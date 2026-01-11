@@ -1,1 +1,4 @@
 @import "tailwindcss";
+
+@import "../node_modules/solid-element-ui/src/style/index.css";
+@source "../node_modules/solid-element-ui/src/**/*.{tsx,ts}";

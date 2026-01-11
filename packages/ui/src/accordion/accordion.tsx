@@ -1,22 +1,31 @@
 import { Accordion as K } from "@kobalte/core/accordion";
 import { For } from "solid-js";
+import { accordionStyles } from "./setting";
 
-export const Accordion = (props:any) => {
+export const Accordion = (props: any) => {
+    // 解构样式槽位
+    const { root, item, header, trigger, content, contentText, icon } =
+        accordionStyles({
+            borderless: props.borderless, // 假设你将来想通过 props 传参
+        });
+
     return (
-        <K class="accordion" > 
+        <K class={root()} collapsible={props.collapsible}>
             <For each={props.items}>
-                {(item, index) => (
-                    <K.Item class="accordion__item" value={`item-${index()}`}>
-                        <K.Header class="accordion__item-header">
-                            <K.Trigger class="accordion__item-trigger">
-                                <span>{item.title}</span>
-                                X
+                {(itemData, index) => (
+                    <K.Item
+                        class={item()}
+                        value={itemData.value || `item-${index()}`}
+                    >
+                        <K.Header class={header()}>
+                            <K.Trigger class={trigger()}>
+                                <span>{itemData.title}</span>
+                                {/* 使用 TV 定义的图标样式 */}
+                                <span class={icon()}>X</span>
                             </K.Trigger>
                         </K.Header>
-                        <K.Content class="accordion__item-content">
-                            <p class="accordion__item-content-text">
-                                {item.content}
-                            </p>
+                        <K.Content class={content()}>
+                            <div class={contentText()}>{itemData.content}</div>
                         </K.Content>
                     </K.Item>
                 )}

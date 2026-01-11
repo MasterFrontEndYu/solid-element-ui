@@ -11,15 +11,11 @@
         "strict": true,
         "noEmit": true,
         "isolatedModules": true,
-
-        "lib": ["ESNext", "DOM", "DOM.Iterable"],
-
         "types": [
             "vinxi/types/client",
             "unplugin-icons/types/solid",
             "solid-js"
         ],
-
         "baseUrl": ".",
         "paths": {
             "~/*": ["./src/*"],

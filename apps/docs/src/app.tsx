@@ -2,7 +2,7 @@ import { Router, useLocation } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense, Show } from "solid-js";
 import Layout from "./layout";
-
+import "./app.css";
 export default function App() {
     return (
         <Router

@@ -1,4 +1,4 @@
-import { createContext, JSX, useContext } from "solid-js";
+import { createContext, type JSX, useContext } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 export const buttonVariants = tv(

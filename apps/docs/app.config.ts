@@ -31,5 +31,8 @@ export default defineConfig({
                 "@": resolve(__dirname, "src"),
             },
         },
+        ssr: {
+            noExternal: ["solid-mdx", "@kobalte/core", "tailwind-variants"],
+        },
     },
 });

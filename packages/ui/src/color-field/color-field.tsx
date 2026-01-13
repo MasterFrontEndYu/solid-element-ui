@@ -1,50 +1,59 @@
 import { ColorField as KColorField } from "@kobalte/core/color-field";
-import { ColorSwatch as KColorSwatch } from "@kobalte/core/color-swatch";
 import { splitProps, type ComponentProps } from "solid-js";
-import { colorFieldVariants } from "./setting";
+import { tv } from "tailwind-variants";
 
-const styles = colorFieldVariants();
-
-// --- 扁平化组件定义 ---
-
-// 这里不直接导出 KColorField，而是包装一层，以便在根部应用样式
-export const ColorFieldRoot = (props: ComponentProps<typeof KColorField>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KColorField class={styles.root({ class: local.class })} {...others} />
-    );
-};
-
-export const ColorFieldLabel = (
-    props: ComponentProps<typeof KColorField.Label>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KColorField.Label
-            class={styles.label({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-export const ColorFieldInput = (
-    props: ComponentProps<typeof KColorField.Input>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KColorField.Input
-            class={styles.input({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-// --- 聚合导出 (Namespace) ---
-
-export const ColorField = Object.assign(ColorFieldRoot, {
-    Label: ColorFieldLabel,
-    Input: ColorFieldInput,
-    Swatch: KColorSwatch, // 修正：直接映射 KColorSwatch，使用时需传 value
-    Description: KColorField.Description,
-    ErrorMessage: KColorField.ErrorMessage,
+const colorFieldStyles = tv({
+    slots: {
+        root: "flex flex-col gap-1.5 w-full",
+        label: "text-sm font-medium text-zinc-900 dark:text-zinc-100 select-none disabled:opacity-50",
+        input: [
+            "h-9 w-full rounded-md border border-zinc-200 bg-white px-3 py-1 text-sm shadow-sm transition-all",
+            "placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950",
+            "data-[invalid]:border-red-500 data-[invalid]:focus-visible:ring-red-500",
+            "disabled:cursor-not-allowed disabled:opacity-50",
+            "dark:border-zinc-800 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300",
+        ],
+        description: "text-[0.8rem] text-zinc-500 dark:text-zinc-400",
+        errorMessage: "text-[0.8rem] font-medium text-red-500",
+    },
 });
+
+const { root, label, input, description, errorMessage } = colorFieldStyles();
+
+export interface ColorFieldProps extends ComponentProps<typeof KColorField> {
+    label?: string;
+    desc?: string;
+    error?: string;
+}
+
+export const ColorField = (props: ColorFieldProps) => {
+    const [local, others] = splitProps(props, [
+        "label",
+        "desc",
+        "error",
+        "class",
+    ]);
+
+    return (
+        <KColorField
+            class={root({ class: local.class })}
+            validationState={local.error ? "invalid" : "valid"}
+            {...others}
+        >
+            {local.label && (
+                <KColorField.Label class={label()}>
+                    {local.label}
+                </KColorField.Label>
+            )}
+            <KColorField.Input class={input()} placeholder="#FFFFFF" />
+            {local.desc && !local.error && (
+                <KColorField.Description class={description()}>
+                    {local.desc}
+                </KColorField.Description>
+            )}
+            <KColorField.ErrorMessage class={errorMessage()}>
+                {local.error}
+            </KColorField.ErrorMessage>
+        </KColorField>
+    );
+};

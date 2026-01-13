@@ -39,7 +39,6 @@ interface AccordionProps extends AccordionRootProps, VariantProps<typeof accordi
     class?: string;
 }
 
-// 3. 完整组件
 export const Accordion = (props: AccordionProps) => {
     const [local, others] = splitProps(props, ["items", "class"]);
 

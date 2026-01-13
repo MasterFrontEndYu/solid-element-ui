@@ -1,135 +1,73 @@
 import { Menubar as KMenubar } from "@kobalte/core/menubar";
-import { splitProps, type ComponentProps, type JSX } from "solid-js";
-import { menubarVariants } from "./setting";
-import { Check, ChevronRight, Circle } from "lucide-solid";
+import { splitProps, type ComponentProps } from "solid-js";
+import { tv } from "tailwind-variants";
 
-const styles = menubarVariants();
-
-// --- 扁平化组件定义 ---
-
-export const MenubarRoot = (props: ComponentProps<typeof KMenubar>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return <KMenubar class={styles.root({ class: local.class })} {...others} />;
-};
-
-export const MenubarMenu = KMenubar.Menu;
-
-export const MenubarTrigger = (
-    props: ComponentProps<typeof KMenubar.Trigger>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KMenubar.Trigger
-            class={styles.trigger({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-export const MenubarContent = (
-    props: ComponentProps<typeof KMenubar.Content>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KMenubar.Portal>
-            <KMenubar.Content
-                class={styles.content({ class: local.class })}
-                {...others}
-            />
-        </KMenubar.Portal>
-    );
-};
-
-export const MenubarItem = (props: ComponentProps<typeof KMenubar.Item>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KMenubar.Item
-            class={styles.item({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-export const MenubarShortcut = (props: JSX.HTMLAttributes<HTMLSpanElement>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return <span class={styles.shortcut({ class: local.class })} {...others} />;
-};
-
-export const MenubarSeparator = (
-    props: ComponentProps<typeof KMenubar.Separator>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KMenubar.Separator
-            class={styles.separator({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-export const MenubarCheckboxItem = (
-    props: ComponentProps<typeof KMenubar.CheckboxItem>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KMenubar.CheckboxItem
-            class={styles.item({ class: local.class })}
-            {...others}
-        >
-            <KMenubar.ItemIndicator class={styles.itemIndicator()}>
-                <Check class="h-4 w-4" />
-            </KMenubar.ItemIndicator>
-            {local.children}
-        </KMenubar.CheckboxItem>
-    );
-};
-
-export const MenubarRadioItem = (
-    props: ComponentProps<typeof KMenubar.RadioItem>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KMenubar.RadioItem
-            class={styles.item({ class: local.class })}
-            {...others}
-        >
-            <KMenubar.ItemIndicator class={styles.itemIndicator()}>
-                <Circle class="h-2 w-2 fill-current" />
-            </KMenubar.ItemIndicator>
-            {local.children}
-        </KMenubar.RadioItem>
-    );
-};
-
-export const MenubarSubTrigger = (
-    props: ComponentProps<typeof KMenubar.SubTrigger>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KMenubar.SubTrigger
-            class={styles.subTrigger({ class: local.class })}
-            {...others}
-        >
-            {local.children}
-            <ChevronRight class="ml-auto h-4 w-4 opacity-50" />
-        </KMenubar.SubTrigger>
-    );
-};
-
-// --- 聚合导出 (Namespace) ---
-
-export const Menubar = Object.assign(MenubarRoot, {
-    Menu: MenubarMenu,
-    Trigger: MenubarTrigger,
-    Content: MenubarContent,
-    Item: MenubarItem,
-    Shortcut: MenubarShortcut,
-    Separator: MenubarSeparator,
-    CheckboxItem: MenubarCheckboxItem,
-    RadioItem: MenubarRadioItem,
-    SubTrigger: MenubarSubTrigger,
-    // 基础组件
-    Group: KMenubar.Group,
-    Sub: KMenubar.Sub,
-    SubContent: MenubarContent,
+const menubarStyles = tv({
+    slots: {
+        root: "flex h-10 items-center space-x-1 rounded-md border bg-white p-1 shadow-sm dark:bg-slate-950 dark:border-slate-800",
+        trigger:
+            "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none focus:bg-slate-100 data-[state=open]:bg-slate-100 dark:focus:bg-slate-800 dark:data-[state=open]:bg-slate-800",
+        content:
+            "z-50 min-w-[12rem] overflow-hidden rounded-md border bg-white p-1 shadow-md dark:bg-slate-950 dark:border-slate-800 animate-in fade-in zoom-in-95",
+        item: "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-slate-100 data-[disabled]:opacity-50 dark:focus:bg-slate-800",
+        separator: "-mx-1 my-1 h-px bg-slate-100 dark:bg-slate-800",
+        shortcut: "ml-auto text-xs tracking-widest text-slate-500",
+    },
 });
+
+const s = menubarStyles();
+
+// 定义 Root 并挂载子组件（Namespace 模式）
+export const Menubar = Object.assign(
+    (props: ComponentProps<typeof KMenubar>) => {
+        const [local, others] = splitProps(props, ["class"]);
+        return <KMenubar class={s.root({ class: local.class })} {...others} />;
+    },
+    {
+        Menu: KMenubar.Menu,
+        Trigger: (props: ComponentProps<typeof KMenubar.Trigger>) => {
+            const [local, others] = splitProps(props, ["class"]);
+            return (
+                <KMenubar.Trigger
+                    class={s.trigger({ class: local.class })}
+                    {...others}
+                />
+            );
+        },
+        Content: (props: ComponentProps<typeof KMenubar.Content>) => {
+            const [local, others] = splitProps(props, ["class"]);
+            return (
+                <KMenubar.Portal>
+                    <KMenubar.Content
+                        class={s.content({ class: local.class })}
+                        {...others}
+                    />
+                </KMenubar.Portal>
+            );
+        },
+        Item: (props: ComponentProps<typeof KMenubar.Item>) => {
+            const [local, others] = splitProps(props, ["class"]);
+            return (
+                <KMenubar.Item
+                    class={s.item({ class: local.class })}
+                    {...others}
+                />
+            );
+        },
+        Separator: (props: ComponentProps<typeof KMenubar.Separator>) => {
+            const [local, others] = splitProps(props, ["class"]);
+            return (
+                <KMenubar.Separator
+                    class={s.separator({ class: local.class })}
+                    {...others}
+                />
+            );
+        },
+        Shortcut: (props: ComponentProps<"span">) => {
+            const [local, others] = splitProps(props, ["class"]);
+            return (
+                <span class={s.shortcut({ class: local.class })} {...others} />
+            );
+        },
+    }
+);

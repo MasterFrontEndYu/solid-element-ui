@@ -1,72 +1,72 @@
-# Accordion 手风琴
+# Accordion 折叠面板 (Tailwind v4)
 
-通过垂直堆叠的可扩展面板展示内容。基于 Kobalte 核心构建，支持单选/多选模式以及完全的键盘交互。
+基于 **Kobalte** 与 **Tailwind Variants** 构建的高性能配置式组件。
 
-## 引入
+## 导入
 
+```tsx
 import { Accordion } from "solid-element-ui";
+```
 
-## 代码演示
+---
 
-### 1. 基础用法
+## 基础用法
 
-默认情况下，手风琴为单选模式（同时只能展开一个）。
+```tsx
+const items = [
+  { value: "1", title: "第一项", content: "内容部分" },
+  { value: "2", title: "第二项", content: "内容部分" }
+];
 
-<Accordion defaultValue={["item-1"]} collapsible>
-    <Accordion.Item value="item-1">
-        <Accordion.Trigger>什么是 Solid.js?</Accordion.Trigger>
-        <Accordion.Content>
-            Solid 是一个用于构建用户界面的声明式、高效且灵活的 JavaScript 库。
-        </Accordion.Content>
-    </Accordion.Item>
-    <Accordion.Item value="item-2">
-        <Accordion.Trigger>它有虚拟 DOM 吗?</Accordion.Trigger>
-        <Accordion.Content>
-            不，Solid 不使用虚拟 DOM。它将模板编译为真实的 DOM
-            节点，并使用精细的信号进行更新。
-        </Accordion.Content>
-    </Accordion.Item>
-</Accordion>
+<Accordion items={items} collapsible />
+```
 
-### 2. 多选模式
-
-设置 multiple 属性允许同时展开多个面板。
-
-<Accordion multiple>
-    <Accordion.Item value="item-1">
-        <Accordion.Trigger>可访问性</Accordion.Trigger>
-        <Accordion.Content>遵循 WAI-ARIA 设计模式。</Accordion.Content>
-    </Accordion.Item>
-    <Accordion.Item value="item-2">
-        <Accordion.Trigger>样式定制</Accordion.Trigger>
-        <Accordion.Content>
-            使用 Tailwind CSS 或任意 CSS 方案。
-        </Accordion.Content>
-    </Accordion.Item>
-</Accordion>
+---
 
 ## API 参考
 
-### Accordion (Root)
+### Accordion Props
 
-| 属性          | 说明                               | 类型                      | 默认值 |
-| :------------ | :--------------------------------- | :------------------------ | :----- |
-| multiple      | 是否允许同时展开多个项目           | boolean                   | false  |
-| collapsible   | 在单选模式下，是否允许关闭所有项目 | boolean                   | false  |
-| value         | 受控展开项的值                     | string[]                  | -      |
-| defaultValue  | 默认展开项的值                     | string[]                  | -      |
-| onValueChange | 展开项变化时的回调                 | (value: string[]) => void | -      |
+| 参数 | 类型 | 默认值 | 说明 |
+| :--- | :--- | :--- | :--- |
+| **items** | `AccordionItem[]` | `[]` | **必填**。渲染面板的数据源。 |
+| **multiple** | `boolean` | `false` | 是否允许多个面板同时展开。 |
+| **collapsible** | `boolean` | `false` | 是否允许关闭当前已展开的面板。 |
+| **class** | `string` | - | 覆盖根容器样式的 Tailwind 类名。 |
 
-### Accordion.Item
+### AccordionItem 接口
 
-| 属性     | 说明                     | 类型    | 默认值 |
-| :------- | :----------------------- | :------ | :----- |
-| value    | 项目的唯一标识符（必须） | string  | -      |
-| disabled | 是否禁用该项             | boolean | false  |
+| 字段 | 类型 | 说明 |
+| :--- | :--- | :--- |
+| **value** | `string` | 唯一标识符。 |
+| **title** | `JSX.Element \| string` | 标题内容。 |
+| **content** | `JSX.Element \| string` | 展开后的内容。 |
+| **disabled** | `boolean` | 是否禁用。 |
 
-## 无障碍 (Accessibility)
+---
 
--   键盘交互: 使用 Enter 或 Space 展开/收起面板。
--   导航: 使用箭头键在不同的触发器之间移动焦点。
--   焦点管理: 自动管理 aria-expanded 和 aria-controls 属性。
--   语义化: 包含适当的 Header 级别支持，确保屏幕阅读器能识别结构。
+## Tailwind CSS v4 样式配置
+
+在 TW v4 中，请直接在你的全局 CSS 文件中添加以下 `@theme` 配置，以支持 Kobalte 的高度过渡动画：
+
+```css
+@import "tailwindcss";
+
+@theme {
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--kb-accordion-content-height); }
+  }
+  @keyframes accordion-up {
+    from { height: var(--kb-accordion-content-height); }
+    to { height: 0; }
+  }
+
+  .animate-accordion-down {
+    animation: accordion-down 0.2s ease-out;
+  }
+  .animate-accordion-up {
+    animation: accordion-up 0.2s ease-out;
+  }
+}
+```

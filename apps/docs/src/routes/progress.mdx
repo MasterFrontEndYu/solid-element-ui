@@ -1,71 +1,53 @@
-# Progress 进度条
+## Progress 进度条
 
-展示一个长时间运行操作的完成进度。基于 Kobalte 的 Progress 核心构建，提供语义化的状态更新，确保屏幕阅读器用户能够实时感知进度变化。
+高度封装的进度展示组件，支持确定进度、不确定进度（Indeterminate）以及圆角和尺寸定制。
 
----
-
-## 引入
-
+### 导入
+```tsx
 import { Progress } from "solid-element-ui";
+```
+
+### 使用示例
+
+```tsx
+<div class="space-y-4">
+  {/* 基础用法 */}
+  <Progress value={60} label="正在下载..." showValue />
+
+  {/* 不确定状态 (加载中) */}
+  <Progress indeterminate label="系统更新中" />
+
+  {/* 尺寸定制 */}
+  <Progress value={30} size="sm" radius="none" />
+</div>
+```
+
+### API 参考
+
+| 属性 | 类型 | 默认值 | 说明 |
+| :--- | :--- | :--- | :--- |
+| **value** | `number` | - | 当前进度值。 |
+| **minValue** | `number` | `0` | 最小值。 |
+| **maxValue** | `number` | `100` | 最大值。 |
+| **indeterminate** | `boolean` | `false` | 是否处于不确定状态（循环滚动动画）。 |
+| **label** | `string` | - | 进度条上方的文本标签。 |
+| **showValue** | `boolean` | `false` | 是否显示百分比数值。 |
+| **size** | `'sm' \| 'md' \| 'lg'` | `'md'` | 进度条的高度粗细。 |
+| **radius** | `'none' \| 'sm' \| 'md' \| 'lg' \| 'full'` | `'full'` | 进度条圆角样式。 |
 
 ---
 
-## 代码演示
+### Tailwind v4 动画配置
 
-### 1. 基础用法
+为了支持 `indeterminate` 状态，请确保 CSS 中包含以下定义：
 
-展示一个简单的百分比进度。
+```css
+@keyframes progress-indeterminate {
+  from { transform: translateX(-100%); width: 30%; }
+  to { transform: translateX(333%); width: 30%; }
+}
 
-<Progress value={70}>
-    <div class="flex justify-between mb-1 text-sm">
-        <Progress.Label>正在下载资源...</Progress.Label>
-        <Progress.ValueLabel />
-    </div>
-    <Progress.Track class="h-2 bg-zinc-100 rounded-full overflow-hidden">
-        <Progress.Indicator class="h-full bg-blue-600 transition-all duration-300" />
-    </Progress.Track>
-</Progress>
-
-### 2. 不确定状态 (Indeterminate)
-
-当无法估算具体进度（例如正在连接服务器）时，不传递 value 属性，通过 CSS 实现循环动画。
-
-<Progress>
-    <Progress.Track class="h-1 bg-zinc-100 overflow-hidden">
-        <Progress.Indicator class="w-1/3 h-full bg-zinc-900 animate-progress-indeterminate" />
-    </Progress.Track>
-</Progress>
-
----
-
-## API 参考
-
-### Progress (Root)
-
-| 属性          | 说明               | 类型                                                            | 默认值 |
-| :------------ | :----------------- | :-------------------------------------------------------------- | :----- |
-| value         | 当前进度值         | number                                                          | -      |
-| minValue      | 最小值             | number                                                          | 0      |
-| maxValue      | 最大值             | number                                                          | 100    |
-| getValueLabel | 自定义数值文本格式 | (params: { value: number, min: number, max: number }) => string | -      |
-
-### Progress.Track
-
-| 属性  | 说明                 | 类型   | 默认值 |
-| :---- | :------------------- | :----- | :----- |
-| class | 进度条轨道的样式类名 | string | -      |
-
-### Progress.Indicator
-
-| 属性  | 说明                             | 类型   | 默认值 |
-| :---- | :------------------------------- | :----- | :----- |
-| class | 进度指示条（填充部分）的样式类名 | string | -      |
-
----
-
-## 无障碍 (Accessibility)
-
--   **角色定义**：自动分配 `role="progressbar"`。
--   **状态更新**：自动管理并更新 `aria-valuenow`、`aria-valuemin` 和 `aria-valuemax` 属性。
--   **语义关联**：`Progress.Label` 自动通过 `aria-labelledby` 与进度条组件关联。
--   **不确定状态**：当 `value` 为空或未定义时，自动移除 `aria-valuenow` 属性，以符合 W3C 标准中关于不确定进度的定义。
+.animate-progress-indeterminate {
+  animation: progress-indeterminate 1.5s infinite linear;
+}
+```

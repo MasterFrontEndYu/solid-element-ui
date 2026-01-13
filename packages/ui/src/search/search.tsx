@@ -1,67 +1,91 @@
-import { TextField as KTextField } from "@kobalte/core/text-field";
-import { splitProps, type ComponentProps, Show } from "solid-js";
-import { searchVariants } from "./setting";
-import { Search as SearchIcon, X } from "lucide-solid";
+import { TextField as KSearch } from "@kobalte/core/text-field";
+import { splitProps, type JSX, type ComponentProps, Show } from "solid-js";
+import { tv, type VariantProps } from "tailwind-variants";
+import { Search as SearchIcon, XCircle } from "lucide-solid";
 
-const styles = searchVariants();
+const searchStyles = tv({
+    slots: {
+        root: "relative flex flex-col gap-1.5 w-full",
+        inputWrapper: "relative flex items-center transition-all",
+        input: [
+            "flex h-10 w-full rounded-md border border-slate-200 bg-white px-9 py-2 text-sm",
+            "ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium",
+            "placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2",
+            "disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950",
+        ],
+        icon: "absolute left-3 h-4 w-4 text-slate-500 pointer-events-none",
+        clear: "absolute right-3 h-4 w-4 text-slate-400 hover:text-slate-600 cursor-pointer transition-colors",
+    },
+    variants: {
+        size: {
+            sm: {
+                input: "h-8 text-xs px-8",
+                icon: "h-3.5 w-3.5",
+                clear: "h-3.5 w-3.5",
+            },
+            md: { input: "h-10 text-sm", icon: "h-4 w-4", clear: "h-4 w-4" },
+            lg: {
+                input: "h-12 text-base px-10",
+                icon: "h-5 w-5",
+                clear: "h-5 w-5",
+            },
+        },
+        ringColor: {
+            primary: { input: "focus-visible:ring-blue-500" },
+            danger: { input: "focus-visible:ring-red-500" },
+        },
+    },
+    defaultVariants: {
+        size: "md",
+        ringColor: "primary",
+    },
+});
 
-// --- 扁平化组件定义 ---
+type SearchVariants = VariantProps<typeof searchStyles>;
 
-export const SearchRoot = (props: ComponentProps<typeof KTextField>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KTextField class={styles.root({ class: local.class })} {...others} />
-    );
-};
-
-export const SearchLabel = (props: ComponentProps<typeof KTextField.Label>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KTextField.Label
-            class={styles.label({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-interface SearchInputProps extends ComponentProps<typeof KTextField.Input> {
+export interface SearchProps
+    extends Omit<ComponentProps<typeof KSearch>, "class">,
+        SearchVariants {
+    class?: string;
+    placeholder?: string;
+    allowClear?: boolean;
     onClear?: () => void;
-    showClear?: boolean;
 }
 
-export const SearchInput = (props: SearchInputProps) => {
-    const [local, others] = splitProps(props, [
-        "class",
-        "onClear",
-        "showClear",
-    ]);
+export const Search = (props: SearchProps) => {
+    const [local, variantProps, others] = splitProps(
+        props,
+        ["class", "placeholder", "allowClear", "onClear", "value", "onChange"],
+        ["size", "ringColor"]
+    );
+
+    const styles = searchStyles(variantProps);
 
     return (
-        <div class={styles.container()}>
-            <SearchIcon class={styles.icon()} />
-            <KTextField.Input
-                type="search"
-                class={styles.input({ class: local.class })}
-                {...others}
-            />
-            <Show when={local.showClear}>
-                <button
-                    type="button"
-                    onClick={() => local.onClear?.()}
-                    class={styles.clear()}
-                >
-                    <X class="h-4 w-4" />
-                </button>
-            </Show>
-        </div>
+        <KSearch
+            class={styles.root({ class: local.class })}
+            value={local.value}
+            onChange={local.onChange}
+            {...others}
+        >
+            <div class={styles.inputWrapper()}>
+                <SearchIcon class={styles.icon()} />
+                <KSearch.Input
+                    class={styles.input()}
+                    placeholder={local.placeholder ?? "搜索..."}
+                />
+                <Show when={local.allowClear && local.value}>
+                    <button
+                        onClick={() => local.onClear?.()}
+                        class={styles.clear()}
+                    >
+                        <XCircle
+                            fill="currentColor"
+                            class="text-white dark:text-slate-950"
+                        />
+                    </button>
+                </Show>
+            </div>
+        </KSearch>
     );
 };
-
-// --- 聚合导出 (Namespace) ---
-
-export const Search = Object.assign(SearchRoot, {
-    Label: SearchLabel,
-    Input: SearchInput,
-    Description: KTextField.Description,
-    ErrorMessage: KTextField.ErrorMessage,
-});

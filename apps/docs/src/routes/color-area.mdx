@@ -1,69 +1,49 @@
-# ColorArea 颜色区域
+## Color Area 颜色区域
 
-允许用户在二维空间内通过拖动滑块来选择颜色的饱和度和亮度。通常与颜色选择器配合使用。基于 Kobalte 的 ColorArea 核心构建，支持完全的键盘导航和触摸交互。
+用于选择颜色的饱和度和亮度。
 
-## 引入
+### 导入
 
+```tsx
 import { ColorArea } from "solid-element-ui";
+```
 
-## 代码演示
+### 使用示例
 
-### 1. 基础用法
-默认渲染一个颜色选择区域。
+```tsx
+<div className="p-6 border rounded-xl bg-zinc-50 dark:bg-zinc-900 max-w-75">
+  <ColorArea />
+  <p className="mt-2 text-xs text-center text-zinc-500">
+    拖动圆点选择颜色
+  </p>
+</div>
+```
 
+---
 
+### API 参考补充
 
-<ColorArea value={color()} onChange={setColor}>
-  <ColorArea.Background />
-  <ColorArea.Thumb />
-</ColorArea>
+| 子组件 | 说明 |
+| :--- | :--- |
+| **HiddenInputX** | 处理 X 轴（通常是饱和度）的隐藏 input，支持键盘左右键。 |
+| **HiddenInputY** | 处理 Y 轴（通常是亮度）的隐藏 input，支持键盘上下键。 |
 
-### 2. 自定义背景
-你可以通过调整 Background 的样式来改变区域的视觉呈现，例如设置圆角或阴影。
+---
 
-<ColorArea class="h-[200px] w-[200px]">
-  <ColorArea.Background class="rounded-xl border border-zinc-200 shadow-inner" />
-  <ColorArea.Thumb />
-</ColorArea>
+### Tailwind v4 动画提示
 
-### 3. 禁用状态
-在禁用状态下，用户无法拖动滑块或改变颜色值。
+为了让颜色区域的 Thumb 在移动时更加丝滑，可以在 CSS 中加入：
 
-<ColorArea disabled>
-  <ColorArea.Background />
-  <ColorArea.Thumb />
-</ColorArea>
+```css
+@import "tailwindcss";
 
-## API 参考
+[data-kb-color-area-thumb] {
+  /* 避免移动时产生布局抖动 */
+  will-change: transform;
+}
 
-### ColorArea (Root)
-
-| 属性 | 说明 | 类型 | 默认值 |
-| :--- | :--- | :--- | :--- |
-| value | 当前选中的颜色值 (受控) | Color | - |
-| defaultValue | 默认颜色值 | Color | - |
-| onChange | 颜色变化时的回调函数 | (value: Color) => void | - |
-| onChangeEnd | 拖动结束时的回调函数 | (value: Color) => void | - |
-| xChannel | X 轴代表的颜色通道 | ColorChannel | - |
-| yChannel | Y 轴代表的颜色通道 | ColorChannel | - |
-| disabled | 是否禁用 | boolean | false |
-| readOnly | 是否只读 | boolean | false |
-
-### ColorArea.Background
-
-| 属性 | 说明 | 类型 | 默认值 |
-| :--- | :--- | :--- | :--- |
-| class | 背景区域的样式类名 | string | - |
-
-### ColorArea.Thumb
-
-| 属性 | 说明 | 类型 | 默认值 |
-| :--- | :--- | :--- | :--- |
-| class | 滑块（选取点）的样式类名 | string | - |
-
-## 无障碍 (Accessibility)
-
-- 键盘支持: 使用箭头键（上下左右）可以精细调整颜色的饱和度和亮度。
-- 步长控制: 配合 Shift 键使用箭头键可以实现更大跨度的数值跳跃。
-- 屏幕阅读器: 自动关联颜色通道的数值变化，并向辅助技术播报当前的颜色状态。
-- 触摸交互: 原生支持移动端触摸拖动，具备良好的响应性。
+[data-kb-color-area-background] {
+  /* 确保颜色渐变过渡平滑 */
+  transition: background-color 0.2s ease;
+}
+```

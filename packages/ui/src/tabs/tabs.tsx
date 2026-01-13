@@ -1,52 +1,68 @@
 import { Tabs as KTabs } from "@kobalte/core/tabs";
-import { splitProps, type ComponentProps } from "solid-js";
-import { tabsVariants } from "./setting";
+import { splitProps, type JSX, For } from "solid-js";
+import { tv } from "tailwind-variants";
 
-const styles = tabsVariants();
-
-// --- 扁平化组件定义 ---
-
-export const TabsRoot = (props: ComponentProps<typeof KTabs>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return <KTabs class={styles.root({ class: local.class })} {...others} />;
-};
-
-export const TabsList = (props: ComponentProps<typeof KTabs.List>) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KTabs.List class={styles.list({ class: local.class })} {...others}>
-            {local.children}
-            {/* 这里的 Indicator 是可选的，如果样式中用了 border-b，则不需要此组件 */}
-            <KTabs.Indicator class={styles.indicator()} />
-        </KTabs.List>
-    );
-};
-
-export const TabsTrigger = (props: ComponentProps<typeof KTabs.Trigger>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KTabs.Trigger
-            class={styles.trigger({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-export const TabsContent = (props: ComponentProps<typeof KTabs.Content>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KTabs.Content
-            class={styles.content({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-// --- 聚合导出 (Namespace) ---
-
-export const Tabs = Object.assign(TabsRoot, {
-    List: TabsList,
-    Trigger: TabsTrigger,
-    Content: TabsContent,
-    Indicator: KTabs.Indicator,
+const tabsStyles = tv({
+    slots: {
+        root: "flex flex-col w-full",
+        list: "relative flex items-center border-b border-zinc-200 dark:border-zinc-800",
+        trigger: [
+            "relative flex h-9 items-center justify-center px-4 text-sm font-medium transition-colors outline-none select-none cursor-pointer",
+            "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200",
+            "data-[selected]:text-zinc-950 dark:data-[selected]:text-zinc-50",
+        ],
+        indicator:
+            "absolute bottom-[-1px] h-0.5 bg-zinc-950 dark:bg-zinc-50 transition-all duration-200",
+        content:
+            "mt-4 text-sm text-zinc-600 dark:text-zinc-400 focus-visible:outline-none",
+    },
 });
+
+const { root, list, trigger, indicator, content } = tabsStyles();
+
+export type TabItem = {
+    value: string;
+    label: string | JSX.Element;
+    content: JSX.Element;
+    disabled?: boolean;
+};
+
+interface TabsProps {
+    items: TabItem[];
+    defaultValue?: string;
+    value?: string;
+    onValueChange?: (value: string) => void;
+    orientation?: "horizontal" | "vertical";
+    class?: string;
+}
+
+export const Tabs = (props: TabsProps) => {
+    const [local, others] = splitProps(props, ["items", "class"]);
+
+    return (
+        <KTabs class={root({ class: local.class })} {...others}>
+            <KTabs.List class={list()}>
+                <For each={local.items}>
+                    {(item) => (
+                        <KTabs.Trigger
+                            class={trigger()}
+                            value={item.value}
+                            disabled={item.disabled}
+                        >
+                            {item.label}
+                        </KTabs.Trigger>
+                    )}
+                </For>
+                <KTabs.Indicator class={indicator()} />
+            </KTabs.List>
+
+            <For each={local.items}>
+                {(item) => (
+                    <KTabs.Content class={content()} value={item.value}>
+                        {item.content}
+                    </KTabs.Content>
+                )}
+            </For>
+        </KTabs>
+    );
+};

@@ -1,71 +1,66 @@
-# Checkbox 复选框
+## Checkbox 复选框
 
-允许用户在多个选项中进行选择，或在两种状态之间切换。基于 Kobalte 核心构建，支持半选状态、完全的键盘导航和自动表单集成。
+允许用户在多个选项中选择一个或多个。
 
-## 引入
+### 导入
 
+```tsx
 import { Checkbox } from "solid-element-ui";
+```
 
-## 代码演示
+### 使用示例
 
-### 1. 基础用法
+在 MDX 中渲染复选框实例：
 
-通过 Label 和 Control 组合成一个完整的复选框。
+```tsx
+<div className="flex flex-col gap-4 p-4">
+  <Checkbox label="接受服务协议" />
+  
+  <Checkbox defaultChecked label="默认选中项" />
+  
+  <Checkbox disabled label="禁用状态" />
+  
+  <Checkbox 
+    label={
+      <span className="text-zinc-500 italic">
+        自定义 Label 样式
+      </span>
+    } 
+  />
+</div>
+```
 
-<Checkbox>
-    <Checkbox.Control />
-    <Checkbox.Label>接受服务条款</Checkbox.Label>
-</Checkbox>
+---
 
-### 2. 自定义图标与半选
+### API 参考
 
-你可以通过 Control 的子元素自定义选中时的图标。对于全选场景，可以使用 indeterminate 属性。
+| 属性 | 类型 | 默认值 | 说明 |
+| :--- | :--- | :--- | :--- |
+| **label** | `JSX.Element \| string` | - | 复选框旁边的文字内容。 |
+| **checked** | `boolean` | - | 受控模式下的选中状态。 |
+| **defaultChecked** | `boolean` | - | 初始渲染时的选中状态。 |
+| **onChange** | `(checked: boolean) => void` | - | 状态改变时的回调函数。 |
+| **disabled** | `boolean` | `false` | 是否禁用交互。 |
+| **class** | `string` | - | 覆盖根容器的类名。 |
 
-<Checkbox indeterminate>
-    <Checkbox.Control>
-        <div class="h-3 w-3 bg-current" />
-    </Checkbox.Control>
-    <Checkbox.Label>部分选中状态</Checkbox.Label>
-</Checkbox>
+---
 
-### 3. 禁用状态
+### Tailwind v4 适配
 
-禁用后的复选框将无法交互。
+Checkbox 核心利用了 `data-[checked]` 伪类选择器。在 Tailwind v4 中，你可以通过 CSS 变量为选中状态添加微动效：
 
-<Checkbox disabled>
-    <Checkbox.Control />
-    <Checkbox.Label>选项已禁用</Checkbox.Label>
-</Checkbox>
+```css
+@import "tailwindcss";
 
-## API 参考
+@theme {
+  @keyframes check-pop {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+}
 
-### Checkbox (Root)
-
-| 属性            | 说明             | 类型                       | 默认值 |
-| :-------------- | :--------------- | :------------------------- | :----- |
-| checked         | 是否选中（受控） | boolean                    | -      |
-| defaultChecked  | 默认是否选中     | boolean                    | false  |
-| onCheckedChange | 状态改变时的回调 | (checked: boolean) => void | -      |
-| indeterminate   | 是否处于半选状态 | boolean                    | false  |
-| disabled        | 是否禁用         | boolean                    | false  |
-| required        | 是否必填         | boolean                    | false  |
-| name            | 表单提交名称     | string                     | -      |
-
-### Checkbox.Control
-
-| 属性     | 说明                   | 类型        | 默认值 |
-| :------- | :--------------------- | :---------- | :----- |
-| class    | 视觉方框的样式类名     | string      | -      |
-| children | 自定义选中时的指示图标 | JSX.Element | Check  |
-
-### Checkbox.Label
-
-| 属性  | 说明               | 类型   | 默认值 |
-| :---- | :----------------- | :----- | :----- |
-| class | 标签文本的样式类名 | string | -      |
-
-## 无障碍 (Accessibility)
-
--   自动关联: Checkbox.Label 自动通过 id 与隐藏的原生 input 关联。
--   键盘支持: 使用 Space 键切换状态，使用 Tab 键聚焦。
--   状态反馈: 自动管理 aria-checked 属性（支持 "true", "false", "mixed"）。
+/* 选中时的图标动画 */
+[data-kb-checkbox-indicator] {
+  animation: check-pop 0.1s ease-out;
+}
+```

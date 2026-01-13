@@ -1,85 +1,59 @@
-# Alert 提示框
+## Alert 警告提示
 
-向用户展示简短、重要的信息。基于 Kobalte 的 Alert 核心构建，支持不同的语义化状态（如成功、警告、错误）。
+展示重要状态反馈的容器。
 
-## 引入
+### 导入
 
+```tsx
 import { Alert } from "solid-element-ui";
+```
 
-## 代码演示
+### 使用示例
 
-### 1. 基础用法
+在 MDX 环境下的实例展示：
 
-提供标准的提示框样式。
-
-<Alert>
-    <Alert.Title>提示</Alert.Title>
-    <Alert.Description>这是一个标准的提示信息。</Alert.Description>
-</Alert>
-
-### 2. 语义化变体
-
-通过 variant 属性区分信息的严重程度。
-
-<div class="flex flex-col gap-4">
-  <Alert variant="default">
-    <Alert.Title>信息</Alert.Title>
-    <Alert.Description>这是一条普通的信息提示。</Alert.Description>
+```tsx
+<div className="flex flex-col gap-4 w-full p-4">
+  <Alert variant="success" title="成功" icon>
+    组件现已正确导出，去掉了不存在的 .Root 属性。
   </Alert>
 
-  <Alert variant="destructive">
-    <Alert.Title>错误</Alert.Title>
-    <Alert.Description>您的操作未能成功，请重试。</Alert.Description>
+  <Alert variant="info" title="提示" icon>
+    基于 Tailwind v4 和 Kobalte 构建。
+  </Alert>
+
+  <Alert variant="danger" title="错误" icon>
+    类型检查现已通过。
   </Alert>
 </div>
+```
 
-### 3. 带图标的提示
+---
 
-可以在 Title 旁放置图标以增强视觉引导。
+### API 参考
 
-<Alert>
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-4 w-4"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-    >
-        <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-    </svg>
-    <Alert.Title>注意</Alert.Title>
-    <Alert.Description>请在提交前仔细检查您的输入数据。</Alert.Description>
-</Alert>
+| 属性 | 类型 | 默认值 | 说明 |
+| :--- | :--- | :--- | :--- |
+| **variant** | `'info' \| 'success' \| 'warning' \| 'danger'` | `'info'` | 视觉变体样式。 |
+| **title** | `string` | - | 可选标题。 |
+| **icon** | `boolean \| JSX.Element` | `true` | 是否显示图标或自定义图标。 |
+| **class** | `string` | - | 附加的 Tailwind 类名。 |
 
-## API 参考
+---
 
-### Alert (Root)
+### Tailwind v4 动画
 
-| 属性    | 说明            | 类型           | 默认值        |
-| :------ | :-------------- | :------------- | :------------ | --------- |
-| variant | 提示框变体风格  | 'default'      | 'destructive' | 'default' |
-| as      | 底层渲染的元素  | ValidComponent | 'div'         |
-| class   | 自定义 CSS 类名 | string         | -             |
+```css
+@import "tailwindcss";
 
-### Alert.Title
+@theme {
+  @keyframes alert-fade {
+    from { opacity: 0; transform: translateY(-2px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
 
-| 属性  | 说明         | 类型   | 默认值 |
-| :---- | :----------- | :----- | :----- |
-| class | 标题样式类名 | string | -      |
-
-### Alert.Description
-
-| 属性  | 说明             | 类型   | 默认值 |
-| :---- | :--------------- | :----- | :----- |
-| class | 描述文本样式类名 | string | -      |
-
-## 无障碍 (Accessibility)
-
--   角色分配: 容器自动标记为 role="alert"，当组件渲染时，屏幕阅读器会立即播报其内容。
--   语义化: Title 和 Description 确保了内容的结构化，便于辅助技术解析。
--   实时性: 适用于不需要用户交互的静态通知信息。
+[role="alert"] {
+  animation: alert-fade 0.2s ease-out;
+}
+```

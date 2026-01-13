@@ -1,75 +1,90 @@
 import { Combobox as KCombobox } from "@kobalte/core/combobox";
-import { splitProps, type ComponentProps } from "solid-js";
-import { comboboxVariants } from "./setting";
+import { splitProps, type ComponentProps, type JSX } from "solid-js";
+import { tv } from "tailwind-variants";
 import { Check, ChevronDown } from "lucide-solid";
 
-const styles = comboboxVariants();
+const comboboxStyles = tv({
+    slots: {
+        root: "flex flex-col gap-1.5 w-full",
+        label: "text-sm font-medium text-zinc-900 dark:text-zinc-100 select-none",
+        control:
+            "relative flex items-center rounded-md border border-zinc-200 bg-white shadow-sm transition-colors focus-within:ring-1 focus-within:ring-zinc-950 dark:border-zinc-800 dark:bg-zinc-950 dark:focus-within:ring-zinc-300",
+        input: "h-9 w-full bg-transparent px-3 py-1 text-sm outline-none placeholder:text-zinc-500 disabled:cursor-not-allowed",
+        trigger: "flex h-9 w-9 items-center justify-center text-zinc-500",
+        content:
+            "z-50 min-w-[8rem] overflow-hidden rounded-md border border-zinc-200 bg-white text-zinc-950 shadow-md animate-in fade-in-0 zoom-in-95 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50",
+        listbox: "p-1",
+        item: "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-50",
+        itemIndicator:
+            "absolute left-2 flex h-3.5 w-3.5 items-center justify-center",
+        icon: "h-4 w-4 transition-transform duration-200 data-[expanded]:rotate-180",
+    },
+});
 
-// --- 扁平化组件定义 ---
+const {
+    root,
+    label,
+    control,
+    input,
+    trigger,
+    content,
+    listbox,
+    item,
+    itemIndicator,
+    icon,
+} = comboboxStyles();
 
-export const ComboboxControl = (
-    props: ComponentProps<typeof KCombobox.Control>
+// 修复 1：使用 type 代替 interface 解决泛型扩展静态已知成员的问题
+export type ComboboxProps<T> = ComponentProps<typeof KCombobox<T>> & {
+    label?: string;
+    placeholder?: string;
+    class?: string;
+};
+
+export const Combobox = <T extends string | object>(
+    props: ComboboxProps<T>
 ) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
+    // 修复 2：显式解构以确保 class 属性被正确捕获
+    const [local, others] = splitProps(props as ComboboxProps<T>, [
+        "label",
+        "placeholder",
+        "class",
+    ]);
+
     return (
-        <KCombobox.Control
-            class={styles.control({ class: local.class })}
-            {...others}
-        >
-            {local.children as any}
-            <KCombobox.Trigger class={styles.trigger()}>
-                <ChevronDown />
-            </KCombobox.Trigger>
-        </KCombobox.Control>
+        <KCombobox<T> class={root({ class: local.class })} {...others}>
+            {local.label && (
+                <KCombobox.Label class={label()}>{local.label}</KCombobox.Label>
+            )}
+
+            <KCombobox.Control class={control()}>
+                <KCombobox.Input
+                    class={input()}
+                    placeholder={local.placeholder}
+                />
+                <KCombobox.Trigger class={trigger()}>
+                    <KCombobox.Icon class={icon()}>
+                        <ChevronDown />
+                    </KCombobox.Icon>
+                </KCombobox.Trigger>
+            </KCombobox.Control>
+
+            <KCombobox.Portal>
+                <KCombobox.Content class={content()}>
+                    <KCombobox.Listbox class={listbox()} />
+                </KCombobox.Content>
+            </KCombobox.Portal>
+        </KCombobox>
     );
 };
 
-export const ComboboxInput = (
-    props: ComponentProps<typeof KCombobox.Input>
-) => {
-    return <KCombobox.Input class={styles.input({ class: props.class })} />;
-};
-
-export const ComboboxContent = (
-    props: ComponentProps<typeof KCombobox.Content>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
+export const ComboboxItem = (props: { item: any }) => {
     return (
-        <KCombobox.Portal>
-            <KCombobox.Content
-                class={styles.content({ class: local.class })}
-                {...others}
-            >
-                <KCombobox.Listbox class={styles.listbox()}>
-                    {local.children as any}
-                </KCombobox.Listbox>
-            </KCombobox.Content>
-        </KCombobox.Portal>
-    );
-};
-
-export const ComboboxItem = (props: ComponentProps<typeof KCombobox.Item>) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KCombobox.Item class={styles.item({ class: local.class })} {...others}>
-            <KCombobox.ItemIndicator class={styles.itemIndicator()}>
-                <Check class="h-4 w-4" />
+        <KCombobox.Item item={props.item} class={item()}>
+            <KCombobox.ItemIndicator class={itemIndicator()}>
+                <Check size={14} />
             </KCombobox.ItemIndicator>
-            <KCombobox.ItemLabel>{local.children}</KCombobox.ItemLabel>
+            <KCombobox.ItemLabel>{props.item.rawValue}</KCombobox.ItemLabel>
         </KCombobox.Item>
     );
 };
-
-// --- 聚合导出 (Namespace) ---
-
-export const Combobox = Object.assign(KCombobox, {
-    Control: ComboboxControl,
-    Input: ComboboxInput,
-    Content: ComboboxContent,
-    Item: ComboboxItem,
-    // 补充其他不需要特殊样式的子组件
-    Label: KCombobox.Label,
-    Description: KCombobox.Description,
-    ErrorMessage: KCombobox.ErrorMessage,
-    Section: KCombobox.Section,
-});

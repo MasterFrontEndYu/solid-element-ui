@@ -1,89 +1,47 @@
-# Rating Group 评分组
+## RatingGroup 评分
 
-允许用户从一组图标中选择数值，通常用于评价、收藏或等级划分。基于 Kobalte 的 RatingGroup 核心构建，支持半星评分、键盘交互以及完整的无障碍特性。
+高度封装的评分组件，内置 Lucide 图标并支持动态高亮与 Form 绑定。
 
----
-
-## 引入
-
+### 导入
+```tsx
 import { RatingGroup } from "solid-element-ui";
+```
+
+### 使用示例
+
+```tsx
+<div class="flex flex-col gap-6">
+  {/* 基础用法 */}
+  <RatingGroup label="服务评分" defaultValue={3} />
+
+  {/* 蓝色风格 + 10星模式 */}
+  <RatingGroup 
+    label="难度系数" 
+    count={10} 
+    color="blue" 
+    size="sm" 
+  />
+
+  {/* 只读模式 */}
+  <RatingGroup value={4.5} readOnly label="综合评分" />
+</div>
+```
+
+### API 参考
+
+| 属性 | 类型 | 默认值 | 说明 |
+| :--- | :--- | :--- | :--- |
+| **count** | `number` | `5` | 总分值（星星数量）。 |
+| **label** | `string` | - | 顶部的描述文字。 |
+| **color** | `'yellow' \| 'blue' \| 'red'` | `'yellow'` | 高亮颜色。 |
+| **size** | `'sm' \| 'md' \| 'lg'` | `'md'` | 图标尺寸。 |
+| **allowHalf** | `boolean` | `false` | 是否允许半星（需配合特定的样式调整）。 |
+| **disabled** | `boolean` | `false` | 禁用交互。 |
+| **readOnly** | `boolean` | `false` | 只读模式，仅用于展示。 |
 
 ---
 
-## 代码演示
-
-### 1. 基础用法
-
-默认的 5 星评分系统。
-
-<RatingGroup maxValue={5} defaultValue={3}>
-    <RatingGroup.Label class="text-sm font-medium mb-2 block">
-        评价此教程
-    </RatingGroup.Label>
-    <RatingGroup.Control class="flex">
-        <RatingGroup.Item value={1} class="cursor-pointer">
-            <RatingGroup.ItemIndicator class="text-zinc-300 data-[selected]:text-yellow-400">
-                <StarIcon />
-            </RatingGroup.ItemIndicator>
-        </RatingGroup.Item>
-        {/* 重复 2-5 的 Item ... */}
-    </RatingGroup.Control>
-</RatingGroup>
-
-### 2. 渲染列表 (推荐)
-
-使用循环生成评分项，并结合 `context` 获取当前状态。
-
-<RatingGroup maxValue={5}>
-    <RatingGroup.Control class="flex gap-1">
-        {(context) => (
-            <For each={context.items}>
-                {(item) => (
-                    <RatingGroup.Item
-                        value={item}
-                        class="transition-transform hover:scale-110"
-                    >
-                        <RatingGroup.ItemIndicator class="w-6 h-6 text-zinc-200 data-[highlighted]:text-yellow-400 data-[selected]:text-yellow-500">
-                            <StarIcon fill="currentColor" />
-                        </RatingGroup.ItemIndicator>
-                    </RatingGroup.Item>
-                )}
-            </For>
-        )}
-    </RatingGroup.Control>
-</RatingGroup>
-
----
-
-## API 参考
-
-### RatingGroup (Root)
-
-| 属性          | 说明              | 类型                    | 默认值 |
-| :------------ | :---------------- | :---------------------- | :----- |
-| value         | 当前评分值 (受控) | number                  | -      |
-| defaultValue  | 默认评分值        | number                  | 0      |
-| onValueChange | 评分改变时的回调  | (value: number) => void | -      |
-| maxValue      | 最大评分值 (星数) | number                  | 5      |
-| allowHalf     | 是否允许半星评分  | boolean                 | false  |
-| disabled      | 是否禁用          | boolean                 | false  |
-| readOnly      | 是否只读          | boolean                 | false  |
-| name          | 表单字段名称      | string                  | -      |
-
-### RatingGroup.Item
-
-| 属性  | 说明           | 类型   | 默认值 |
-| :---- | :------------- | :----- | :----- |
-| value | 该项代表的分值 | number | -      |
-
----
-
-## 无障碍 (Accessibility)
-
--   **角色分配**：根元素自动标记为 `role="group"`，并根据上下文提供评分语义。
--   **状态同步**：自动管理 `aria-valuenow`、`aria-valuemax` 以及 `aria-disabled`。
--   **键盘支持**：
-    -   使用 `ArrowRight` / `ArrowUp` 增加评分。
-    -   使用 `ArrowLeft` / `ArrowDown` 减少评分。
-    -   使用 `Home` 键重置为 0，`End` 键设为最大值。
--   **视觉反馈**：通过 `data-highlighted` 属性实时反馈用户的悬停意图，确保交互的准确性。
+### 特性说明
+1. **自动高亮**：利用 Kobalte 内置的 `data-[highlighted]` 属性，结合 Tailwind 变体自动切换 `fill` 和 `color`。
+2. **键盘支持**：支持 `ArrowLeft` 和 `ArrowRight` 进行精准分值调节，符合 WAI-ARIA 标准。
+3. **隐身输入框**：内置 `HiddenInput`，可无缝配合原生 `<form>` 提交。

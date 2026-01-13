@@ -1,76 +1,48 @@
 import { Popover as KPopover } from "@kobalte/core/popover";
-import { splitProps, type ComponentProps } from "solid-js";
-import { popoverVariants } from "./setting";
-import { X } from "lucide-solid";
+import { splitProps, type ComponentProps, type JSX } from "solid-js";
+import { tv } from "tailwind-variants";
 
-const styles = popoverVariants();
-
-// --- 扁平化组件定义 ---
-
-export const PopoverRoot = KPopover;
-
-export const PopoverTrigger = KPopover.Trigger;
-
-export const PopoverContent = (
-    props: ComponentProps<typeof KPopover.Content>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KPopover.Portal>
-            <KPopover.Content
-                class={styles.content({ class: local.class })}
-                {...others}
-            >
-                {local.children}
-                <KPopover.CloseButton class={styles.close()}>
-                    <X class="h-4 w-4" />
-                    <span class="sr-only">Close</span>
-                </KPopover.CloseButton>
-            </KPopover.Content>
-        </KPopover.Portal>
-    );
-};
-
-export const PopoverTitle = (props: ComponentProps<typeof KPopover.Title>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KPopover.Title
-            class={styles.title({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-export const PopoverDescription = (
-    props: ComponentProps<typeof KPopover.Description>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KPopover.Description
-            class={styles.description({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-export const PopoverArrow = (props: ComponentProps<typeof KPopover.Arrow>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KPopover.Arrow
-            class={styles.arrow({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-// --- 聚合导出 (Namespace) ---
-
-export const Popover = Object.assign(PopoverRoot, {
-    Trigger: PopoverTrigger,
-    Content: PopoverContent,
-    Title: PopoverTitle,
-    Description: PopoverDescription,
-    Arrow: PopoverArrow,
-    Anchor: KPopover.Anchor,
-    Close: KPopover.CloseButton,
+const popoverStyles = tv({
+    slots: {
+        content: [
+            "z-50 w-72 rounded-md border bg-white p-4 shadow-md outline-none antialiased",
+            "dark:bg-slate-950 dark:border-slate-800 dark:text-slate-50",
+            "animate-in fade-in zoom-in-95 duration-200",
+        ],
+        arrow: "fill-white stroke-slate-200 dark:fill-slate-950 dark:stroke-slate-800",
+    },
 });
+
+const s = popoverStyles();
+
+export interface PopoverProps extends ComponentProps<typeof KPopover> {
+    trigger: JSX.Element;
+    showArrow?: boolean;
+}
+
+/**
+ * Popover 高度封装版
+ * 修复了 Kobalte 不支持 asChild 的问题，直接将 trigger 渲染为内容
+ */
+export const Popover = (props: PopoverProps) => {
+    const [local, others] = splitProps(props, [
+        "trigger",
+        "children",
+        "showArrow",
+    ]);
+
+    return (
+        <KPopover {...others}>
+            <KPopover.Trigger class="inline-flex">
+                {local.trigger}
+            </KPopover.Trigger>
+
+            <KPopover.Portal>
+                <KPopover.Content class={s.content()}>
+                    {local.showArrow && <KPopover.Arrow class={s.arrow()} />}
+                    {local.children}
+                </KPopover.Content>
+            </KPopover.Portal>
+        </KPopover>
+    );
+};

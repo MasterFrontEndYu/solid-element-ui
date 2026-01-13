@@ -1,111 +1,93 @@
 import { ContextMenu as KContextMenu } from "@kobalte/core/context-menu";
-import { splitProps, type ComponentProps } from "solid-js";
-import { contextMenuVariants } from "./setting";
-import { Check, ChevronRight, Circle } from "lucide-solid";
+import { splitProps, type ComponentProps, For, Show, JSX } from "solid-js";
+import { tv } from "tailwind-variants";
+import { ChevronRight } from "lucide-solid";
 
-const styles = contextMenuVariants();
-
-// --- 扁平化组件定义 ---
-
-export const ContextMenuContent = (
-    props: ComponentProps<typeof KContextMenu.Content>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KContextMenu.Portal>
-            <KContextMenu.Content
-                class={styles.content({ class: local.class })}
-                {...others}
-            />
-        </KContextMenu.Portal>
-    );
-};
-
-export const ContextMenuItem = (
-    props: ComponentProps<typeof KContextMenu.Item>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KContextMenu.Item
-            class={styles.item({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-export const ContextMenuSeparator = (
-    props: ComponentProps<typeof KContextMenu.Separator>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KContextMenu.Separator
-            class={styles.separator({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-export const ContextMenuCheckboxItem = (
-    props: ComponentProps<typeof KContextMenu.CheckboxItem>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KContextMenu.CheckboxItem
-            class={styles.item({ class: local.class })}
-            {...others}
-        >
-            <KContextMenu.ItemIndicator class={styles.itemIndicator()}>
-                <Check class="h-4 w-4" />
-            </KContextMenu.ItemIndicator>
-            {local.children}
-        </KContextMenu.CheckboxItem>
-    );
-};
-
-export const ContextMenuRadioItem = (
-    props: ComponentProps<typeof KContextMenu.RadioItem>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KContextMenu.RadioItem
-            class={styles.item({ class: local.class })}
-            {...others}
-        >
-            <KContextMenu.ItemIndicator class={styles.itemIndicator()}>
-                <Circle class="h-2 w-2 fill-current" />
-            </KContextMenu.ItemIndicator>
-            {local.children}
-        </KContextMenu.RadioItem>
-    );
-};
-
-export const ContextMenuSubTrigger = (
-    props: ComponentProps<typeof KContextMenu.SubTrigger>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KContextMenu.SubTrigger
-            class={styles.subTrigger({ class: local.class })}
-            {...others}
-        >
-            {local.children}
-            <ChevronRight class={styles.subTriggerIcon()} />
-        </KContextMenu.SubTrigger>
-    );
-};
-
-// --- 聚合导出 (Namespace) ---
-
-export const ContextMenu = Object.assign(KContextMenu, {
-    Content: ContextMenuContent,
-    Item: ContextMenuItem,
-    Separator: ContextMenuSeparator,
-    CheckboxItem: ContextMenuCheckboxItem,
-    RadioItem: ContextMenuRadioItem,
-    SubTrigger: ContextMenuSubTrigger,
-    // 直接引用原生的
-    Trigger: KContextMenu.Trigger,
-    Group: KContextMenu.Group,
-    Sub: KContextMenu.Sub,
-    SubContent: ContextMenuContent, // SubContent 样式通常与 Content 一致
+const menuStyles = tv({
+    slots: {
+        content:
+            "z-50 min-w-[10rem] overflow-hidden rounded-md border border-zinc-200 bg-white p-1 text-zinc-950 shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50",
+        item: "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-50",
+        separator: "-mx-1 my-1 h-px bg-zinc-100 dark:bg-zinc-800",
+        subIcon: "ml-auto h-4 w-4",
+    },
 });
+
+const { content, item, separator, subIcon } = menuStyles();
+
+// 定义配置项类型
+export type ContextMenuItemConfig = {
+    label: string;
+    onClick?: () => void;
+    disabled?: boolean;
+    separator?: boolean;
+    children?: ContextMenuItemConfig[]; // 支持嵌套子菜单
+};
+
+interface UnifiedContextMenuProps {
+    items: ContextMenuItemConfig[];
+    children: JSX.Element; // 触发区域
+    class?: string;
+}
+
+// 递归渲染函数
+const RenderMenuItems = (props: { items: ContextMenuItemConfig[] }) => {
+    return (
+        <For each={props.items}>
+            {(itemConfig) => (
+                <Show
+                    when={!itemConfig.separator}
+                    fallback={<KContextMenu.Separator class={separator()} />}
+                >
+                    <Show
+                        when={
+                            itemConfig.children &&
+                            itemConfig.children.length > 0
+                        }
+                        fallback={
+                            <KContextMenu.Item
+                                class={item()}
+                                disabled={itemConfig.disabled}
+                                onSelect={() => itemConfig.onClick?.()}
+                            >
+                                {itemConfig.label}
+                            </KContextMenu.Item>
+                        }
+                    >
+                        {/* 渲染子菜单 */}
+                        <KContextMenu.Sub>
+                            <KContextMenu.SubTrigger class={item()}>
+                                {itemConfig.label}
+                                <ChevronRight class={subIcon()} />
+                            </KContextMenu.SubTrigger>
+                            <KContextMenu.Portal>
+                                <KContextMenu.SubContent class={content()}>
+                                    <RenderMenuItems
+                                        items={itemConfig.children!}
+                                    />
+                                </KContextMenu.SubContent>
+                            </KContextMenu.Portal>
+                        </KContextMenu.Sub>
+                    </Show>
+                </Show>
+            )}
+        </For>
+    );
+};
+
+export const ContextMenu = (props: UnifiedContextMenuProps) => {
+    const [local] = splitProps(props, ["items", "children", "class"]);
+
+    return (
+        <KContextMenu>
+            <KContextMenu.Trigger class={local.class}>
+                {local.children}
+            </KContextMenu.Trigger>
+            <KContextMenu.Portal>
+                <KContextMenu.Content class={content()}>
+                    <RenderMenuItems items={local.items} />
+                </KContextMenu.Content>
+            </KContextMenu.Portal>
+        </KContextMenu>
+    );
+};

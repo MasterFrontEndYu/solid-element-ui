@@ -1,27 +1,68 @@
 import { Skeleton as KSkeleton } from "@kobalte/core/skeleton";
 import { splitProps, type ComponentProps } from "solid-js";
-import { skeletonVariants } from "./setting";
+import { tv, type VariantProps } from "tailwind-variants";
 
-const styles = skeletonVariants();
+const skeletonStyles = tv({
+    base: "bg-slate-200 dark:bg-slate-800",
+    variants: {
+        variant: {
+            rect: "rounded-md",
+            circle: "rounded-full",
+            text: "rounded h-3 w-full",
+        },
+        animation: {
+            pulse: "animate-pulse",
+            wave: "relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[wave_2s_linear_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent",
+            none: "",
+        },
+    },
+    defaultVariants: {
+        variant: "rect",
+        animation: "pulse",
+    },
+});
 
-// --- 扁平化组件定义 ---
+type SkeletonVariants = VariantProps<typeof skeletonStyles>;
 
-export const Skeleton = (props: ComponentProps<typeof KSkeleton>) => {
-    const [local, others] = splitProps(props, ["class", "radius"]);
+// 核心修正：使用 Omit 排除掉冲突的 width 和 height
+export interface SkeletonProps
+    extends Omit<
+            ComponentProps<typeof KSkeleton>,
+            "class" | "width" | "height"
+        >,
+        SkeletonVariants {
+    width?: string | number;
+    height?: string | number;
+    class?: string;
+}
+
+export const Skeleton = (props: SkeletonProps) => {
+    // 显式提取这些属性，避免传给 KSkeleton 引起类型或运行时错误
+    const [local, variantProps, others] = splitProps(
+        props,
+        ["class", "width", "height", "style"],
+        ["variant", "animation"]
+    );
+
+    const mergedStyle = () => ({
+        width:
+            typeof local.width === "number" ? `${local.width}px` : local.width,
+        height:
+            typeof local.height === "number"
+                ? `${local.height}px`
+                : local.height,
+        ...(typeof local.style === "object" ? local.style : {}),
+    });
 
     return (
         <KSkeleton
-            class={styles.root({
+            class={skeletonStyles({
+                variant: variantProps.variant,
+                animation: variantProps.animation,
                 class: local.class,
-                // 如果你需要通过 props 动态控制样式，可以在这里映射
             })}
+            style={mergedStyle()}
             {...others}
         />
     );
 };
-
-// --- 聚合导出 (Namespace) ---
-
-export const SkeletonRoot = Object.assign(Skeleton, {
-    // Kobalte 的 Skeleton 结构非常简单，通常直接使用 Root
-});

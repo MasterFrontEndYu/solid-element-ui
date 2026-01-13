@@ -1,48 +1,60 @@
 import { Tooltip as KTooltip } from "@kobalte/core/tooltip";
-import { splitProps, type ComponentProps } from "solid-js";
-import { tooltipVariants } from "./setting";
+import { splitProps, type JSX, type ComponentProps, Show } from "solid-js";
+import { tv, type VariantProps } from "tailwind-variants";
 
-const styles = tooltipVariants();
-
-// --- 扁平化组件定义 ---
-
-export const TooltipRoot = (props: ComponentProps<typeof KTooltip>) => {
-    // 默认延迟 700ms 开启，符合大多数 OS 规范
-    return <KTooltip openDelay={700} closeDelay={300} {...props} />;
-};
-
-export const TooltipTrigger = KTooltip.Trigger;
-
-export const TooltipContent = (
-    props: ComponentProps<typeof KTooltip.Content>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KTooltip.Portal>
-            <KTooltip.Content
-                class={styles.content({ class: local.class })}
-                {...others}
-            >
-                {local.children}
-            </KTooltip.Content>
-        </KTooltip.Portal>
-    );
-};
-
-export const TooltipArrow = (props: ComponentProps<typeof KTooltip.Arrow>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KTooltip.Arrow
-            class={styles.arrow({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-// --- 聚合导出 (Namespace) ---
-
-export const Tooltip = Object.assign(TooltipRoot, {
-    Trigger: TooltipTrigger,
-    Content: TooltipContent,
-    Arrow: TooltipArrow,
+const tooltipStyles = tv({
+    slots: {
+        content: [
+            "z-50 overflow-hidden rounded-md bg-slate-900 px-3 py-1.5 text-xs text-slate-50 shadow-md animate-in fade-in-0 zoom-in-95",
+            "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
+            "dark:bg-slate-50 dark:text-slate-900",
+        ],
+        arrow: "text-slate-900 dark:text-slate-50",
+    },
+    variants: {
+        variant: {
+            default: { content: "bg-slate-900 dark:bg-slate-50" },
+            danger: { content: "bg-red-600 text-white dark:bg-red-500" },
+        },
+    },
+    defaultVariants: {
+        variant: "default",
+    },
 });
+
+type TooltipVariants = VariantProps<typeof tooltipStyles>;
+
+export interface TooltipProps
+    extends Omit<ComponentProps<typeof KTooltip>, "class">,
+        TooltipVariants {
+    content: JSX.Element;
+    children: JSX.Element;
+    showArrow?: boolean;
+}
+
+export const Tooltip = (props: TooltipProps) => {
+    const [local, variantProps, others] = splitProps(
+        props,
+        ["children", "content", "showArrow"],
+        ["variant"]
+    );
+
+    const styles = tooltipStyles(variantProps);
+
+    return (
+        <KTooltip {...others}>
+            <KTooltip.Trigger class="inline-block">
+                {local.children}
+            </KTooltip.Trigger>
+
+            <KTooltip.Portal>
+                <KTooltip.Content class={styles.content()}>
+                    <Show when={local.showArrow}>
+                        <KTooltip.Arrow class={styles.arrow()} />
+                    </Show>
+                    {local.content}
+                </KTooltip.Content>
+            </KTooltip.Portal>
+        </KTooltip>
+    );
+};

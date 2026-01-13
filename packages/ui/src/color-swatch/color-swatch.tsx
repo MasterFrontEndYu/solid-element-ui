@@ -1,19 +1,23 @@
 import { ColorSwatch as KColorSwatch } from "@kobalte/core/color-swatch";
 import { splitProps, type ComponentProps } from "solid-js";
-import { colorSwatchVariants } from "./setting";
+import { tv } from "tailwind-variants";
 
-// --- 扁平化组件定义 ---
+const colorSwatchStyles = tv({
+    base: [
+        "h-8 w-8 rounded-md border border-black/10 shadow-sm transition-transform",
+        "hover:scale-105 select-none dark:border-white/20",
+    ],
+});
 
-export const ColorSwatch = (props: ComponentProps<typeof KColorSwatch>) => {
-    const [local, others] = splitProps(props, ["class"]);
+export interface ColorSwatchProps extends ComponentProps<typeof KColorSwatch> {}
+
+export const ColorSwatch = (props: ColorSwatchProps) => {
+    const [local, others] = splitProps(props, ["class", "style"]);
+
     return (
         <KColorSwatch
-            class={colorSwatchVariants({ class: local.class })}
+            class={colorSwatchStyles({ class: local.class })}
             {...others}
         />
     );
 };
-
-// --- 聚合导出 ---
-
-export const ColorSwatchRoot = ColorSwatch;

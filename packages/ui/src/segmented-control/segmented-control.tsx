@@ -1,51 +1,82 @@
-import { Tabs as KTabs } from "@kobalte/core/tabs";
-import { splitProps, type ComponentProps } from "solid-js";
-import { segmentedVariants } from "./setting";
+import { SegmentedControl as KSegmented } from "@kobalte/core/segmented-control";
+import { splitProps, For, type ComponentProps } from "solid-js";
+import { tv, type VariantProps } from "tailwind-variants";
 
-const styles = segmentedVariants();
-
-// --- 扁平化组件定义 ---
-
-export const SegmentedRoot = (props: ComponentProps<typeof KTabs>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return <KTabs class={styles.root({ class: local.class })} {...others} />;
-};
-
-export const SegmentedList = (props: ComponentProps<typeof KTabs.List>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KTabs.List class={styles.list({ class: local.class })} {...others} />
-    );
-};
-
-export const SegmentedTrigger = (
-    props: ComponentProps<typeof KTabs.Trigger>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KTabs.Trigger
-            class={styles.trigger({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-export const SegmentedContent = (
-    props: ComponentProps<typeof KTabs.Content>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KTabs.Content
-            class={styles.content({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-// --- 聚合导出 (Namespace) ---
-
-export const SegmentedControl = Object.assign(SegmentedRoot, {
-    List: SegmentedList,
-    Trigger: SegmentedTrigger,
-    Content: SegmentedContent,
+const segmentedStyles = tv({
+    slots: {
+        root: "relative flex items-center w-full rounded-lg bg-slate-100 p-1 text-slate-500 dark:bg-slate-800 dark:text-slate-400",
+        item: [
+            "relative z-10 inline-flex flex-1 items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-all cursor-pointer",
+            "outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2",
+            "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+            "data-[checked]:text-slate-950 dark:data-[checked]:text-slate-50 transition-colors duration-200",
+        ],
+        indicator:
+            "absolute z-0 bg-white shadow-sm rounded-md transition-all duration-200 ease-in-out dark:bg-slate-950",
+        label: "mb-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+    },
+    variants: {
+        size: {
+            sm: { root: "p-0.5", item: "px-2 py-1 text-xs" },
+            md: { root: "p-1", item: "px-3 py-1.5 text-sm" },
+            lg: { root: "p-1.5", item: "px-6 py-2 text-base" },
+        },
+    },
+    defaultVariants: {
+        size: "md",
+    },
 });
+
+type SegmentedVariants = VariantProps<typeof segmentedStyles>;
+
+interface Option {
+    label: string;
+    value: string;
+    disabled?: boolean;
+}
+
+export interface SegmentedControlProps
+    extends Omit<ComponentProps<typeof KSegmented>, "class">,
+        SegmentedVariants {
+    options: Option[];
+    label?: string;
+    class?: string;
+}
+
+export const SegmentedControl = (props: SegmentedControlProps) => {
+    const [local, variantProps, others] = splitProps(
+        props,
+        ["options", "class", "label"],
+        ["size"]
+    );
+
+    const styles = segmentedStyles(variantProps);
+
+    return (
+        <div class="flex flex-col w-full">
+            {local.label && (
+                <KSegmented.Label class={styles.label()}>
+                    {local.label}
+                </KSegmented.Label>
+            )}
+
+            <KSegmented class={styles.root({ class: local.class })} {...others}>
+                <For each={local.options}>
+                    {(option) => (
+                        <KSegmented.Item
+                            value={option.value}
+                            disabled={option.disabled}
+                            class={styles.item()}
+                        >
+                            <KSegmented.ItemInput />
+                            <KSegmented.ItemLabel>
+                                {option.label}
+                            </KSegmented.ItemLabel>
+                        </KSegmented.Item>
+                    )}
+                </For>
+                <KSegmented.Indicator class={styles.indicator()} />
+            </KSegmented>
+        </div>
+    );
+};

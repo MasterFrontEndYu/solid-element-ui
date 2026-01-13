@@ -1,111 +1,102 @@
 import { DropdownMenu as KDropdownMenu } from "@kobalte/core/dropdown-menu";
-import { splitProps, type ComponentProps } from "solid-js";
-import { dropdownMenuVariants } from "./setting";
-import { Check, ChevronRight, Circle } from "lucide-solid";
+import { splitProps, type JSX, For, Show } from "solid-js";
+import { tv } from "tailwind-variants";
+import { ChevronRight } from "lucide-solid";
 
-const styles = dropdownMenuVariants();
-
-// --- 扁平化组件定义 ---
-
-export const DropdownMenuContent = (
-    props: ComponentProps<typeof KDropdownMenu.Content>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KDropdownMenu.Portal>
-            <KDropdownMenu.Content
-                class={styles.content({ class: local.class })}
-                {...others}
-            />
-        </KDropdownMenu.Portal>
-    );
-};
-
-export const DropdownMenuItem = (
-    props: ComponentProps<typeof KDropdownMenu.Item>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KDropdownMenu.Item
-            class={styles.item({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-export const DropdownMenuSeparator = (
-    props: ComponentProps<typeof KDropdownMenu.Separator>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KDropdownMenu.Separator
-            class={styles.separator({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-export const DropdownMenuCheckboxItem = (
-    props: ComponentProps<typeof KDropdownMenu.CheckboxItem>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KDropdownMenu.CheckboxItem
-            class={styles.item({ class: local.class })}
-            {...others}
-        >
-            <KDropdownMenu.ItemIndicator class={styles.itemIndicator()}>
-                <Check class="h-4 w-4" />
-            </KDropdownMenu.ItemIndicator>
-            {local.children}
-        </KDropdownMenu.CheckboxItem>
-    );
-};
-
-export const DropdownMenuRadioItem = (
-    props: ComponentProps<typeof KDropdownMenu.RadioItem>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KDropdownMenu.RadioItem
-            class={styles.item({ class: local.class })}
-            {...others}
-        >
-            <KDropdownMenu.ItemIndicator class={styles.itemIndicator()}>
-                <Circle class="h-2 w-2 fill-current" />
-            </KDropdownMenu.ItemIndicator>
-            {local.children}
-        </KDropdownMenu.RadioItem>
-    );
-};
-
-export const DropdownMenuSubTrigger = (
-    props: ComponentProps<typeof KDropdownMenu.SubTrigger>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KDropdownMenu.SubTrigger
-            class={styles.subTrigger({ class: local.class })}
-            {...others}
-        >
-            {local.children}
-            <ChevronRight class={styles.subTriggerIcon()} />
-        </KDropdownMenu.SubTrigger>
-    );
-};
-
-// --- 聚合导出 (Namespace) ---
-
-export const DropdownMenu = Object.assign(KDropdownMenu, {
-    Content: DropdownMenuContent,
-    Item: DropdownMenuItem,
-    Separator: DropdownMenuSeparator,
-    CheckboxItem: DropdownMenuCheckboxItem,
-    RadioItem: DropdownMenuRadioItem,
-    SubTrigger: DropdownMenuSubTrigger,
-    // 直接引用原生组件
-    Trigger: KDropdownMenu.Trigger,
-    Group: KDropdownMenu.Group,
-    Sub: KDropdownMenu.Sub,
-    SubContent: DropdownMenuContent,
+const menuStyles = tv({
+    slots: {
+        content:
+            "z-50 min-w-[8rem] overflow-hidden rounded-md border border-zinc-200 bg-white p-1 text-zinc-950 shadow-md animate-in fade-in-0 zoom-in-95 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50",
+        item: "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-50",
+        separator: "-mx-1 my-1 h-px bg-zinc-100 dark:bg-zinc-800",
+        subIcon: "ml-auto h-4 w-4",
+    },
 });
+
+const { content, item, separator, subIcon } = menuStyles();
+
+// 定义菜单项配置类型
+export type DropdownItemConfig = {
+    label: string;
+    onClick?: () => void;
+    disabled?: boolean;
+    separator?: boolean; // 是否作为分隔线
+    children?: DropdownItemConfig[]; // 子菜单
+};
+
+interface DropdownMenuProps {
+    trigger: JSX.Element;
+    items: DropdownItemConfig[];
+    placement?:
+        | "bottom"
+        | "bottom-start"
+        | "bottom-end"
+        | "top"
+        | "left"
+        | "right";
+    class?: string;
+}
+
+// 递归渲染函数：处理无限级嵌套
+const RenderMenuItems = (props: { items: DropdownItemConfig[] }) => {
+    return (
+        <For each={props.items}>
+            {(config) => (
+                <Show
+                    when={!config.separator}
+                    fallback={<KDropdownMenu.Separator class={separator()} />}
+                >
+                    <Show
+                        when={config.children && config.children.length > 0}
+                        fallback={
+                            <KDropdownMenu.Item
+                                class={item()}
+                                disabled={config.disabled}
+                                onSelect={() => config.onClick?.()}
+                            >
+                                {config.label}
+                            </KDropdownMenu.Item>
+                        }
+                    >
+                        {/* 子菜单渲染逻辑 */}
+                        <KDropdownMenu.Sub>
+                            <KDropdownMenu.SubTrigger class={item()}>
+                                {config.label}
+                                <ChevronRight class={subIcon()} />
+                            </KDropdownMenu.SubTrigger>
+                            <KDropdownMenu.Portal>
+                                <KDropdownMenu.SubContent class={content()}>
+                                    <RenderMenuItems items={config.children!} />
+                                </KDropdownMenu.SubContent>
+                            </KDropdownMenu.Portal>
+                        </KDropdownMenu.Sub>
+                    </Show>
+                </Show>
+            )}
+        </For>
+    );
+};
+
+export const DropdownMenu = (props: DropdownMenuProps) => {
+    const [local] = splitProps(props, [
+        "trigger",
+        "items",
+        "placement",
+        "class",
+    ]);
+
+    return (
+        <KDropdownMenu placement={local.placement ?? "bottom-start"}>
+            <KDropdownMenu.Trigger as="div" class="inline-block cursor-pointer">
+                {local.trigger}
+            </KDropdownMenu.Trigger>
+
+            <KDropdownMenu.Portal>
+                <KDropdownMenu.Content class={content({ class: local.class })}>
+                    <RenderMenuItems items={local.items} />
+                </KDropdownMenu.Content>
+            </KDropdownMenu.Portal>
+        </KDropdownMenu>
+    );
+};
+    

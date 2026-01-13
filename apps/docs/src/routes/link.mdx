@@ -1,50 +1,46 @@
-# Link 链接
+## Link 链接
 
-用于在不同页面之间导航或跳转到外部资源的交互组件。基于 Kobalte 的 Link 核心构建，支持多态渲染和增强的无障碍语义。
+基于 Kobalte Link 封装，用于页面导航或外链跳转，支持按钮样式和可访问性优化。
 
-## 引入
-
+### 导入
+```tsx
 import { Link } from "solid-element-ui";
+```
 
-## 代码演示
+### 使用示例
 
-### 1. 基础用法
+```tsx
+<div class="flex flex-col gap-2">
+  {/* 默认链接 */}
+  <Link href="[https://github.com](https://github.com)" external>
+    GitHub 官网
+  </Link>
 
-默认渲染为具有链接样式的锚点元素。
+  {/* 品牌颜色变体 */}
+  <Link href="/docs" variant="primary">
+    查看文档
+  </Link>
 
-<Link href="https://solidjs.com" target="_blank">
-    访问 SolidJS 官网
-</Link>
+  {/* 模拟按钮样式 */}
+  <Link href="/login" variant="button" radius="md">
+    立即登录
+  </Link>
+</div>
+```
 
-### 2. 禁用状态
+### API 参考
 
-禁用后的链接将无法点击，并自动从 Tab 键导航流中移除。
+| 属性 | 类型 | 默认值 | 说明 |
+| :--- | :--- | :--- | :--- |
+| **href** | `string` | - | 跳转地址。 |
+| **variant** | `'default' \| 'primary' \| 'muted' \| 'button'` | `'default'` | 视觉变体样式。 |
+| **underline** | `'always' \| 'hover' \| 'none'` | `'hover'` | 下划线的显示策略。 |
+| **external** | `boolean` | `false` | 是否为外部链接（自动添加 target="_blank" 和 rel）。 |
+| **disabled** | `boolean` | `false` | 是否禁用链接。 |
 
-<Link href="/dashboard" disabled class="text-zinc-400">
-    个人中心 (暂未开放)
-</Link>
+---
 
-### 3. 多态渲染 (As)
-
-结合前端路由库（如 `@solidjs/router`）使用，保持 UI 样式的一致性。
-
-<Link  href="/about" class="font-medium text-blue-600">
-    关于我们
-</Link>
-
-## API 参考
-
-### Link
-
-| 属性     | 说明                 | 类型           | 默认值 |
-| :------- | :------------------- | :------------- | :----- |
-| href     | 跳转地址             | string         | -      |
-| disabled | 是否禁用             | boolean        | false  |
-| as       | 底层渲染的元素或组件 | ValidComponent | 'a'    |
-| class    | 自定义样式类名       | string         | -      |
-
-## 无障碍 (Accessibility)
-
--   语义化: 默认使用 `<a>` 标签。当使用 `disabled` 属性时，组件会移除 `href` 并添加 `aria-disabled="true"` 以确保辅助技术能正确识别。
--   键盘导航: 支持通过 `Tab` 键聚焦，并按 `Enter` 键激活。
--   安全性: 对于外部链接，建议手动添加 `rel="noreferrer noopener"`，组件会自动传递这些原生属性。
+### 技术亮点
+- **语义化**：当不提供 `href` 时，Kobalte 会自动将其映射为正确的 `div` 或 `span` 结构，避免非法 HTML 嵌套。
+- **安全外链**：开启 `external` 属性后，自动注入 `rel="noopener noreferrer"` 以防范安全漏洞。
+- **Focus 管理**：统一了 `focus-visible` 的环绕样式，符合 WCAG 2.1 标准。

@@ -1,54 +1,42 @@
 import { Checkbox as KCheckbox } from "@kobalte/core/checkbox";
-import { splitProps, type ComponentProps } from "solid-js";
-import { checkboxVariants } from "./setting";
+import { splitProps, type ComponentProps, type JSX } from "solid-js";
+import { tv, type VariantProps } from "tailwind-variants";
 import { Check } from "lucide-solid";
 
-const styles = checkboxVariants();
-
-// --- 扁平化组件定义 ---
-
-export const CheckboxRoot = (props: ComponentProps<typeof KCheckbox>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KCheckbox class={styles.root({ class: local.class })} {...others} />
-    );
-};
-
-export const CheckboxControl = (
-    props: ComponentProps<typeof KCheckbox.Control>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KCheckbox.Control
-            class={styles.control({ class: local.class })}
-            {...others}
-        >
-            <KCheckbox.Indicator class={styles.indicator()}>
-                {local.children ?? <Check class="h-3.5 w-3.5" />}
-            </KCheckbox.Indicator>
-        </KCheckbox.Control>
-    );
-};
-
-export const CheckboxLabel = (
-    props: ComponentProps<typeof KCheckbox.Label>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KCheckbox.Label
-            class={styles.label({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-// --- 聚合导出 (Namespace) ---
-
-export const Checkbox = Object.assign(CheckboxRoot, {
-    Control: CheckboxControl,
-    Label: CheckboxLabel,
-    Indicator: KCheckbox.Indicator,
-    Input: KCheckbox.Input,
-    Description: KCheckbox.Description,
-    ErrorMessage: KCheckbox.ErrorMessage,
+const checkboxStyles = tv({
+    slots: {
+        root: "group flex items-center gap-2 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
+        control: [
+            "flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border border-zinc-300 transition-all",
+            "group-focus-visible:outline-none group-focus-visible:ring-2 group-focus-visible:ring-zinc-950",
+            "data-[checked]:bg-zinc-900 data-[checked]:border-zinc-900 data-[checked]:text-zinc-50",
+            "dark:border-zinc-700 dark:data-[checked]:bg-zinc-50 dark:data-[checked]:text-zinc-900 dark:group-focus-visible:ring-zinc-300",
+        ],
+        label: "text-sm font-medium leading-none select-none",
+        indicator: "h-3.5 w-3.5",
+    },
 });
+
+const { root, control, label, indicator } = checkboxStyles();
+
+export interface CheckboxProps extends ComponentProps<typeof KCheckbox> {
+    label?: JSX.Element;
+}
+
+export const Checkbox = (props: CheckboxProps) => {
+    const [local, others] = splitProps(props, ["label", "class"]);
+
+    return (
+        <KCheckbox class={root({ class: local.class })} {...others}>
+            <KCheckbox.Input />
+            <KCheckbox.Control class={control()}>
+                <KCheckbox.Indicator class={indicator()}>
+                    <Check stroke-width={3} />
+                </KCheckbox.Indicator>
+            </KCheckbox.Control>
+            {local.label && (
+                <KCheckbox.Label class={label()}>{local.label}</KCheckbox.Label>
+            )}
+        </KCheckbox>
+    );
+};

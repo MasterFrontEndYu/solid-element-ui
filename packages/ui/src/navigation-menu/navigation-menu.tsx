@@ -1,72 +1,82 @@
 import { NavigationMenu as KNavigationMenu } from "@kobalte/core/navigation-menu";
-import { splitProps, type ComponentProps } from "solid-js";
-import { navigationMenuVariants } from "./setting";
-import { ChevronDown } from "lucide-solid";
+import { splitProps, type ComponentProps, type JSX, For, Show } from "solid-js";
+import { tv } from "tailwind-variants";
 
-const styles = navigationMenuVariants();
+const navStyles = tv({
+    slots: {
+        root: "relative z-10 flex w-full justify-center antialiased",
+        // Kobalte NavigationMenu 本身就是 ul 结构，不需要多余的 List
+        trigger: [
+            "group inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all",
+            "hover:bg-slate-100 hover:text-slate-900 data-[state=open]:bg-slate-100/50",
+            "dark:hover:bg-slate-800 dark:hover:text-slate-50",
+        ],
+        content:
+            "absolute left-0 top-0 w-full p-2 animate-in fade-in zoom-in-95 duration-200",
+        viewport:
+            "relative mt-1.5 h-(--kb-navigation-menu-viewport-height) w-(--kb-navigation-menu-viewport-width) origin-[top_center] overflow-hidden rounded-md border bg-white shadow-xl dark:bg-slate-950 dark:border-slate-800 transition-[width,height] duration-300",
+    },
+});
 
-// --- 扁平化组件定义 ---
+const s = navStyles();
 
-export const NavigationMenuRoot = (
-    props: ComponentProps<typeof KNavigationMenu>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
+interface NavItem {
+    title: string;
+    href?: string;
+    content?: JSX.Element;
+}
+
+export interface NavigationMenuProps
+    extends ComponentProps<typeof KNavigationMenu> {
+    items: NavItem[];
+}
+
+export const NavigationMenu = (props: NavigationMenuProps) => {
+    const [local, others] = splitProps(props, ["items", "class"]);
+
     return (
-        <KNavigationMenu
-            class={styles.root({ class: local.class })}
-            {...others}
-        >
-            {local.children}
-            {/* Viewport 承载弹出内容 */}
-            <KNavigationMenu.Viewport class={styles.viewport()} />
+        <KNavigationMenu class={s.root({ class: local.class })} {...others}>
+            <For each={local.items}>
+                {(item) => (
+                    <KNavigationMenu.Menu>
+                        <Show
+                            when={item.content}
+                            fallback={
+                                <KNavigationMenu.Trigger
+                                    as="a"
+                                    href={item.href}
+                                    class={s.trigger()}
+                                >
+                                    {item.title}
+                                </KNavigationMenu.Trigger>
+                            }
+                        >
+                            <KNavigationMenu.Trigger class={s.trigger()}>
+                                {item.title}
+                                <svg
+                                    class="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 9l-7 7-7-7"
+                                    />
+                                </svg>
+                            </KNavigationMenu.Trigger>
+                            <KNavigationMenu.Portal>
+                                <KNavigationMenu.Content class={s.content()}>
+                                    {item.content}
+                                </KNavigationMenu.Content>
+                            </KNavigationMenu.Portal>
+                        </Show>
+                    </KNavigationMenu.Menu>
+                )}
+            </For>
+            <KNavigationMenu.Viewport class={s.viewport()} />
         </KNavigationMenu>
     );
 };
-
-// 修正：KNavigationMenu 下没有 List，直接使用其子组件 Menu 相关的逻辑
-// 在 Kobalte 中，NavigationMenu 根组件本身就充当了容器
-export const NavigationMenuMenu = KNavigationMenu.Menu;
-
-export const NavigationMenuTrigger = (
-    props: ComponentProps<typeof KNavigationMenu.Trigger>
-) => {
-    const [local, others] = splitProps(props, ["class", "children"]);
-    return (
-        <KNavigationMenu.Trigger
-            class={styles.trigger({ class: local.class })}
-            {...others}
-        >
-            {local.children}
-            <ChevronDown class={styles.triggerIcon()} aria-hidden="true" />
-        </KNavigationMenu.Trigger>
-    );
-};
-
-export const NavigationMenuContent = (
-    props: ComponentProps<typeof KNavigationMenu.Content>
-) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return (
-        <KNavigationMenu.Content
-            class={styles.content({ class: local.class })}
-            {...others}
-        />
-    );
-};
-
-// 修正：Kobalte NavigationMenu 中通常直接使用原生 <a> 或 Link 组件
-// 如果需要特定样式，我们直接封装一个样式化的项
-export const NavigationMenuItem = KNavigationMenu.Item;
-
-// --- 聚合导出 (Namespace) ---
-
-export const NavigationMenu = Object.assign(NavigationMenuRoot, {
-    Item: NavigationMenuItem,
-    Menu: NavigationMenuMenu,
-    Trigger: NavigationMenuTrigger,
-    Content: NavigationMenuContent,
-    // 修正：透传 Portal 和其他核心组件
-    Portal: KNavigationMenu.Portal,
-    Viewport: KNavigationMenu.Viewport,
-    Sub: KNavigationMenu.Sub,
-});

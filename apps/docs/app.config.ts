@@ -14,7 +14,7 @@ export default defineConfig({
     extensions: ["mdx", "md"],
     vite: {
         plugins: [
-            mdx.withImports({})({
+            mdx.withImports({
                 jsx: true,
                 jsxImportSource: "solid-js",
                 providerImportSource: "solid-mdx",

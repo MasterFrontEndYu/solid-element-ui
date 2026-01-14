@@ -74,7 +74,7 @@ export const AlertDialog = (props: AlertDialogProps) => {
                             </KAlertDialog.CloseButton>
 
                             <div
-                                onClick={(e) => {
+                                onClick={() => {
                                     // 如果是确认操作，用户通常会传入 onClick，这里保持原样
                                 }}
                             >

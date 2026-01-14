@@ -1,5 +1,5 @@
 import { ContextMenu as KContextMenu } from "@kobalte/core/context-menu";
-import { splitProps, type ComponentProps, For, Show, JSX } from "solid-js";
+import { splitProps, For, Show, JSX } from "solid-js";
 import { tv } from "tailwind-variants";
 import { ChevronRight } from "lucide-solid";
 

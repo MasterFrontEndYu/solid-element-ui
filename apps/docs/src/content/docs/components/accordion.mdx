@@ -7,9 +7,11 @@ description: A reference page in my new Starlight docs site.
 
 基于 **Kobalte** 与 **Tailwind Variants** 构建的高性能配置式组件。
 
-import Counter from "../../../components/Counter";
+import { Accordion } from "solid-element-ui";
+import {AccordionItems} from "../../../components/data";
 
-<Counter client:load />
+
+<Accordion client:load items={AccordionItems} />
 
 ## 导入
 

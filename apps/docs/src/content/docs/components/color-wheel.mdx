@@ -3,10 +3,19 @@ title: color-wheel
 description: A reference page in my new Starlight docs site.
 ---
 
+import { ColorWheel } from "solid-element-ui";
+
+<div class="flex justify-center p-8 border rounded-xl bg-white dark:bg-zinc-950">
+  <ColorWheel 
+    size={200} 
+    thickness={20} 
+    defaultValue="hsl(200, 100%, 50%)" 
+  />
+</div>
+
 ## Color Wheel 色轮
 
 圆环形色相选择器。采用标准的 HSL 模式进行色相调整，支持全方位的交互体验。
-
 
 
 ### 导入

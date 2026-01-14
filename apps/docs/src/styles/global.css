@@ -1,3 +1,19 @@
 @import "tailwindcss";
 
 @source "../../node_modules/solid-element-ui/src/**/*.tsx";
+
+@theme {
+    /* 定义关键帧 */
+    @keyframes accordion-down {
+        from { height: 0; }
+        to { height: var(--kb-accordion-content-height); }
+    }
+    @keyframes accordion-up {
+        from { height: var(--kb-accordion-content-height); }
+        to { height: 0; }
+    }
+
+    /* 注册为 Tailwind 动画变量 */
+    --animate-accordion-down: accordion-down 0.2s ease-out;
+    --animate-accordion-up: accordion-up 0.2s ease-out;
+}

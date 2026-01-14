@@ -2,12 +2,26 @@
 title: combobox
 description: A reference page in my new Starlight docs site.
 ---
+import { Combobox ,ComboboxItem} from "solid-element-ui";
+
+<Combobox 
+  options={["Apple", "Banana", "Orange"]} 
+  placeholder="Search fruits..."
+  itemComponent={(props) => <ComboboxItem item={props.item} />}
+/>
+
+
+
 
 ## Combobox 组合框
 
 支持过滤和自定义选择逻辑的智能输入框。
 
+## 导入
 
+```tsx
+import { Combobox ,ComboboxItem} from "solid-element-ui";
+```
 
 ### 使用示例
 

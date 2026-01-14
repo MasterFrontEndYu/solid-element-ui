@@ -1,5 +1,5 @@
 import { Combobox as KCombobox } from "@kobalte/core/combobox";
-import { splitProps, type ComponentProps, type JSX } from "solid-js";
+import { splitProps, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 import { Check, ChevronDown } from "lucide-solid";
 

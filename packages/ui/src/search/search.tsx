@@ -1,5 +1,5 @@
 import { TextField as KSearch } from "@kobalte/core/text-field";
-import { splitProps, type JSX, type ComponentProps, Show } from "solid-js";
+import { splitProps, type ComponentProps, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { Search as SearchIcon, XCircle } from "lucide-solid";
 

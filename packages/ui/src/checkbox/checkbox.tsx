@@ -1,6 +1,6 @@
 import { Checkbox as KCheckbox } from "@kobalte/core/checkbox";
 import { splitProps, type ComponentProps, type JSX } from "solid-js";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 import { Check } from "lucide-solid";
 
 const checkboxStyles = tv({

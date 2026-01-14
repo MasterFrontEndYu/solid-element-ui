@@ -53,7 +53,10 @@ export const Meter = Object.assign(
         ValueLabel: (props: ComponentProps<typeof KMeter.ValueLabel>) => {
             const [local, others] = splitProps(props, ["class"]);
             return (
-                <KMeter.ValueLabel class="text-xs text-slate-500" {...others} />
+                <KMeter.ValueLabel
+                    class={`text-xs text-slate-500 ${local.class}`}
+                    {...others}
+                />
             );
         },
         Track: (props: ComponentProps<typeof KMeter.Track>) => {

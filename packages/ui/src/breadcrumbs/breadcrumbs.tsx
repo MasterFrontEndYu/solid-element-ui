@@ -1,7 +1,7 @@
 import { Breadcrumbs as KBreadcrumbs } from "@kobalte/core/breadcrumbs";
 import { For, type JSX, splitProps, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
-import { ChevronRight, MoreHorizontal } from "lucide-solid";
+import { ChevronRight } from "lucide-solid";
 
 const breadcrumbStyles = tv({
     slots: {

@@ -1,9 +1,10 @@
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
-import Nav from "~/components/nav";
-import Aside from "~/components/aside";
 import "./app.css";
+
+import Nav from "~/layout/nav";
+import Aside from "~/layout/aside";
 
 export default function App() {
   return (
@@ -12,8 +13,10 @@ export default function App() {
               <>
                   <Nav />
                   <main class="flex">
-                       <Aside />
-                      <Suspense>{props.children}</Suspense>
+                      <Aside />
+                      <div class="prose prose-slate max-w-none dark:prose-invert p-8 w-full bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+                          <Suspense>{props.children}</Suspense>
+                      </div>
                   </main>
               </>
           )}

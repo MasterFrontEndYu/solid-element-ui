@@ -3,22 +3,25 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --color-primary: #1677ff;
-    --color-success: #52c41a;
-    --color-warning: #faad14;
-    --color-error: #ff4d4f;
-    --color-border: #d9d9d9;
+  /* ... 其他颜色 */
+  --color-default-color: rgba(0, 0, 0, 0.88);
+  --color-default-bg: #ffffff; /* 浅色模式默认为白 */
 
-    --color-defaultColor: rgba(255, 255, 255, 0.85);
-    --color-defaultBg: #000;
-
-    --color-text-main: rgba(0, 0, 0, 0.88);
-    --color-border-base: #d9d9d9;
+  /* 定义深色模式下的变量覆盖 */
+  --dark-default-color: rgba(255, 255, 255, 0.85);
+  --dark-default-bg: #121212; /* 深色模式默认为深灰/黑 */
 }
 
 @layer base {
-    :root[data-theme="dark"] {
-        --color-defaultColor: rgba(0, 0, 0, 0.85);
-        --color-defaultBg: #fff;
-    }
+  /* 使用 tailwind v4 的变体逻辑 */
+  :root {
+    background-color: var(--color-default-bg);
+    color: var(--color-default-color);
+  }
+
+  /* 当匹配到 .dark 类或 data-theme="dark" 时 */
+  :root.dark, :root[data-theme="dark"] {
+    background-color: var(--dark-default-bg);
+    color: var(--dark-default-color);
+  }
 }

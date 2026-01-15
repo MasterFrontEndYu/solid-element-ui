@@ -1,0 +1,32 @@
+/* 1. 声明顺序（保持不变） */
+@layer ui-lib, base, components, utilities;
+
+/* 2. 核心引入 */
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* --- 关键修改开始 --- */
+
+/* 3. 引入 UI 库 */
+/* 不要在这里使用 layer(ui-lib)，因为里面有 @custom-variant */
+@import "../node_modules/solid-element-ui/src/style/index.css"; 
+
+/* 4. 显式覆盖 UI 库中那些“霸道”的基础样式 */
+@layer base {
+  :root, body {
+    /* 强制使用你想要的背景，不被 UI 库的 :root 规则带跑 */
+    background-color: white !important; 
+    color: black !important;
+  }
+  
+  :root.dark, body.dark {
+    background-color: #0f172a !important;
+    color: white !important;
+  }
+}
+
+/* --- 关键修改结束 --- */
+
+/* 5. 扫描路径 */
+@source "../node_modules/solid-element-ui/src/**/*.{ts,tsx}";
+@source "./routes/**/*.{md,mdx}";

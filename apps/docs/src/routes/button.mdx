@@ -1,6 +1,19 @@
+import { Button } from "solid-element-ui";
+import { Search } from "lucide-solid";
+
 ## Button 按钮
 
 基于 Kobalte Button 核心构建的交互组件，支持多种视觉变体和加载状态。
+
+<div className="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2">
+    <Button variant="default">确定</Button>
+    <Button variant="outline" leftIcon={<Search size={14} />}>
+        搜索
+    </Button>
+    <Button variant="destructive">删除</Button>
+    <Button loading>请稍候</Button>
+</div>
+
 
 ### 导入
 
@@ -29,7 +42,7 @@ import { Search } from "lucide-solid";
 ### API 参考
 
 | 属性          | 类型          | 默认值      | 说明                         |
-| :------------ | :------------ | :---------- | :--------------------------- |
+| :------------ | :------------ | :---------- | :------------------------- |
 | **variant**   | `Enum`        | `'default'` | 样式变体。                   |
 | **size**      | `Enum`        | `'default'` | 按钮尺寸。                   |
 | **loading**   | `boolean`     | `false`     | 是否显示加载状态并禁用交互。 |

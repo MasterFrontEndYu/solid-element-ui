@@ -3,12 +3,15 @@ import { For, type JSX, splitProps, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 import { ChevronRight } from "lucide-solid";
 
+// TODO 1. 定义样式
+//      2. icon 支持自定义
+
 const breadcrumbStyles = tv({
     slots: {
         root: "flex w-full justify-start",
         list: "flex flex-wrap items-center gap-1.5 break-words text-sm text-zinc-500 dark:text-zinc-400",
         item: "flex items-center gap-1.5",
-        link: "transition-colors hover:text-zinc-900 dark:hover:text-zinc-100 data-[current]:font-semibold data-[current]:text-zinc-900 dark:data-[current]:text-zinc-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        link: "transition-colors hover:text-zinc-900 dark:hover:text-zinc-100 data-[current]:font-semibold data-[current]:text-zinc-900 dark:data-[current]:text-zinc-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 no-underline",
         separator: "flex h-4 w-4 items-center justify-center text-zinc-400",
     },
 });
@@ -35,7 +38,7 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
     ]);
 
     return (
-        <KBreadcrumbs class={root({ class: local.class })} {...others}>
+        <KBreadcrumbs class={root()} {...others}>
             <ol class={list()}>
                 <For each={local.items}>
                     {(breadcrumb, index) => (
@@ -44,7 +47,7 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
                                 href={breadcrumb.href}
                                 current={breadcrumb.current}
                                 disabled={breadcrumb.disabled}
-                                class={link()}
+                                class={link({ class: local.class })}
                             >
                                 {breadcrumb.title}
                             </KBreadcrumbs.Link>

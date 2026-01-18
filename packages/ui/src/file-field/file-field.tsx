@@ -3,6 +3,8 @@ import { splitProps, type ComponentProps, Show, createSignal } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { UploadCloud } from "lucide-solid";
 
+//TODO 样式修改，移除 UploadCloud这种已废弃的icon
+
 const fileFieldStyles = tv({
     slots: {
         root: "flex flex-col gap-1.5 w-full antialiased",

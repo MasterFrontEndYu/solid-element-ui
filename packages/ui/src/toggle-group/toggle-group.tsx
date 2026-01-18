@@ -2,6 +2,9 @@ import { ToggleGroup as KToggleGroup } from "@kobalte/core/toggle-group";
 import { splitProps, For, type ComponentProps, type JSX } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
+
+// TODO 单选，多选出现问题
+
 const toggleGroupStyles = tv({
     slots: {
         root: "inline-flex items-center justify-center rounded-md border border-slate-200 bg-transparent p-1 dark:border-slate-800",

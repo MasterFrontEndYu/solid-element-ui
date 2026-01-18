@@ -2,6 +2,8 @@ import { SegmentedControl as KSegmented } from "@kobalte/core/segmented-control"
 import { splitProps, For, type ComponentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
+// FIXME 样式问题
+
 const segmentedStyles = tv({
     slots: {
         root: "relative flex items-center w-full rounded-lg bg-slate-100 p-1 text-slate-500 dark:bg-slate-800 dark:text-slate-400",
@@ -54,13 +56,13 @@ export const SegmentedControl = (props: SegmentedControlProps) => {
 
     return (
         <div class="flex flex-col w-full">
-            {local.label && (
-                <KSegmented.Label class={styles.label()}>
-                    {local.label}
-                </KSegmented.Label>
-            )}
 
             <KSegmented class={styles.root({ class: local.class })} {...others}>
+                {local.label && (
+                    <KSegmented.Label class={styles.label()}>
+                        {local.label}
+                    </KSegmented.Label>
+                )}
                 <For each={local.options}>
                     {(option) => (
                         <KSegmented.Item

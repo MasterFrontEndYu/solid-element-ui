@@ -1,5 +1,10 @@
 import { Toast as KToast, toaster } from "@kobalte/core/toast";
-import { splitProps, type ComponentProps, Show } from "solid-js";
+import {
+    splitProps,
+    type ComponentProps,
+    Show,
+    type ParentProps,
+} from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import {
     X,
@@ -12,7 +17,7 @@ import {
 const toastStyles = tv({
     slots: {
         root: [
-            "group relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-4 pr-8 shadow-lg transition-all",
+            "group relative flex w-[400px] items-start justify-between space-x-4 overflow-hidden rounded-md border p-4 pr-8 shadow-lg transition-all",
             "data-[opened]:animate-in data-[closed]:animate-out data-[swipe=move]:translate-x-[var(--kb-toast-swipe-move-x)]",
             "data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-transform data-[swipe=end]:translate-x-[var(--kb-toast-swipe-end-x)]",
             "data-[swipe=end]:animate-out data-[closed]:fade-out-80 data-[closed]:slide-out-to-right-full data-[opened]:slide-in-from-top-full",
@@ -24,7 +29,7 @@ const toastStyles = tv({
             "focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 dark:text-slate-400 dark:hover:text-slate-50",
         ],
         content: "flex flex-col gap-1 flex-1",
-        icon: "h-5 w-5 shrink-0",
+        icon: "h-5 w-5 shrink-0 mt-0.5", // 稍微下移一点对齐文字
     },
     variants: {
         variant: {
@@ -46,16 +51,13 @@ const toastStyles = tv({
             },
         },
     },
-    defaultVariants: {
-        variant: "info",
-    },
+    defaultVariants: { variant: "info" },
 });
 
 type ToastVariants = VariantProps<typeof toastStyles>;
 
 export interface ToastProps
-    extends Omit<ComponentProps<typeof KToast>, "class">,
-        ToastVariants {
+    extends Omit<ComponentProps<typeof KToast>, "class">, ToastVariants {
     title?: string;
     description?: string;
     class?: string;
@@ -66,9 +68,21 @@ const iconMap = {
     success: CheckCircle2,
     warning: AlertTriangle,
     error: AlertCircle,
+} as const; // 使用 const 断言增强类型推导
+
+// 优化：允许包裹 Children，这样在 App.tsx 顶层包裹即可
+export const ToastProvider = (props: ParentProps) => {
+    return (
+        <>
+            {props.children}
+            <KToast.Region>
+                <KToast.List class="fixed bottom-4 right-4 z-[100] flex flex-col gap-3 w-full max-w-[400px] outline-none" />
+            </KToast.Region>
+        </>
+    );
 };
 
-export const Toast = (props: ToastProps) => {
+const Toast = (props: ToastProps) => {
     const [local, variantProps, others] = splitProps(
         props,
         ["title", "description", "class", "toastId"],
@@ -76,7 +90,8 @@ export const Toast = (props: ToastProps) => {
     );
 
     const styles = toastStyles(variantProps);
-    const Icon = iconMap[variantProps.variant || "info"];
+    // 显式回退到 info，确保 Icon 组件始终存在
+    const Icon = iconMap[variantProps.variant ?? "info"];
 
     return (
         <KToast
@@ -104,7 +119,6 @@ export const Toast = (props: ToastProps) => {
     );
 };
 
-// 导出便捷调用方法
 export const showToast = (props: Omit<ToastProps, "toastId">) => {
     return toaster.show((data) => <Toast toastId={data.toastId} {...props} />);
 };

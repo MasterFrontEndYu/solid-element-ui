@@ -4,6 +4,20 @@
 
 [Image showing a multi-level dropdown menu with icons and dividers]
 
+import { DropdownMenu } from "solid-element-ui";
+
+import { profileMenu } from "~/components/data";
+
+
+<div className="p-4 bg-white dark:bg-zinc-950 border rounded-lg space-y-2">
+
+    <DropdownMenu
+    items={profileMenu}
+    trigger={<button className="btn">账户设置</button>}/>
+
+</div>
+
+
 ### 导入
 
 ```tsx
@@ -30,8 +44,7 @@ const profileMenu = [
 
 <DropdownMenu
     items={profileMenu}
-    trigger={<button className="btn">账户设置</button>}
-/>;
+    trigger={<button className="btn">账户设置</button>}/>
 ```
 
 ---

@@ -2,6 +2,8 @@ import { Popover as KPopover } from "@kobalte/core/popover";
 import { splitProps, type ComponentProps, type JSX } from "solid-js";
 import { tv } from "tailwind-variants";
 
+// FIXME 与其他的气泡样式不统一的问题
+
 const popoverStyles = tv({
     slots: {
         content: [
@@ -20,10 +22,7 @@ export interface PopoverProps extends ComponentProps<typeof KPopover> {
     showArrow?: boolean;
 }
 
-/**
- * Popover 高度封装版
- * 修复了 Kobalte 不支持 asChild 的问题，直接将 trigger 渲染为内容
- */
+
 export const Popover = (props: PopoverProps) => {
     const [local, others] = splitProps(props, [
         "trigger",

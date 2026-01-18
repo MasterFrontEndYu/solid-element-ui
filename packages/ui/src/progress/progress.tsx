@@ -2,6 +2,8 @@ import { Progress as KProgress } from "@kobalte/core/progress";
 import { splitProps, type ComponentProps, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
+// FIXME  进度条问题，value 直接占满
+
 const progressStyles = tv({
     slots: {
         root: "flex flex-col gap-2 w-full antialiased",
@@ -39,10 +41,7 @@ export interface ProgressProps
     showValue?: boolean;
 }
 
-/**
- * Progress 高度封装版
- * 自动处理 Label、ValueLabel 以及 Indeterminate (不确定) 状态
- */
+
 export const Progress = (props: ProgressProps) => {
     const [local, variantProps, others] = splitProps(
         props,

@@ -3,10 +3,12 @@ import { splitProps, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-solid";
 
+
+// FIXME 样式修改，
+
 const paginationStyles = tv({
     slots: {
         root: "flex w-full justify-center antialiased",
-        // Kobalte 没有 List，直接样式化其外层或 Items
         itemsContainer: "flex items-center gap-1",
         item: [
             "inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium transition-colors",

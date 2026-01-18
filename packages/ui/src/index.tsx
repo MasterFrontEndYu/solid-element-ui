@@ -82,7 +82,7 @@ export { TextField } from "./text-field/text-field";
 
 //  time-field
 
-export { Toast, showToast } from "./toast/toast";
+export { ToastProvider, showToast } from "./toast/toast";
 
 export { ToggleButton } from "./toggle-button/toggle-button";
 

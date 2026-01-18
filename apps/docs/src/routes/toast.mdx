@@ -2,22 +2,39 @@
 
 在屏幕角落显示的临时通知消息。
 
+import { showToast } from "solid-element-ui";
+import { Button } from "solid-element-ui";
+
+<div className="p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 space-y-2">
+
+    <Button variant="default" onClick={() => showToast({
+        variant: "success",
+        title: "操作成功",
+        description: "数据已同步至云端"
+      })}>确定</Button>
+
+</div>
+
 ### 导入与配置
 
 首先，你需要在应用的根节点放置 `Toaster` 容器：
 
 ```tsx
-import { Toaster, ToastRegion } from "@kobalte/core/toast";
+import { ToastProvider } from "solid-element-ui";
 
 function App() {
     return (
         <>
-            <YourApp />
-            <Toaster>
-                <ToastRegion>
-                    <ol className="fixed bottom-0 right-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]" />
-                </ToastRegion>
-            </Toaster>
+            <Router
+                root={(props) => (
+                    <>
+                        <ToastProvider />
+                        ... routers
+                    </>
+                )}
+            >
+                <FileRoutes />
+            </Router>
         </>
     );
 }
@@ -28,13 +45,18 @@ function App() {
 ```tsx
 import { showToast } from "solid-element-ui";
 
-const notify = () => {
-    showToast({
-        title: "订单已发送",
-        description: "您的包裹预计在 3-5 个工作日内送达。",
-        variant: "success",
-    });
-};
+<Button
+    variant="default"
+    onClick={() =>
+        showToast({
+            variant: "success",
+            title: "操作成功",
+            description: "数据已同步至云端",
+        })
+    }
+>
+    确定
+</Button>;
 ```
 
 ---

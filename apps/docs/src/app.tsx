@@ -3,6 +3,8 @@ import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
 import "./app.css";
 
+import { ToastProvider } from "solid-element-ui";
+
 import Nav from "~/layout/nav";
 import Aside from "~/layout/aside";
 
@@ -11,6 +13,7 @@ export default function App() {
       <Router
           root={(props) => (
               <>
+                  <ToastProvider />
                   <Nav />
                   <main class="flex">
                       <Aside />

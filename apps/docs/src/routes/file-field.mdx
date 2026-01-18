@@ -2,6 +2,20 @@
 
 基于 Kobalte TextField 封装的高效文件上传组件，完美适配 Tailwind 样式体系。
 
+import { FileField } from "solid-element-ui";
+
+<div className="p-4 bg-white dark:bg-zinc-950 border rounded-lg space-y-2">
+
+  <FileField
+    label="附件上传"
+    description="支持 PDF 格式"
+    accept=".pdf"
+    onChange={(files) => console.log(files)}
+/>
+
+</div>
+
+
 ### 导入
 
 ```tsx

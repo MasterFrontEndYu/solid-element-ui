@@ -2,6 +2,8 @@ import { ColorSlider as KColorSlider } from "@kobalte/core/color-slider";
 import { splitProps, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 
+// TODO defaultValue,还有channel 的问题
+
 const sliderStyles = tv({
     slots: {
         root: "relative flex flex-col items-center select-none touch-none w-full gap-2",

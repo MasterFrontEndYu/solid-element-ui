@@ -2,6 +2,21 @@
 
 Color Slider 允许用户通过滑动轨道来调节颜色特定的通道（如色相、饱和度、亮度或透明度）。
 
+
+
+import { ColorSlider } from "solid-element-ui";
+
+
+<div class="space-y-6 p-6 border rounded-xl max-w-sm">
+    <ColorSlider
+        label="色相 (Hue)"
+        channel="hue"
+        showValue
+    />
+
+</div>
+
+
 ### 导入
 
 ```tsx
@@ -13,7 +28,7 @@ import { ColorSlider } from "solid-element-ui";
 通过设置 `channel` 属性来定义滑块控制的颜色维度。组件会自动处理数值范围和背景渐变。
 
 ```tsx
-<div className="space-y-6 p-6 border rounded-xl max-w-sm">
+<div class="space-y-6 p-6 border rounded-xl max-w-sm">
     {/* 色相滑块 */}
     <ColorSlider
         label="色相 (Hue)"

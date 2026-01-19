@@ -1,5 +1,5 @@
 import { Select as KSelect } from "@kobalte/core/select";
-import { splitProps, type ComponentProps, Show } from "solid-js";
+import { splitProps, Show, createMemo } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { ChevronDown, Check } from "lucide-solid";
 
@@ -46,40 +46,77 @@ interface Option {
     disabled?: boolean;
 }
 
-export interface SelectProps
-    extends Omit<ComponentProps<typeof KSelect>, "class" | "options">,
-        SelectVariants {
+// 重新定义接口，使 value 和 onChange 处理的是 string 类型
+export interface SelectProps extends SelectVariants {
     options: Option[];
+    value?: string;
+    defaultValue?: string;
+    onChange?: (value: string) => void;
     label?: string;
     description?: string;
     placeholder?: string;
+    disabled?: boolean;
+    name?: string;
     class?: string;
 }
 
 export const Select = (props: SelectProps) => {
     const [local, variantProps, others] = splitProps(
         props,
-        ["options", "label", "description", "placeholder", "class"],
-        ["size"]
+        [
+            "options",
+            "label",
+            "description",
+            "placeholder",
+            "class",
+            "value",
+            "defaultValue",
+            "onChange",
+        ],
+        ["size"],
     );
 
     const styles = selectStyles(variantProps);
 
+    const selectedOption = createMemo(() => {
+        if (local.value === undefined) return undefined;
+        return local.options.find((opt) => opt.value === local.value);
+    });
+
+    const defaultOption = createMemo(() => {
+        if (local.defaultValue === undefined) return undefined;
+        return local.options.find((opt) => opt.value === local.defaultValue);
+    });
+
+    const handleValueChange = (opt: Option | null) => {
+        if (opt === null) {
+           
+            local.onChange?.("");
+            return;
+        }
+        local.onChange?.(opt.value);
+    };
+
     return (
-        <KSelect
+        <KSelect<Option>
+            multiple={false}
             options={local.options}
             optionValue="value"
             optionTextValue="label"
+            optionDisabled="disabled"
             placeholder={local.placeholder}
+            value={selectedOption()}
+            defaultValue={defaultOption()}
+            onChange={handleValueChange}
             class={styles.root({ class: local.class })}
             {...others}
-            itemComponent={(props) => (
-                <KSelect.Item item={props.item} class={styles.item()}>
+            itemComponent={(itemProps) => (
+                <KSelect.Item item={itemProps.item} class={styles.item()}>
                     <KSelect.ItemIndicator class={styles.itemIndicator()}>
                         <Check size={14} />
                     </KSelect.ItemIndicator>
                     <KSelect.ItemLabel>
-                        {props.item.textValue}
+                        {itemProps.item.textValue}
                     </KSelect.ItemLabel>
                 </KSelect.Item>
             )}
@@ -92,7 +129,14 @@ export const Select = (props: SelectProps) => {
 
             <KSelect.Trigger class={styles.trigger()}>
                 <KSelect.Value<Option>>
-                    {(state) => state.selectedOption()?.label}
+                    {(state) => (
+                        <Show
+                            when={state.selectedOption()}
+                            fallback={local.placeholder}
+                        >
+                            {state.selectedOption()?.label}
+                        </Show>
+                    )}
                 </KSelect.Value>
                 <KSelect.Icon>
                     <ChevronDown size={16} class="opacity-50" />

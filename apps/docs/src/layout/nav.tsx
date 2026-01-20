@@ -25,9 +25,10 @@ export default () => {
   });
 
     const location = useLocation();
+
     const active = (path: string) =>
         path == location.pathname
-            ? "border-sky-600"
+            ? "bg-sky-600"
             : "border-transparent hover:border-sky-600";
     return (
         <nav class="flex bg-sky-800">

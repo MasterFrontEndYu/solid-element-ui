@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* --- 1. 定义语义化变量映射 --- */
 @layer theme {
     :root {
         --primary: var(--color-blue-600);
@@ -15,7 +14,6 @@
         --app-ring: var(--color-zinc-400);
     }
 
-    /* 当 [data-theme="dark"] 时的变量覆盖 */
     [data-theme="dark"] {
         --app-bg: var(--color-zinc-950);
         --app-text-main: var(--color-zinc-50);
@@ -24,7 +22,6 @@
         --app-ring: var(--color-zinc-600);
     }
 
-    /* 扩展：如果你以后想加个咖啡模式，只需几行 */
     [data-theme="coffee"] {
         --app-bg: #2c2420;
         --app-text-main: #f3e5d8;

@@ -1,18 +1,31 @@
 import { Alert as KAlert } from "@kobalte/core/alert";
 import { splitProps, type JSX, type ComponentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Info, AlertCircle, CheckCircle2, XCircle } from "lucide-solid";
+import { Info, CircleAlert, CircleCheck, CircleX } from "lucide-solid";
 
 const alertStyles = tv({
-    base: "relative w-full rounded-lg border p-4 flex gap-3 antialiased",
+    slots: {
+        root: "relative w-full rounded-lg border p-4 flex gap-3 antialiased text-main",
+        icon: "shrink-0",
+    },
     variants: {
         variant: {
-            info: "bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-300",
-            success:
-                "bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-900/20 dark:border-emerald-800 dark:text-emerald-300",
-            warning:
-                "bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-300",
-            danger: "bg-red-50 border-red-200 text-red-800 dark:bg-red-900/20 dark:border-red-800 dark:text-red-300",
+            info: {
+                root: "bg-primary/20 border-primary/80",
+                icon: "text-primary",
+            },
+            success: {
+                root: "bg-success/20 border-success/80 ",
+                icon: "text-success",
+            },
+            warning: {
+                root: "bg-warning/20 border-warning/80 ",
+                icon: "text-warning",
+            },
+            danger: {
+                root: "bg-danger/20 border-danger/80 ",
+                icon: "text-danger",
+            },
         },
     },
     defaultVariants: {
@@ -22,53 +35,48 @@ const alertStyles = tv({
 
 type AlertVariants = VariantProps<typeof alertStyles>;
 
-// 使用 ComponentProps<typeof KAlert> 获取 Kobalte Alert 的原始属性
 export interface AlertProps
-    extends ComponentProps<typeof KAlert>,
-        AlertVariants {
+    extends ComponentProps<typeof KAlert>, AlertVariants {
     title?: string;
     icon?: boolean | JSX.Element;
 }
 
 const iconMap = {
     info: Info,
-    success: CheckCircle2,
-    warning: AlertCircle,
-    danger: XCircle,
+    success: CircleCheck,
+    warning: CircleAlert,
+    danger: CircleX,
 };
 
 export const Alert = (props: AlertProps) => {
-    // 显式提取属性，确保 others 中不包含 variant
     const [local, variantProps, others] = splitProps(
         props,
         ["title", "icon", "children", "class"],
-        ["variant"]
+        ["variant"],
     );
 
-    const IconComponent = () => {
+    const slots = alertStyles(variantProps);
+    const { root, icon } = slots;
+
+    const RenderedIcon = () => {
         if (local.icon === false) return null;
         if (typeof local.icon === "object") return local.icon;
+
         const Icon = iconMap[variantProps.variant || "info"];
-        return <Icon size={18} class="shrink-0" />;
+        return <Icon size={18} class={icon()} />;
     };
 
-    // 注意：这里直接使用 KAlert，而不是 KAlert.Root
+    // 5. 渲染组件
     return (
-        <KAlert
-            class={alertStyles({
-                variant: variantProps.variant,
-                class: local.class,
-            })}
-            {...others}
-        >
-            <IconComponent />
+        <KAlert class={`${root()} ${local.class || ""}`.trim()} {...others}>
+            <RenderedIcon />
             <div class="flex flex-col gap-1 text-left">
                 {local.title && (
                     <h5 class="font-semibold leading-none tracking-tight">
                         {local.title}
                     </h5>
                 )}
-                <div class="text-sm leading-relaxed opacity-90">
+                <div class="text-md leading-relaxed opacity-90">
                     {local.children}
                 </div>
             </div>

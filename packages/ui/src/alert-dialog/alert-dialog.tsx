@@ -2,21 +2,24 @@ import { AlertDialog as KAlertDialog } from "@kobalte/core/alert-dialog";
 import { splitProps, type JSX, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 import { X } from "lucide-solid";
+import { Button } from "../button/button";
 
-// TOTO 修改点击确定时的行为，目前是关闭对话框
+
+// TODO 修改点击确定时的行为，目前是关闭对话框
+
 
 const alertDialogStyles = tv({
     slots: {
         overlay:
             "fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-[expanded]:animate-in data-[closed]:animate-out",
         content:
-            "fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl border bg-white p-4 shadow-xl dark:bg-zinc-900 dark:border-zinc-800",
+            "fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl bg-app p-4 shadow-xl",
         header: "flex align-center justify-between",
-        title: "text-lg font-semibold text-zinc-900 dark:text-zinc-100",
-        description: "text-sm py-2 text-zinc-500 dark:text-zinc-400",
+        title: "text-lg font-semibold text-main ",
+        description: "text-sm py-2 text-main",
         footer: "mt-6 flex flex-row justify-end gap-3",
         closeButton:
-            "rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none",
+            "rounded-sm opacity-70 text-main transition-opacity hover:opacity-100 focus:outline-none",
     },
 });
 
@@ -64,26 +67,23 @@ export const AlertDialog = (props: AlertDialogProps) => {
                         </div>
 
                         <div class={footer()}>
-                            {/* 取消按钮 */}
                             <KAlertDialog.CloseButton>
                                 {local.cancel || (
-                                    <button
-                                        type="button"
-                                        class="inline-flex h-9 items-center justify-center rounded-md border px-4 py-2 text-sm font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                                    <Button
+                                        variant="outline"
                                     >
                                         取消
-                                    </button>
+                                    </Button>
                                 )}
                             </KAlertDialog.CloseButton>
 
                             <KAlertDialog.CloseButton>
                                 {local.action || (
-                                    <button
-                                        type="button"
-                                        class="inline-flex h-9 items-center justify-center rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900"
+                                    <Button
+                                        color="primary"
                                     >
                                         确认
-                                    </button>
+                                    </Button>
                                 )}
                             </KAlertDialog.CloseButton>
                         </div>

@@ -5,13 +5,76 @@ import { Search } from "lucide-solid";
 
 基于 Kobalte Button 核心构建的交互组件，支持多种视觉变体和加载状态。
 
-<div className="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2">
-    <Button variant="default">确定</Button>
-    <Button variant="outline" leftIcon={<Search size={14} />}>
-        搜索
+
+<div class="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
+    <Button variant="default">default</Button>
+    <Button variant="outline">outline</Button>
+    <Button variant="dashed">dashed</Button>
+    <Button variant="filled">filled</Button>
+    <Button variant="text">text</Button>
+</div>
+<div class="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
+    <Button color="primary">primary</Button>
+    <Button variant="outline" color="primary">
+        primary
     </Button>
-    <Button variant="destructive">删除</Button>
-    <Button loading>请稍候</Button>
+    <Button variant="dashed" color="primary">
+        primary
+    </Button>
+    <Button variant="filled" color="primary">
+        primary
+    </Button>
+    <Button variant="text" color="primary">
+        primary
+    </Button>
+   
+</div>
+<div class="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
+    <Button color="success">success</Button>
+    <Button variant="outline" color="success">
+        primary
+    </Button>
+    <Button variant="dashed" color="success">
+        primary
+    </Button>
+    <Button variant="filled" color="success">
+        primary
+    </Button>
+    <Button variant="text" color="success">
+        primary
+    </Button>
+   
+</div>
+<div class="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
+    <Button color="warning">warning</Button>
+    <Button variant="outline" color="warning">
+        primary
+    </Button>
+    <Button variant="dashed" color="warning">
+        primary
+    </Button>
+    <Button variant="filled" color="warning">
+        primary
+    </Button>
+    <Button variant="text" color="warning">
+        primary
+    </Button>
+    
+</div>
+<div class="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
+    <Button color="danger">danger</Button>
+    <Button variant="outline" color="danger">
+        primary
+    </Button>
+    <Button variant="dashed" color="danger">
+        primary
+    </Button>
+    <Button variant="filled" color="danger">
+        primary
+    </Button>
+    <Button variant="text" color="danger">
+        primary
+    </Button>
 </div>
 
 
@@ -27,13 +90,75 @@ import { Search } from "lucide-solid";
 在 MDX 中渲染按钮实例：
 
 ```tsx
-<div className="flex flex-wrap gap-4 p-4">
-    <Button variant="default">确定</Button>
-    <Button variant="outline" leftIcon={<Search size={14} />}>
-        搜索
+<div class="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
+    <Button variant="default">default</Button>
+    <Button variant="outline">outline</Button>
+    <Button variant="dashed">dashed</Button>
+    <Button variant="filled">filled</Button>
+    <Button variant="text">text</Button>
+</div>
+<div class="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
+    <Button color="primary">primary</Button>
+    <Button variant="outline" color="primary">
+        primary
     </Button>
-    <Button variant="destructive">删除</Button>
-    <Button loading>请稍候</Button>
+    <Button variant="dashed" color="primary">
+        primary
+    </Button>
+    <Button variant="filled" color="primary">
+        primary
+    </Button>
+    <Button variant="text" color="primary">
+        primary
+    </Button>
+   
+</div>
+<div class="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
+    <Button color="success">success</Button>
+    <Button variant="outline" color="success">
+        primary
+    </Button>
+    <Button variant="dashed" color="success">
+        primary
+    </Button>
+    <Button variant="filled" color="success">
+        primary
+    </Button>
+    <Button variant="text" color="success">
+        primary
+    </Button>
+   
+</div>
+<div class="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
+    <Button color="warning">warning</Button>
+    <Button variant="outline" color="warning">
+        primary
+    </Button>
+    <Button variant="dashed" color="warning">
+        primary
+    </Button>
+    <Button variant="filled" color="warning">
+        primary
+    </Button>
+    <Button variant="text" color="warning">
+        primary
+    </Button>
+    
+</div>
+<div class="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
+    <Button color="danger">danger</Button>
+    <Button variant="outline" color="danger">
+        primary
+    </Button>
+    <Button variant="dashed" color="danger">
+        primary
+    </Button>
+    <Button variant="filled" color="danger">
+        primary
+    </Button>
+    <Button variant="text" color="danger">
+        primary
+    </Button>
 </div>
 ```
 

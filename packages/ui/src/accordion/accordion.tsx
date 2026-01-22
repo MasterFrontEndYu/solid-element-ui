@@ -9,13 +9,12 @@ import { tv, type VariantProps } from "tailwind-variants";
 // 1. 定义样式
 const accordionStyles = tv({
     slots: {
-        root: "w-full divide-y divide-base border border-base rounded-lg",
+        root: "w-full divide-y divide-base border border-base rounded-lg overflow-hidden",
         item: "group",
         header: "flex",
         trigger: [
             "flex flex-1 items-center justify-between cursor-pointer py-4 px-4 text-md font-medium transition-all ",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-            "bg-header first:rounded-t-lg last:first:rounded-b-lg hover:bg-header/80",
+            "bg-header hover:bg-header/80",
         ],
         content: [
             "overflow-hidden text-md transition-all bg-transparent text-main",

@@ -8,6 +8,7 @@
         --danger: var(--color-red-600);
 
         --app-bg: #ffffff;
+        --app-text-reversal: #ffffff;
         --app-text-main: var(--color-zinc-900);
         --app-text-muted: var(--color-zinc-500);
         --app-border: var(--color-zinc-500);
@@ -16,6 +17,7 @@
     }
 
     [data-theme="dark"] {
+        --app-text-reversal: #000;
         --app-bg: var(--color-zinc-950);
         --app-text-main: var(--color-zinc-50);
         --app-text-muted: var(--color-zinc-400);
@@ -36,7 +38,7 @@
     --color-success: var(--success);
     --color-warning: var(--warning);
     --color-danger: var(--danger);
-
+    --color-reversal: var(--app-text-reversal);
     --color-header: var(--container-header);
     --color-app: var(--app-bg);
     --color-main: var(--app-text-main);

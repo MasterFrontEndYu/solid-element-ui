@@ -1,4 +1,7 @@
-import { Accordion as KAccordion, type AccordionRootProps } from "@kobalte/core/accordion";
+import {
+    Accordion as KAccordion,
+    type AccordionRootProps,
+} from "@kobalte/core/accordion";
 import { For, type JSX, splitProps } from "solid-js";
 import { ChevronDown } from "lucide-solid";
 import { tv, type VariantProps } from "tailwind-variants";
@@ -6,19 +9,19 @@ import { tv, type VariantProps } from "tailwind-variants";
 // 1. 定义样式
 const accordionStyles = tv({
     slots: {
-        root: "w-full divide-y divide-zinc-200 border-y border-zinc-200",
+        root: "w-full divide-y divide-base border border-base rounded-lg",
         item: "group",
-        header: "flex cursor-pointer",
+        header: "flex",
         trigger: [
-            "flex flex-1 items-center justify-between py-4 px-2 text-sm font-medium transition-all hover:bg-zinc-50",
+            "flex flex-1 items-center justify-between cursor-pointer py-4 px-4 text-md font-medium transition-all ",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-            "data-[expanded]:text-blue-600",
+            "bg-header first:rounded-t-lg last:first:rounded-b-lg hover:bg-header/80",
         ],
         content: [
-            "overflow-hidden text-sm text-zinc-600 transition-all bg-zinc-50/50",
+            "overflow-hidden text-md transition-all bg-transparent text-main",
             "data-[expanded]:animate-accordion-down data-[closed]:animate-accordion-up",
         ],
-        contentInner: "pb-4 pt-0 px-4",
+        contentInner: "pb-4 pt-2 px-4",
         icon: "h-4 w-4 transition-transform duration-200 group-data-[expanded]:rotate-180",
     },
 });
@@ -34,7 +37,8 @@ export interface AccordionItem {
     disabled?: boolean;
 }
 
-interface AccordionProps extends AccordionRootProps, VariantProps<typeof accordionStyles> {
+interface AccordionProps
+    extends AccordionRootProps, VariantProps<typeof accordionStyles> {
     items: AccordionItem[];
     class?: string;
 }

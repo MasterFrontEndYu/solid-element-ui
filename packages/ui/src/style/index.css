@@ -10,22 +10,22 @@
         --app-bg: #ffffff;
         --app-text-main: var(--color-zinc-900);
         --app-text-muted: var(--color-zinc-500);
-        --app-border: var(--color-zinc-200);
+        --app-border: var(--color-zinc-500);
         --app-ring: var(--color-zinc-400);
+        --container-header: var(--color-zinc-100);
     }
 
     [data-theme="dark"] {
         --app-bg: var(--color-zinc-950);
         --app-text-main: var(--color-zinc-50);
         --app-text-muted: var(--color-zinc-400);
-        --app-border: var(--color-zinc-800);
         --app-ring: var(--color-zinc-600);
+        --container-header: var(--color-zinc-900);
     }
 
     [data-theme="coffee"] {
         --app-bg: #2c2420;
         --app-text-main: #f3e5d8;
-        --app-border: #4b3621;
         --app-ring: #8b5e3c;
     }
 }
@@ -37,6 +37,7 @@
     --color-warning: var(--warning);
     --color-danger: var(--danger);
 
+    --color-header: var(--container-header);
     --color-app: var(--app-bg);
     --color-main: var(--app-text-main);
     --color-muted: var(--app-text-muted);
@@ -44,6 +45,5 @@
     --color-accent-ring: var(--app-ring);
     --radius-app: 0.75rem;
 }
-
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));

@@ -29,8 +29,8 @@ const buttonStyles = tv(
                 dashed: {
                     base: "border border-dashed border-base hover:border-primary hover:text-primary",
                 },
-                filled: { base: "bg-main/5 hover:bg-main/10"},
-                text: { base: "hover:bg-main/10"},
+                filled: { base: "bg-main/5 hover:bg-main/10" },
+                text: { base: "hover:bg-main/10" },
             },
             color: {
                 primary: { base: "" },
@@ -175,12 +175,10 @@ export interface ButtonProps
 }
 
 export const Button = (props: ButtonProps) => {
-    // 1. 更加精细地拆分 props
-    // local: 逻辑处理相关; variantKeys: 样式变体相关; others: 传递给 HTML 按钮的属性
     const [local, variantKeys, others] = splitProps(
         props,
         ["class", "children", "loading", "leftIcon", "rightIcon", "disabled"],
-        ["variant", "size", "color", "loading"], // 这里的 loading 也要传给 tv
+        ["variant", "size", "color", "loading"],
     );
 
     // 2. 调用 styles 获取 slots

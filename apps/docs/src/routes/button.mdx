@@ -5,7 +5,6 @@ import { Search } from "lucide-solid";
 
 基于 Kobalte Button 核心构建的交互组件，支持多种视觉变体和加载状态。
 
-
 <div class="not-prose flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
     <Button variant="default">default</Button>
     <Button variant="outline">outline</Button>
@@ -27,7 +26,6 @@ import { Search } from "lucide-solid";
     <Button variant="text" color="primary">
         primary
     </Button>
-   
 </div>
 <div class="not-prose flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
     <Button color="success">success</Button>
@@ -43,7 +41,6 @@ import { Search } from "lucide-solid";
     <Button variant="text" color="success">
         primary
     </Button>
-   
 </div>
 <div class="not-prose flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
     <Button color="warning">warning</Button>
@@ -59,7 +56,6 @@ import { Search } from "lucide-solid";
     <Button variant="text" color="warning">
         primary
     </Button>
-    
 </div>
 <div class="not-prose flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
     <Button color="danger">danger</Button>
@@ -77,6 +73,16 @@ import { Search } from "lucide-solid";
     </Button>
 </div>
 
+<div class="not-prose flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
+    <Button color="danger" leftIcon={<div>左边</div>}>
+        danger
+    </Button>
+
+    <Button variant="text" color="danger" rightIcon={<div>右边</div>}>
+        primary
+    </Button>
+
+</div>
 
 ### 导入
 
@@ -111,7 +117,7 @@ import { Search } from "lucide-solid";
     <Button variant="text" color="primary">
         primary
     </Button>
-   
+
 </div>
 <div class="not-prose flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
     <Button color="success">success</Button>
@@ -127,7 +133,7 @@ import { Search } from "lucide-solid";
     <Button variant="text" color="success">
         primary
     </Button>
-   
+
 </div>
 <div class="not-prose flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
     <Button color="warning">warning</Button>
@@ -143,7 +149,7 @@ import { Search } from "lucide-solid";
     <Button variant="text" color="warning">
         primary
     </Button>
-    
+
 </div>
 <div class="not-prose flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
     <Button color="danger">danger</Button>
@@ -167,7 +173,7 @@ import { Search } from "lucide-solid";
 ### API 参考
 
 | 属性          | 类型          | 默认值      | 说明                         |
-| :------------ | :------------ | :---------- | :------------------------- |
+| :------------ | :------------ | :---------- | :--------------------------- |
 | **variant**   | `Enum`        | `'default'` | 样式变体。                   |
 | **size**      | `Enum`        | `'default'` | 按钮尺寸。                   |
 | **loading**   | `boolean`     | `false`     | 是否显示加载状态并禁用交互。 |

@@ -6,9 +6,11 @@ import { tv, type VariantProps } from "tailwind-variants";
 
 const segmentedStyles = tv({
     slots: {
-        root: "relative flex items-center w-full rounded-lg bg-slate-100 p-1 text-slate-500 dark:bg-slate-800 dark:text-slate-400",
+        root: "relative flex flex-col",
+        container:
+            "relative flex items-center w-full rounded-lg bg-slate-100 p-1 text-slate-500 dark:bg-slate-800 dark:text-slate-400",
         item: [
-            "relative z-10 inline-flex flex-1 items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-all cursor-pointer",
+            " z-10 inline-flex flex-1 items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-all cursor-pointer",
             "outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2",
             "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
             "data-[checked]:text-slate-950 dark:data-[checked]:text-slate-50 transition-colors duration-200",
@@ -38,7 +40,8 @@ interface Option {
 }
 
 export interface SegmentedControlProps
-    extends Omit<ComponentProps<typeof KSegmented>, "class">,
+    extends
+        Omit<ComponentProps<typeof KSegmented>, "class">,
         SegmentedVariants {
     options: Option[];
     label?: string;
@@ -49,20 +52,19 @@ export const SegmentedControl = (props: SegmentedControlProps) => {
     const [local, variantProps, others] = splitProps(
         props,
         ["options", "class", "label"],
-        ["size"]
+        ["size"],
     );
 
     const styles = segmentedStyles(variantProps);
 
     return (
-        <div class="flex flex-col w-full">
-
-            <KSegmented class={styles.root({ class: local.class })} {...others}>
-                {local.label && (
-                    <KSegmented.Label class={styles.label()}>
-                        {local.label}
-                    </KSegmented.Label>
-                )}
+        <KSegmented class={styles.root({ class: local.class })} {...others}>
+            {local.label && (
+                <KSegmented.Label class={styles.label()}>
+                    {local.label}
+                </KSegmented.Label>
+            )}
+            <div class={styles.container()}>
                 <For each={local.options}>
                     {(option) => (
                         <KSegmented.Item
@@ -71,14 +73,14 @@ export const SegmentedControl = (props: SegmentedControlProps) => {
                             class={styles.item()}
                         >
                             <KSegmented.ItemInput />
-                            <KSegmented.ItemLabel>
+                            <KSegmented.ItemLabel class="flex items-center justify-center">
                                 {option.label}
                             </KSegmented.ItemLabel>
                         </KSegmented.Item>
                     )}
                 </For>
                 <KSegmented.Indicator class={styles.indicator()} />
-            </KSegmented>
-        </div>
+            </div>
+        </KSegmented>
     );
 };

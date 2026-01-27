@@ -7,6 +7,7 @@ import { ChevronRight } from "lucide-solid";
 
 const menuStyles = tv({
     slots: {
+        trigger: "inline-block cursor-pointer",
         content:
             "z-50 min-w-[8rem] overflow-hidden rounded-md border border-zinc-200 bg-white p-1 text-zinc-950 shadow-md animate-in fade-in-0 zoom-in-95 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50",
         item: "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-50",
@@ -15,7 +16,7 @@ const menuStyles = tv({
     },
 });
 
-const { content, item, separator, subIcon } = menuStyles();
+const { content, item, separator, subIcon, trigger } = menuStyles();
 
 // 定义菜单项配置类型
 export type DropdownItemConfig = {
@@ -89,7 +90,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
 
     return (
         <KDropdownMenu placement={local.placement ?? "bottom-start"}>
-            <KDropdownMenu.Trigger as="div" class="inline-block cursor-pointer">
+            <KDropdownMenu.Trigger as="div" class={trigger()}>
                 {local.trigger}
             </KDropdownMenu.Trigger>
 
@@ -101,4 +102,3 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
         </KDropdownMenu>
     );
 };
-    

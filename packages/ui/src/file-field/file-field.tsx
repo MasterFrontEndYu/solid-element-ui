@@ -1,7 +1,7 @@
 import { TextField as KTextField } from "@kobalte/core/text-field";
 import { splitProps, type ComponentProps, Show, createSignal } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { UploadCloud } from "lucide-solid";
+import { CloudUpload } from "lucide-solid";
 
 //TODO 样式修改，移除 UploadCloud这种已废弃的icon
 
@@ -37,7 +37,8 @@ const fileFieldStyles = tv({
 type FileFieldVariants = VariantProps<typeof fileFieldStyles>;
 
 export interface FileFieldProps
-    extends Omit<ComponentProps<typeof KTextField>, "value" | "onChange">,
+    extends
+        Omit<ComponentProps<typeof KTextField>, "value" | "onChange">,
         FileFieldVariants {
     label?: string;
     description?: string;
@@ -50,7 +51,7 @@ export const FileField = (props: FileFieldProps) => {
     const [local, variantProps, others] = splitProps(
         props,
         ["label", "description", "class", "accept", "multiple", "onChange"],
-        ["validationState", "isDisabled"]
+        ["validationState", "isDisabled"],
     );
 
     const [files, setFiles] = createSignal<File[]>([]);
@@ -90,7 +91,7 @@ export const FileField = (props: FileFieldProps) => {
                     multiple={local.multiple}
                     onChange={onFileChange}
                 />
-                <UploadCloud class={styles().icon()} />
+                <CloudUpload class={styles().icon()} />
                 <div class="text-sm font-medium text-slate-600 dark:text-slate-400">
                     {files().length > 0
                         ? `已选择 ${files().length} 个文件`

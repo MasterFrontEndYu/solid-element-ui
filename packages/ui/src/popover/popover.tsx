@@ -1,8 +1,11 @@
 import { Popover as KPopover } from "@kobalte/core/popover";
+import { CrossIcon } from "lucide-solid";
 import { splitProps, type ComponentProps, type JSX } from "solid-js";
 import { tv } from "tailwind-variants";
 
 // FIXME 与其他的气泡样式不统一的问题
+// Description，而不是内敛。
+// trigger用内部，而其他放在标签属性
 
 const popoverStyles = tv({
     slots: {
@@ -19,16 +22,11 @@ const s = popoverStyles();
 
 export interface PopoverProps extends ComponentProps<typeof KPopover> {
     trigger: JSX.Element;
-    showArrow?: boolean;
+    title: string;
 }
 
-
 export const Popover = (props: PopoverProps) => {
-    const [local, others] = splitProps(props, [
-        "trigger",
-        "children",
-        "showArrow",
-    ]);
+    const [local, others] = splitProps(props, ["trigger", "children", "title"]);
 
     return (
         <KPopover {...others}>
@@ -38,8 +36,17 @@ export const Popover = (props: PopoverProps) => {
 
             <KPopover.Portal>
                 <KPopover.Content class={s.content()}>
-                    {local.showArrow && <KPopover.Arrow class={s.arrow()} />}
-                    {local.children}
+                    <KPopover.Arrow class={s.arrow()} />
+
+                    <div class="flex">
+                        <KPopover.Title>{local.title}</KPopover.Title>
+                        <KPopover.CloseButton>
+                            <CrossIcon />
+                        </KPopover.CloseButton>
+                    </div>
+                    <KPopover.Description>
+                        {local.children}
+                    </KPopover.Description>
                 </KPopover.Content>
             </KPopover.Portal>
         </KPopover>

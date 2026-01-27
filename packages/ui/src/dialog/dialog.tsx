@@ -65,38 +65,36 @@ export const Dialog = (props: DialogProps) => {
 
             <KDialog.Portal>
                 <KDialog.Overlay class={overlay()} />
-                <div class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-                    <KDialog.Content
-                        class={content({ class: local.class })}
-                        style={{ "pointer-events": "auto" }}
-                    >
-                        {/* 头部区域 */}
-                        <div class="flex flex-col">
-                            <KDialog.Title class={title()}>
-                                {local.title}
-                            </KDialog.Title>
-                            <Show when={local.description}>
-                                <KDialog.Description class={description()}>
-                                    {local.description}
-                                </KDialog.Description>
-                            </Show>
-                        </div>
-
-                        {/* 主体内容 */}
-                        <div class="mt-4">{local.children}</div>
-
-                        {/* 底部区域 */}
-                        <Show when={local.footer}>
-                            <div class={footer()}>{local.footer}</div>
+                <KDialog.Content
+                    class={content({ class: local.class })}
+                    style={{ "pointer-events": "auto" }}
+                >
+                    {/* 头部区域 */}
+                    <div class="flex flex-col">
+                        <KDialog.Title class={title()}>
+                            {local.title}
+                        </KDialog.Title>
+                        <Show when={local.description}>
+                            <KDialog.Description class={description()}>
+                                {local.description}
+                            </KDialog.Description>
                         </Show>
+                    </div>
 
-                        {/* 关闭按钮 */}
-                        <KDialog.CloseButton class={closeButton()}>
-                            <X size={18} />
-                            <span class="sr-only">关闭</span>
-                        </KDialog.CloseButton>
-                    </KDialog.Content>
-                </div>
+                    {/* 主体内容 */}
+                    <div class="mt-4">{local.children}</div>
+
+                    {/* 底部区域 */}
+                    <Show when={local.footer}>
+                        <div class={footer()}>{local.footer}</div>
+                    </Show>
+
+                    {/* 关闭按钮 */}
+                    <KDialog.CloseButton class={closeButton()}>
+                        <X size={18} />
+                        <span class="sr-only">关闭</span>
+                    </KDialog.CloseButton>
+                </KDialog.Content>
             </KDialog.Portal>
         </KDialog>
     );

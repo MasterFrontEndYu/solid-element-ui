@@ -3,8 +3,7 @@ import { splitProps, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 import { Check, ChevronDown } from "lucide-solid";
 
-
-// FIXME icon 位置问题和旋转问题
+// FIXME 缺少Description，ErrorMessage，验证
 
 const comboboxStyles = tv({
     slots: {
@@ -37,7 +36,6 @@ const {
     icon,
 } = comboboxStyles();
 
-
 export type ComboboxProps<T> = ComponentProps<typeof KCombobox<T>> & {
     label?: string;
     placeholder?: string;
@@ -45,7 +43,7 @@ export type ComboboxProps<T> = ComponentProps<typeof KCombobox<T>> & {
 };
 
 export const Combobox = <T extends string | object>(
-    props: ComboboxProps<T>
+    props: ComboboxProps<T>,
 ) => {
     const [local, others] = splitProps(props as ComboboxProps<T>, [
         "label",

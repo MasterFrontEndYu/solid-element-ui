@@ -1,7 +1,7 @@
 import { TextField as KSearch } from "@kobalte/core/text-field";
 import { splitProps, type ComponentProps, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Search as SearchIcon, XCircle } from "lucide-solid";
+import { Search as SearchIcon, CircleX } from "lucide-solid";
 
 const searchStyles = tv({
     slots: {
@@ -44,8 +44,7 @@ const searchStyles = tv({
 type SearchVariants = VariantProps<typeof searchStyles>;
 
 export interface SearchProps
-    extends Omit<ComponentProps<typeof KSearch>, "class">,
-        SearchVariants {
+    extends Omit<ComponentProps<typeof KSearch>, "class">, SearchVariants {
     class?: string;
     placeholder?: string;
     allowClear?: boolean;
@@ -56,7 +55,7 @@ export const Search = (props: SearchProps) => {
     const [local, variantProps, others] = splitProps(
         props,
         ["class", "placeholder", "allowClear", "onClear", "value", "onChange"],
-        ["size", "ringColor"]
+        ["size", "ringColor"],
     );
 
     const styles = searchStyles(variantProps);
@@ -79,7 +78,7 @@ export const Search = (props: SearchProps) => {
                         onClick={() => local.onClear?.()}
                         class={styles.clear()}
                     >
-                        <XCircle
+                        <CircleX
                             fill="currentColor"
                             class="text-white dark:text-slate-950"
                         />

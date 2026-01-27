@@ -26,8 +26,7 @@ const hoverCardStyles = tv({
 type HoverCardVariants = VariantProps<typeof hoverCardStyles>;
 
 export interface HoverCardProps
-    extends ComponentProps<typeof KHoverCard>,
-        HoverCardVariants {
+    extends ComponentProps<typeof KHoverCard>, HoverCardVariants {
     trigger: JSX.Element;
     showArrow?: boolean;
 }
@@ -36,7 +35,7 @@ export const HoverCard = (props: HoverCardProps) => {
     const [local, variantProps, others] = splitProps(
         props,
         ["trigger", "children", "showArrow"],
-        ["size"]
+        ["size"],
     );
 
     const styles = hoverCardStyles({ size: variantProps.size });

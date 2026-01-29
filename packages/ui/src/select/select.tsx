@@ -14,7 +14,7 @@ const selectStyles = tv({
         ],
         content: [
             "relative z-50 min-w-[8rem] overflow-hidden rounded-md border border-slate-200 bg-white text-slate-950 shadow-md",
-            "animate-in fade-in-80 slide-in-from-top-1 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50",
+            "data-[expanded]:animate-in data-[closed]:animate-out dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50",
         ],
         listbox: "p-1",
         item: [

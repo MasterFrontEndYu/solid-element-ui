@@ -18,7 +18,7 @@ const segmentedStyles = tv({
         indicator:
             "absolute z-0 bg-white shadow-sm rounded-md transition-all duration-200 ease-in-out dark:bg-slate-950",
         label: "mb-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-        itemLabel: "flex items-center justify-center",
+        itemLabel: "flex w-full cursor-pointer items-center justify-center",
     },
     variants: {
         size: {

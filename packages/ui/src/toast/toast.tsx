@@ -6,21 +6,19 @@ import {
     type ParentProps,
 } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import {
-    X,
-    CheckCircle2,
-    AlertCircle,
-    Info,
-    AlertTriangle,
-} from "lucide-solid";
+import { X, CircleCheck, CircleAlert, Info, TriangleAlert } from "lucide-solid";
 
 const toastStyles = tv({
     slots: {
         root: [
             "group relative flex w-[400px] items-start justify-between space-x-4 overflow-hidden rounded-md border p-4 pr-8 shadow-lg transition-all",
-            "data-[opened]:animate-in data-[closed]:animate-out data-[swipe=move]:translate-x-[var(--kb-toast-swipe-move-x)]",
-            "data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-transform data-[swipe=end]:translate-x-[var(--kb-toast-swipe-end-x)]",
-            "data-[swipe=end]:animate-out data-[closed]:fade-out-80 data-[closed]:slide-out-to-right-full data-[opened]:slide-in-from-top-full",
+            "data-[opened]:animate-slide-in",
+            "data-[closed]:animate-hide",
+
+            // 滑动手势处理
+            "data-[swipe=move]:translate-x-[--kb-toast-swipe-move-x]",
+            "data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-transform data-[swipe=cancel]:duration-200 data-[swipe=cancel]:ease-out",
+            "data-[swipe=end]:animate-swipe-out",
         ],
         title: "text-sm font-semibold",
         description: "text-xs opacity-90 leading-relaxed",
@@ -65,9 +63,9 @@ export interface ToastProps
 
 const iconMap = {
     info: Info,
-    success: CheckCircle2,
-    warning: AlertTriangle,
-    error: AlertCircle,
+    success: CircleCheck,
+    warning: TriangleAlert,
+    error: CircleAlert,
 } as const; // 使用 const 断言增强类型推导
 
 // 优化：允许包裹 Children，这样在 App.tsx 顶层包裹即可
@@ -76,7 +74,7 @@ export const ToastProvider = (props: ParentProps) => {
         <>
             {props.children}
             <KToast.Region>
-                <KToast.List class="fixed bottom-4 right-4 z-[100] flex flex-col gap-3 w-full max-w-[400px] outline-none" />
+                <KToast.List class="fixed bottom-4 right-4 z-100 flex flex-col gap-3 w-full max-w-100 outline-none" />
             </KToast.Region>
         </>
     );
@@ -89,30 +87,31 @@ const Toast = (props: ToastProps) => {
         ["variant"]
     );
 
-    const styles = toastStyles(variantProps);
+    const { root, icon, content, title, description, closeButton } =
+        toastStyles(variantProps);
     // 显式回退到 info，确保 Icon 组件始终存在
     const Icon = iconMap[variantProps.variant ?? "info"];
 
     return (
         <KToast
             toastId={local.toastId}
-            class={styles.root({ class: local.class })}
+            class={root({ class: local.class })}
             {...others}
         >
-            <Icon class={styles.icon()} />
-            <div class={styles.content()}>
+            <Icon class={icon()} />
+            <div class={content()}>
                 <Show when={local.title}>
-                    <KToast.Title class={styles.title()}>
+                    <KToast.Title class={title()}>
                         {local.title}
                     </KToast.Title>
                 </Show>
                 <Show when={local.description}>
-                    <KToast.Description class={styles.description()}>
+                    <KToast.Description class={description()}>
                         {local.description}
                     </KToast.Description>
                 </Show>
             </div>
-            <KToast.CloseButton class={styles.closeButton()}>
+            <KToast.CloseButton class={closeButton()}>
                 <X size={16} />
             </KToast.CloseButton>
         </KToast>

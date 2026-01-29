@@ -12,13 +12,13 @@ const popoverStyles = tv({
         content: [
             "z-50 w-72 rounded-md border bg-white p-4 shadow-md outline-none antialiased",
             "dark:bg-slate-950 dark:border-slate-800 dark:text-slate-50",
-            "animate-in fade-in zoom-in-95 duration-200",
+            "data-[expanded]:animate-in data-[closed]:animate-out",
         ],
         arrow: "fill-white stroke-slate-200 dark:fill-slate-950 dark:stroke-slate-800",
     },
 });
 
-const s = popoverStyles();
+const {content, arrow} = popoverStyles();
 
 export interface PopoverProps extends ComponentProps<typeof KPopover> {
     trigger: JSX.Element;
@@ -35,8 +35,8 @@ export const Popover = (props: PopoverProps) => {
             </KPopover.Trigger>
 
             <KPopover.Portal>
-                <KPopover.Content class={s.content()}>
-                    <KPopover.Arrow class={s.arrow()} />
+                <KPopover.Content class={content()}>
+                    <KPopover.Arrow class={arrow()} />
 
                     <div class="flex">
                         <KPopover.Title>{local.title}</KPopover.Title>

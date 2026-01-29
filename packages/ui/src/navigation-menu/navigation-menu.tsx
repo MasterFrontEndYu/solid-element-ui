@@ -7,7 +7,6 @@ import { tv } from "tailwind-variants";
 const navStyles = tv({
     slots: {
         root: "relative z-10 flex w-full justify-center antialiased",
-        // Kobalte NavigationMenu 本身就是 ul 结构，不需要多余的 List
         trigger: [
             "group inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all",
             "hover:bg-slate-100 hover:text-slate-900 data-[state=open]:bg-slate-100/50",
@@ -20,7 +19,7 @@ const navStyles = tv({
     },
 });
 
-const s = navStyles();
+const { root, trigger, content, viewport } = navStyles();
 
 interface NavItem {
     title: string;
@@ -37,7 +36,7 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
     const [local, others] = splitProps(props, ["items", "class"]);
 
     return (
-        <KNavigationMenu class={s.root({ class: local.class })} {...others}>
+        <KNavigationMenu class={root({ class: local.class })} {...others}>
             <For each={local.items}>
                 {(item) => (
                     <KNavigationMenu.Menu>
@@ -47,13 +46,13 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
                                 <KNavigationMenu.Trigger
                                     as="a"
                                     href={item.href}
-                                    class={s.trigger()}
+                                    class={trigger()}
                                 >
                                     {item.title}
                                 </KNavigationMenu.Trigger>
                             }
                         >
-                            <KNavigationMenu.Trigger class={s.trigger()}>
+                            <KNavigationMenu.Trigger class={trigger()}>
                                 {item.title}
                                 <svg
                                     class="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180"
@@ -70,7 +69,7 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
                                 </svg>
                             </KNavigationMenu.Trigger>
                             <KNavigationMenu.Portal>
-                                <KNavigationMenu.Content class={s.content()}>
+                                <KNavigationMenu.Content class={content()}>
                                     {item.content}
                                 </KNavigationMenu.Content>
                             </KNavigationMenu.Portal>
@@ -78,7 +77,9 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
                     </KNavigationMenu.Menu>
                 )}
             </For>
-            <KNavigationMenu.Viewport class={s.viewport()} />
+            <KNavigationMenu.Viewport class={viewport()}>
+                <KNavigationMenu.Arrow />
+            </KNavigationMenu.Viewport>
         </KNavigationMenu>
     );
 };

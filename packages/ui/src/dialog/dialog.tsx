@@ -8,11 +8,16 @@ import { X } from "lucide-solid";
 
 const dialogStyles = tv({
     slots: {
-        overlay:
+        overlay: [
             "fixed inset-0 z-50 bg-black/50 backdrop-blur-sm animate-in fade-in-0 duration-200",
+            "data-[expanded]:animate-in data-[closed]:animate-out",
+        ],
         content: [
-            "fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-zinc-200 bg-white p-6 shadow-lg sm:rounded-lg",
-            "animate-in fade-in-0 zoom-in-95 duration-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50",
+            [
+                "fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-zinc-200 bg-white p-6 shadow-lg sm:rounded-lg",
+                "animate-in fade-in-0 zoom-in-95 duration-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50",
+                "data-[expanded]:animate-in data-[closed]:animate-out",
+            ],
         ],
         title: "text-lg font-semibold leading-none text-zinc-950 dark:text-zinc-50",
         description: "text-sm text-zinc-500 dark:text-zinc-400 mt-2",

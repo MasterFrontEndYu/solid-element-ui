@@ -49,16 +49,15 @@ export const Progress = (props: ProgressProps) => {
         ["size", "radius"]
     );
 
-    const s = () =>
-        progressStyles({
-            size: variantProps.size,
-            radius: variantProps.radius,
-        });
+    const { root, labelContainer, track, fill } = progressStyles({
+        size: variantProps.size,
+        radius: variantProps.radius,
+    });
 
     return (
-        <KProgress class={s().root({ class: local.class })} {...others}>
+        <KProgress class={root({ class: local.class })} {...others}>
             <Show when={local.label || local.showValue}>
-                <div class={s().labelContainer()}>
+                <div class={labelContainer()}>
                     <Show when={local.label}>
                         <KProgress.Label>{local.label}</KProgress.Label>
                     </Show>
@@ -68,8 +67,11 @@ export const Progress = (props: ProgressProps) => {
                 </div>
             </Show>
 
-            <KProgress.Track class={s().track()}>
-                <KProgress.Fill class={s().fill()} />
+            <KProgress.Track class={track()}>
+                <KProgress.Fill
+                    class={fill()}
+                    style={{ width: "var(--kb-progress-fill-width)" }}
+                />
             </KProgress.Track>
         </KProgress>
     );

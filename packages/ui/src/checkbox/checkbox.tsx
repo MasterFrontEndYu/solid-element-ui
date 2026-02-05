@@ -3,8 +3,7 @@ import { splitProps, type ComponentProps, type JSX } from "solid-js";
 import { tv } from "tailwind-variants";
 import { Check } from "lucide-solid";
 
-// TODO 添加 <Checkbox.Description /> <Checkbox.ErrorMessage />的处理情况
-// 添加checkbox 的几种形状尺寸
+// TODO 添加checkbox 的几种形状尺寸,看情况吧
 
 	
 

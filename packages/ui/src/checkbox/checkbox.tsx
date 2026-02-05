@@ -20,17 +20,23 @@ const checkboxStyles = tv({
         ],
         label: "text-sm font-medium leading-none select-none data-[disabled]:text-zinc-400",
         indicator: "h-3.5 w-3.5",
+        description: "text-sm text-zinc-500",
+        errorMessage:"text-sm text-red-500",
     },
 });
 
-const { root, control, label, indicator } = checkboxStyles();
-
+const { root, control, label, indicator, description, errorMessage } = checkboxStyles();
 export interface CheckboxProps extends ComponentProps<typeof KCheckbox> {
     label?: JSX.Element;
 }
 
 export const Checkbox = (props: CheckboxProps) => {
-    const [local, others] = splitProps(props, ["label", "class"]);
+    const [local, others] = splitProps(props, [
+        "label",
+        "class",
+        "description",
+        "errorMessage",
+    ]);
 
     return (
         <KCheckbox class={root({ class: local.class })} {...others}>
@@ -43,6 +49,12 @@ export const Checkbox = (props: CheckboxProps) => {
             {local.label && (
                 <KCheckbox.Label class={label()}>{local.label}</KCheckbox.Label>
             )}
+            <KCheckbox.Description class={description()}>
+                {local.description}
+            </KCheckbox.Description>
+            <KCheckbox.ErrorMessage class={errorMessage()}>
+                {local.errorMessage}
+            </KCheckbox.ErrorMessage>
         </KCheckbox>
     );
 };

@@ -1,6 +1,6 @@
 {
     "name": "solid-element-ui",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "type": "module",
     "license": "MIT",
     "author": "sanguogege",
@@ -38,7 +38,7 @@
             "default": "./dist/index.js"
         },
         "./styles": "./src/index.css",
-        "./index.css": "./dist/index.css" 
+        "./index.css": "./dist/index.css"
     },
     "source": "./src/index.tsx",
     "scripts": {

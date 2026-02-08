@@ -15,6 +15,7 @@
         "jsx": "preserve",
         "jsxImportSource": "solid-js",
         "declaration": true,
+        "emitDeclarationOnly": true,
         "declarationDir": "dist",
         "types": ["solid-js"],
         /* Linting */

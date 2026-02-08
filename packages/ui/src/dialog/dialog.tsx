@@ -78,7 +78,6 @@ export const Dialog = (props: DialogProps) => {
                     class={content({ class: local.class })}
                     style={{ "pointer-events": "auto" }}
                 >
-                    {/* 头部区域 */}
                     <div class="flex justify-between items-center">
                         <KDialog.Title class={title()}>
                             {local.title}
@@ -94,7 +93,7 @@ export const Dialog = (props: DialogProps) => {
                         </KDialog.Description>
                     </Show>
 
-                    <div class="mt-4">{local.children}</div>
+                    <div class="mt-6">{local.children}</div>
                    
                 </KDialog.Content>
             </KDialog.Portal>

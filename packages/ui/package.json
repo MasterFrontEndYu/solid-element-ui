@@ -25,6 +25,7 @@
     },
     "files": [
         "dist",
+        "src",
         "README.md"
     ],
     "main": "./dist/index.js",
@@ -33,11 +34,10 @@
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
-            "solid": "./src/index.tsx",
             "import": "./dist/index.js",
+            "solid": "./src/index.tsx",
             "default": "./dist/index.js"
         },
-        "./styles": "./src/index.css",
         "./index.css": "./dist/index.css"
     },
     "source": "./src/index.tsx",

@@ -5,13 +5,11 @@ export const accordionData = [
     { value: "2", title: "第二项", content: "内容部分" },
 ];
 
-
 export const navItems = [
     { title: "首页", href: "/" },
     { title: "组件库", href: "/components" },
     { title: "面包屑", current: true },
 ];
-
 
 export const menuItems = [
     { label: "返回", onClick: () => console.log("Back") },
@@ -27,7 +25,6 @@ export const menuItems = [
     { separator: true },
     { label: "检查", onClick: () => console.log("Inspect") },
 ];
-
 
 export const profileMenu = [
     { label: "个人资料", onClick: () => console.log("Profile") },
@@ -55,7 +52,6 @@ export const selectOptions = [
     { label: "Banana", value: "banana" },
     { label: "Blueberry", value: "blueberry", disabled: true },
 ];
-
 
 export const tabOptions = [
     { value: "account", label: "账户", content: "这里是账户设置内容。" },

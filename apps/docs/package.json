@@ -16,7 +16,7 @@
         "lucide-solid": "^0.562.0",
         "remark-gfm": "3.0.1",
         "solid-element-ui": "*",
-        "solid-js": "^1.9.5",
+        "solid-js": "^1.9.10",
         "solid-mdx": "^0.0.7",
         "vinxi": "^0.5.7"
     },

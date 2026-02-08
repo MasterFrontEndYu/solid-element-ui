@@ -34,8 +34,12 @@
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
-            "import": "./dist/index.js",
             "solid": "./src/index.tsx",
+            "import": {
+                "node": "./dist/index.js",
+                "default": "./dist/index.js"
+            },
+            "browser": "./dist/index.js",
             "default": "./dist/index.js"
         },
         "./index.css": "./dist/index.css"

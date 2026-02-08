@@ -1,4 +1,6 @@
 import { Toast as KToast, toaster } from "@kobalte/core/toast";
+
+import { isServer } from "solid-js/web";
 import {
     splitProps,
     type ComponentProps,
@@ -73,7 +75,6 @@ const iconMap = {
     error: CircleAlert,
 } as const; // 使用 const 断言增强类型推导
 
-// 优化：允许包裹 Children，这样在 App.tsx 顶层包裹即可
 export const ToastProvider = (props: ParentProps) => {
     return (
         <>
@@ -124,5 +125,8 @@ const Toast = (props: ToastProps) => {
 };
 
 export const showToast = (props: Omit<ToastProps, "toastId">) => {
+    if (isServer) {
+        return { toastId: () => "server-id" }; // 给个假实现，不报错就行
+    }
     return toaster.show((data) => <Toast toastId={data.toastId} {...props} />);
 };

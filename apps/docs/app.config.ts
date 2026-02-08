@@ -20,7 +20,16 @@ export default defineConfig({
             tailwindcss(),
         ],
         ssr: {
-            noExternal: ["solid-element-ui"],
+            noExternal: [
+                "solid-element-ui",
+                "solid-js",
+                "@kobalte/core",
+                "lucide-solid",
+            ],
+        },
+        resolve: {
+            // 显式包含 use 可能存在的路径
+            conditions: ["solid", "import", "browser", "node"],
         },
     },
 });

@@ -35,10 +35,10 @@
             "types": "./dist/index.d.ts",
             "solid": "./src/index.tsx",
             "import": "./dist/index.js",
-            "default": "./src/index.tsx"
+            "default": "./dist/index.js"
         },
         "./styles": "./src/index.css",
-        "./dist/index.css": "./dist/index.css"
+        "./index.css": "./dist/index.css" 
     },
     "source": "./src/index.tsx",
     "scripts": {

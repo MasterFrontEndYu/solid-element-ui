@@ -13,7 +13,8 @@
         --app-text-main: var(--color-zinc-950);  /* 应用主文字色 */
         --app-text-muted: var(--color-zinc-600); /* 应用次级文字色*/
         --app-border: var(--color-zinc-500); /* 应用边框色*/
-        --app-ring: var(--color-zinc-400);
+        --app-border-light: var(--color-zinc-300); /* 应用浅边框色 */
+        --app-ring: var(--color-zinc-300);
         --app-text-reversal: var(--color-zinc-100); /* 应用反转文字色 */
      
     }
@@ -128,6 +129,7 @@
     --color-main: var(--app-text-main);
     --color-muted: var(--app-text-muted);
     --color-base: var(--app-border);
+    --color-light: var(--app-border-light);
     --radius-app: 0.75rem;
 
     /* 注册动画到主题 */

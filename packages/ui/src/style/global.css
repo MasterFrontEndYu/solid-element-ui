@@ -7,19 +7,20 @@
         --warning: var(--color-orange-600);
         --danger: var(--color-red-600);
 
-        --app-bg: var(--color-white);  /* 应用背景色 */
+        --app-bg: var(--color-white); /* 应用背景色 */
+        --app-bg-reveral: var(--color-zinc-900); /* 应用反转背景色 */
         --app-foreground: var(--color-zinc-100); /* 应用前景色 */
-        --app-text-main: var(--color-zinc-950);  /* 应用主文字色 */
+        --app-text-main: var(--color-zinc-950); /* 应用主文字色 */
         --app-text-muted: var(--color-zinc-600); /* 应用次级文字色*/
         --app-border: var(--color-zinc-500); /* 应用边框色*/
         --app-border-light: var(--color-zinc-300); /* 应用浅边框色 */
         --app-ring: var(--color-zinc-300);
         --app-text-reversal: var(--color-zinc-100); /* 应用反转文字色 */
-     
     }
 
     [data-theme="dark"] {
         --app-text-reversal: var(--color-zinc-950);
+        --app-bg-reveral: var(--color-zinc-50);
         --app-bg: var(--color-zinc-950);
         --app-text-main: var(--color-zinc-50);
         --app-text-muted: var(--color-zinc-400);
@@ -32,7 +33,7 @@
         --app-text-main: #f3e5d8;
         --app-ring: #8b5e3c;
     }
-    
+
     @keyframes accordion-down {
         from {
             height: 0;
@@ -124,6 +125,7 @@
 
     --color-reversal: var(--app-text-reversal);
     --color-foreground: var(--app-foreground);
+    --color-reversal-bg: var(--app-bg-reveral);
     --color-app: var(--app-bg);
     --color-main: var(--app-text-main);
     --color-muted: var(--app-text-muted);

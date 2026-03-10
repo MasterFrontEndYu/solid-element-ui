@@ -15,7 +15,7 @@ const comboboxStyles = tv(
             input: "h-9 w-full bg-transparent px-3 py-1 text-sm outline-none placeholder:text-zinc-500 disabled:cursor-not-allowed",
             trigger: "flex h-9 w-9 items-center justify-center text-zinc-500",
             content: [
-                "z-50 min-w-[8rem] overflow-hidden rounded-md border border-base bg-app text-zinc-950 shadow-md animate-in fade-in-0 zoom-in-95   dark:text-zinc-50",
+                "z-50 min-w-[8rem] overflow-hidden rounded-md border border-base bg-app text-zinc-950 shadow-md animate-in zoom-in-95   dark:text-zinc-50",
                 "data-[expanded]:animate-in data-[closed]:animate-out",
             ],
             listbox: "p-1",

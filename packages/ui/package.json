@@ -49,15 +49,15 @@
         "build": "tsc -b && vite build"
     },
     "peerDependencies": {
-        "solid-js": "^1.9.11"
+        "solid-js": "^1.9.13"
     },
     "dependencies": {
         "@kobalte/core": "^0.13.11",
-        "lucide-solid": "^0.577.0",
-        "tailwind-merge": "^3.5.0",
+        "lucide-solid": "^1.16.0",
+        "tailwind-merge": "^3.6.0",
         "tailwind-variants": "^3.2.2"
     },
     "devDependencies": {
-        "@tailwindcss/vite": "*"
+        "@tailwindcss/vite": "^4.3.0"
     }
 }

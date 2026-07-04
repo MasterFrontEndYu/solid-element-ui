@@ -15,7 +15,7 @@
     "@vinxi/plugin-mdx": "^3.7.2",
     "lucide-solid": "^1.23.0",
     "remark-gfm": "4.0.1",
-    "solid-element-ui": "*",
+    "solid-element-ui": "workspace:*",
     "solid-js": "^1.9.14",
     "solid-mdx": "^0.0.7",
     "vinxi": "^0.5.11"

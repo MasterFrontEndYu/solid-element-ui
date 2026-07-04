@@ -1,7 +1,29 @@
-# solid-element-ui
+# Vite+ Monorepo Starter
 
-###  All of kobalte components have been encapsulated, but the writing is still not fully completed.
+A starter for creating a Vite+ monorepo.
 
-### The details of the component still need to be revised and tested.
+## Development
 
-## new system
+- Check everything is ready:
+
+```bash
+vp run ready
+```
+
+- Run the tests:
+
+```bash
+vp run -r test
+```
+
+- Build the monorepo:
+
+```bash
+vp run -r build
+```
+
+- Run the development server:
+
+```bash
+vp run dev
+```

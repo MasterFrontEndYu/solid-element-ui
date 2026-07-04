@@ -1,37 +1,37 @@
 {
-    "name": "solid-element-ui-monorepo",
-    "version": "0.0.0",
-    "private": true,
-    "devDependencies": {
-        "@changesets/cli": "^2.31.0",
-        "@types/node": "^25.9.1",
-        "solid-js": "^1.9.13",
-        "turbo": "^2.9.14",
-        "typescript": "~6.0.3",
-        "vite": "^8.0.13",
-        "vite-plugin-dts": "^5.0.1",
-        "vite-plugin-solid": "^2.11.12"
-    },
-    "packageManager": "bun@1.3.5",
-    "scripts": {
-        "dev": "turbo dev",
-        "build": "turbo build",
-        "test:ui": "vitest",
-        "change": "bun changeset",
-        "version": "bun changeset version",
-        "status": "bun changeset status",
-        "gen": "node scripts/gen-component.ts",
-        "clean": "turbo run clean && rm -rf node_modules",
-        "lint": "turbo lint",
-        "release": "turbo build --filter=solid-element-ui && turbo lint && changeset publish"
-    },
-    "workspaces": [
-        "apps/*",
-        "packages/*"
-    ],
-    "dependencies": {
-        "@tailwindcss/vite": "^4.3.0",
-        "lucide-solid": "^1.16.0",
-        "tailwindcss": "^4.3.0"
+  "name": "solid-element-ui",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "tools/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "ready": "vp check && vp run -r test && vp run -r build",
+    "dev": "vp run docs#dev",
+    "prepare": "vp config"
+  },
+  "devDependencies": {
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "overrides": {
+    "vite": "catalog:"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "bun",
+      "version": "1.3.14",
+      "onFail": "download"
     }
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "catalog": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@0.2.2",
+    "vite-plus": "0.2.2"
+  }
 }

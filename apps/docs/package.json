@@ -1,29 +1,25 @@
 {
-  "name": "docs",
-  "private": true,
+  "name": "example-with-mdx",
   "type": "module",
   "scripts": {
-    "dev": "vinxi dev",
-    "build": "vinxi build",
-    "start": "vinxi start"
+    "dev": "vp dev",
+    "build": "tsc && vp build",
+    "preview": "vp preview"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^3.1.1",
-    "@solidjs/router": "^0.16.1",
-    "@solidjs/start": "^1.3.2",
-    "@tailwindcss/typography": "^0.5.20",
-    "@vinxi/plugin-mdx": "^3.7.2",
-    "lucide-solid": "^1.23.0",
-    "remark-gfm": "4.0.1",
+    "@mdx-js/mdx": "^2.3.0",
+    "@mdx-js/rollup": "^3.0.0",
+    "@solidjs/router": "^0.15.0",
+    "@solidjs/start": "2.0.0-alpha.2",
+    "@solidjs/vite-plugin-nitro-2": "^0.1.0",
     "solid-element-ui": "workspace:*",
-    "solid-js": "^1.9.14",
+    "solid-js": "^1.9.5",
     "solid-mdx": "^0.0.7",
-    "vinxi": "^0.5.11"
+    "vite": "^8.0.0"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "*",
-    "mdast-util-gfm-table": "2.0.0",
-    "micromark-extension-gfm-table": "2.1.1",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.3.2",
     "tailwindcss": "^4.3.2"
   },
   "engines": {

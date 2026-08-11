@@ -1,7 +1,7 @@
 import { Rating as KRating } from "@kobalte/core/rating";
-import { splitProps, type ComponentProps, For, Show, Index } from "solid-js";
+import { splitProps, type ComponentProps, Show, Index } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Star, StarIcon } from "lucide-solid";
+import { StarIcon } from "lucide-solid";
 
 const ratingStyles = tv({
     slots: {

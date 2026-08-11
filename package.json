@@ -14,10 +14,10 @@
     "prepare": "vp config"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.1",
-    "@types/node": "^25.9.5",
+    "@changesets/cli": "^3.0.0",
+    "@types/node": "^26.2.0",
     "solid-js": "^1.9.14",
-    "typescript": "~6.0.3",
+    "typescript": "~7.0.2",
     "vite": "catalog:",
     "vite-plugin-dts": "^5.0.3",
     "vite-plus": "catalog:"
@@ -36,7 +36,7 @@
     "node": ">=22.18.0"
   },
   "catalog": {
-    "vite": "npm:@voidzero-dev/vite-plus-core@0.2.5",
-    "vite-plus": "0.2.5"
+    "vite": "npm:@voidzero-dev/vite-plus-core@0.2.8",
+    "vite-plus": "0.2.8"
   }
 }

@@ -1,4 +1,4 @@
-import { defineConfig } from "vite-plus";
+import { defineConfig } from "vite";
 import { nitro } from "nitro/vite";
 import { solidStart } from "@solidjs/start/config";
 import { createSolidBase } from "@kobalte/solidbase/config";
@@ -15,7 +15,7 @@ export default defineConfig({
         if (importer?.includes("@kobalte/solidbase") && id.endsWith(".js")) {
           return this.resolve(id.replace(/\.js$/, ""), importer, { skipSelf: true });
         }
-      },
+      }
     },
     solidbase.plugin({
       title: "SolidBase",
@@ -30,23 +30,23 @@ export default defineConfig({
               items: [
                 {
                   title: "Home",
-                  link: "/",
+                  link: "/"
                 },
                 {
                   title: "About",
-                  link: "/about",
-                },
-              ],
-            },
-          ],
-        },
-      },
+                  link: "/about"
+                }
+              ]
+            }
+          ]
+        }
+      }
     }),
     solidStart(solidbase.startConfig()),
     nitro({
       prerender: {
-        crawlLinks: true,
-      },
-    }),
-  ],
+        crawlLinks: true
+      }
+    })
+  ]
 });

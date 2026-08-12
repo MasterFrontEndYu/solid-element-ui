@@ -2,10 +2,10 @@
   "name": "example-with-solidbase",
   "type": "module",
   "scripts": {
-    "dev": "vp dev",
-    "build": "vp build",
+    "dev": "vite dev",
+    "build": "vite build",
     "start": "node .output/server/index.mjs",
-    "preview": "vp preview"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@iconify-json/ri": "^1.2.5",
@@ -14,12 +14,18 @@
     "@solidjs/router": "^1.0.0",
     "@solidjs/start": "^2.0.0",
     "nitro": "^3.0.260610-beta",
-    "resolve": "^1.22.12",
     "solid-js": "^1.9.14",
-    "vite": "catalog:"
+    "vite": "^8.0.0"
   },
-  "devDependencies": {},
   "engines": {
     "node": ">=24"
-  }
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.21.0",
+      "onFail": "download"
+    }
+  },
+  "devDependencies": {}
 }

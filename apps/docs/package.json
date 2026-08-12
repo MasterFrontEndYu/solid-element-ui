@@ -2,10 +2,10 @@
     "name": "example-with-solidbase",
     "type": "module",
     "scripts": {
-        "dev": "vite dev",
-        "build": "vite build",
+        "dev": "vp dev",
+        "build": "vp build",
         "start": "node .output/server/index.mjs",
-        "preview": "vite preview"
+        "preview": "vp preview"
     },
     "dependencies": {
         "solid-element-ui": "workspace:*",
@@ -16,8 +16,8 @@
         "nitro": "^3.0.260610-beta",
         "solid-js": "^1.9.14",
         "resolve": "^1.22.12",
-        "vite-plus": "catalog:",
-        "vite": "catalog:"
+        "vite-plus": "^0.2.9",
+        "vite": "^0.2.9"
     },
     "overrides": {
         "@iconify-json/ri": "^1.2.5",

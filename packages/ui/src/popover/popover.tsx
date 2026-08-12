@@ -8,51 +8,47 @@ import { tv } from "tailwind-variants";
 // trigger用内部，而其他放在标签属性
 
 const popoverStyles = tv(
-    {
-        slots: {
-            content: [
-                "z-50 w-72 rounded-md border border-light bg-app p-4 shadow-md outline-none antialiased text-main",
-                "data-[expanded]:animate-in data-[closed]:animate-out",
-            ],
-            arrow: "fill-app stroke-slate-200 dark:stroke-slate-800",
-        },
+  {
+    slots: {
+      content: [
+        "z-50 w-72 rounded-md border border-light bg-app p-4 shadow-md outline-none antialiased text-main",
+        "data-[expanded]:animate-in data-[closed]:animate-out",
+      ],
+      arrow: "fill-app stroke-slate-200 dark:stroke-slate-800",
     },
-    {
-        twMerge: true,
-    },
+  },
+  {
+    twMerge: true,
+  },
 );
 
-const {content, arrow} = popoverStyles();
+const { content, arrow } = popoverStyles();
 
 export interface PopoverProps extends ComponentProps<typeof KPopover> {
-    trigger: JSX.Element;
-    title: string;
+  trigger: JSX.Element;
+  title: string;
 }
 
 export const Popover = (props: PopoverProps) => {
-    const [local, others] = splitProps(props, ["trigger", "children", "title"]);
+  const [local, others] = splitProps(props, ["trigger", "children", "title"]);
 
-    return (
-        <KPopover {...others}>
-            <KPopover.Trigger class="inline-flex">
-                {local.trigger}
-            </KPopover.Trigger>
+  return (
+    <KPopover {...others}>
+      <KPopover.Trigger class="inline-flex">{local.trigger}</KPopover.Trigger>
 
-            <KPopover.Portal>
-                <KPopover.Content class={content()}>
-                    <KPopover.Arrow class={arrow()} />
+      <KPopover.Portal>
+        <KPopover.Content class={content()}>
+          <KPopover.Arrow class={arrow()} />
 
-                    <div class="flex">
-                        <KPopover.Title>{local.title}</KPopover.Title>
-                        <KPopover.CloseButton>
-                            <CrossIcon />
-                        </KPopover.CloseButton>
-                    </div>
-                    <KPopover.Description>
-                        {local.children}
-                    </KPopover.Description>
-                </KPopover.Content>
-            </KPopover.Portal>
-        </KPopover>
-    );
+          <div class="flex">
+            <KPopover.Title>{local.title}</KPopover.Title>
+            <KPopover.CloseButton>
+              <CrossIcon />
+            </KPopover.CloseButton>
+          </div>
+          <KPopover.Description>{local.children}</KPopover.Description>
+        </KPopover.Content>
+      </KPopover.Portal>
+    </KPopover>
+  );
 };

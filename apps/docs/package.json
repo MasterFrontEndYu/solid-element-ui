@@ -1,28 +1,25 @@
 {
-  "name": "example-with-mdx",
+  "name": "example-with-solidbase",
   "type": "module",
   "scripts": {
-    "dev": "vp dev",
-    "build": "tsc && vp build",
-    "preview": "vp preview"
+    "dev": "vite dev",
+    "build": "vite build",
+    "start": "node .output/server/index.mjs",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^2.3.0",
-    "@mdx-js/rollup": "^3.0.0",
-    "@solidjs/router": "^0.15.0",
-    "@solidjs/start": "2.0.0-alpha.2",
-    "@solidjs/vite-plugin-nitro-2": "^0.1.0",
-    "solid-element-ui": "workspace:*",
-    "solid-js": "^1.9.5",
-    "solid-mdx": "^0.0.7",
-    "vite": "catalog:"
+    "@iconify-json/ri": "^1.2.5",
+    "@kobalte/solidbase": "https://pkg.pr.new/kobaltedev/solidbase/@kobalte/solidbase@5b1e2c1",
+    "@solidjs/meta": "^0.29.4",
+    "@solidjs/router": "^1.0.0",
+    "@solidjs/start": "^2.0.0",
+    "nitro": "^3.0.260610-beta",
+    "resolve": "^1.22.12",
+    "solid-js": "^1.9.14",
+    "vite": "^8.0.0"
   },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.20",
-    "@tailwindcss/vite": "^4.3.2",
-    "tailwindcss": "^4.3.2"
-  },
+  "devDependencies": {},
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   }
 }

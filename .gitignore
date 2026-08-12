@@ -23,6 +23,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+docsold
 
 # AI agent worktrees
 .claude/worktrees/

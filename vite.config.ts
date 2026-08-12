@@ -1,5 +1,5 @@
 import { defineConfig } from "vite-plus";
-import consolePipe from 'vite-plugin-console-pipe';
+import consolePipe from "vite-plugin-console-pipe";
 
 export default defineConfig({
   staged: {

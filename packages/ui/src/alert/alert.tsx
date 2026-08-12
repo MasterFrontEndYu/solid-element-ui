@@ -1,86 +1,85 @@
 import { Alert as KAlert } from "@kobalte/core/alert";
-import { splitProps, type JSX, type ComponentProps } from "solid-js";
+import { splitProps, type ComponentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { Info, CircleAlert, CircleCheck, CircleX } from "lucide-solid";
 
 const alertStyles = tv(
-    {
-        slots: {
-            root: "relative w-full rounded-lg border p-4 flex gap-3 antialiased text-main",
-            content: "flex flex-col gap-1 text-left",
-            title: "font-semibold leading-none tracking-tight",
-            children: "text-md leading-relaxed opacity-90",
-            icon: "shrink-0",
-        },
-        variants: {
-            variant: {
-                info: {
-                    root: "bg-primary/20 border-primary/80",
-                    icon: "text-primary",
-                },
-                success: {
-                    root: "bg-success/20 border-success/80 ",
-                    icon: "text-success",
-                },
-                warning: {
-                    root: "bg-warning/20 border-warning/80 ",
-                    icon: "text-warning",
-                },
-                danger: {
-                    root: "bg-danger/20 border-danger/80 ",
-                    icon: "text-danger",
-                },
-            },
-        },
-        defaultVariants: {
-            variant: "info",
-        },
+  {
+    slots: {
+      root: "relative w-full rounded-lg border p-4 flex gap-3 antialiased text-main",
+      content: "flex flex-col gap-1 text-left",
+      title: "font-semibold leading-none tracking-tight",
+      children: "text-md leading-relaxed opacity-90",
+      icon: "shrink-0",
     },
-    {
-        twMerge: true,
+    variants: {
+      variant: {
+        info: {
+          root: "bg-primary/20 border-primary/80",
+          icon: "text-primary",
+        },
+        success: {
+          root: "bg-success/20 border-success/80 ",
+          icon: "text-success",
+        },
+        warning: {
+          root: "bg-warning/20 border-warning/80 ",
+          icon: "text-warning",
+        },
+        danger: {
+          root: "bg-danger/20 border-danger/80 ",
+          icon: "text-danger",
+        },
+      },
     },
+    defaultVariants: {
+      variant: "info",
+    },
+  },
+  {
+    twMerge: true,
+  },
 );
 
 type AlertVariants = VariantProps<typeof alertStyles>;
 
-export interface AlertProps
-    extends ComponentProps<typeof KAlert>, AlertVariants {
-    title?: string;
-    icon?: boolean | JSX.Element;
+export interface AlertProps extends ComponentProps<typeof KAlert>, AlertVariants {
+  title?: string;
+  icon?: boolean;
 }
 
 const iconMap = {
-    info: Info,
-    success: CircleCheck,
-    warning: CircleAlert,
-    danger: CircleX,
+  info: Info,
+  success: CircleCheck,
+  warning: CircleAlert,
+  danger: CircleX,
 };
 
 export const Alert = (props: AlertProps) => {
-    const [local, variantProps, others] = splitProps(
-        props,
-        ["title", "icon", "children", "class"],
-        ["variant"],
-    );
+  const [local, variantProps, others] = splitProps(
+    props,
+    ["title", "icon", "children", "class"],
+    ["variant"],
+  );
 
-    const { root, content, title, children, icon } = alertStyles(variantProps);
+  const { root, content, title, children, icon } = alertStyles(variantProps);
 
-    const RenderedIcon = () => {
-        if (local.icon === false) return null;
-        if (typeof local.icon === "object") return local.icon;
+  const RenderedIcon = () => {
+    if (local.icon === false) return null;
+    if (typeof local.icon === "object") return local.icon;
 
-        const Icon = iconMap[variantProps.variant || "info"];
-        return <Icon size={18} class={icon()} />;
-    };
+    const Icon = iconMap[variantProps.variant || "info"];
+    return <Icon size={18} class={icon()} />;
+  };
 
-    // 5. 渲染组件
-    return (
-        <KAlert class={`${root()} ${local.class || ""}`.trim()} {...others}>
-            <RenderedIcon />
-            <div class={content()}>
-                {local.title && <h5 class={title()}>{local.title}</h5>}
-                <div class={children()}>{local.children}</div>
-            </div>
-        </KAlert>
-    );
+  // 5. 渲染组件
+  return (
+    <KAlert class={`${root()} ${local.class || ""}`.trim()} {...others}>
+      <RenderedIcon />
+      <div class={content()}>
+        {local.title && <h5 class={title()}>{local.title}</h5>}
+        <div class={children()}>{local.children}</div>
+      </div>
+    </KAlert>
+  );
 };

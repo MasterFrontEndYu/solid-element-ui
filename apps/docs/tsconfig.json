@@ -13,9 +13,7 @@
     "types": ["vite/client"],
     "isolatedModules": true,
     "paths": {
-      "~/*": ["./src/*"],
-      "solid-element-ui": ["../../packages/ui/src/index.tsx"],
-      "solid-element-ui/*": ["../../packages/ui/src/*"]
+      "~/*": ["./src/*"]
     }
   }
 }

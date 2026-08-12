@@ -10,10 +10,20 @@
     "allowJs": true,
     "strict": true,
     "noEmit": true,
-    "types": ["vite/client"],
+    "types": [
+      "vite/client"
+    ],
     "isolatedModules": true,
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": [
+        "./src/*"
+      ],
+      "solid-element-ui": [
+        "../../packages/ui/src/index.tsx"
+      ],
+      "solid-element-ui/*": [
+        "../../packages/ui/src/*"
+      ]
     }
   }
 }

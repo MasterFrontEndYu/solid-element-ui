@@ -1,52 +1,58 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vite-plus";
 import { nitro } from "nitro/vite";
 import { solidStart } from "@solidjs/start/config";
 import { createSolidBase } from "@kobalte/solidbase/config";
-import defaultTheme from "@kobalte/solidbase/default-theme";
+import path from "path";
+import {
+  createDefaultThemeFilesystemSidebar,
+  default as defaultTheme,
+} from "@kobalte/solidbase/default-theme";
 
 const solidbase = createSolidBase(defaultTheme);
 
 export default defineConfig({
-  plugins: [
-    {
-      name: "fix-solidbase",
-      enforce: "pre",
-      resolveId(id, importer) {
-        if (importer?.includes("@kobalte/solidbase") && id.endsWith(".js")) {
-          return this.resolve(id.replace(/\.js$/, ""), importer, { skipSelf: true });
-        }
-      }
+  resolve: {
+    alias: {
+      "~/": path.resolve(__dirname, "src"),
     },
+  },
+  build: {
+    rollupOptions: {
+      external: [
+        "solid-js",
+        "solid-js/web",
+        "solid-js/store",
+        "@kobalte/core",
+        "tailwind-variants",
+        "tailwind-merge",
+      ],
+    },
+  },
+  plugins: [
     solidbase.plugin({
-      title: "SolidBase",
-      titleTemplate: ":title - SolidBase",
+      title: "solid-element-ui",
+      titleTemplate: ":title - ui",
       description: "Fully featured, fully customisable static site generation for SolidStart",
       themeConfig: {
         sidebar: {
-          "/": [
-            {
-              title: "Overview",
-              collapsed: false,
-              items: [
-                {
-                  title: "Home",
-                  link: "/"
-                },
-                {
-                  title: "About",
-                  link: "/about"
-                }
-              ]
-            }
-          ]
-        }
-      }
+          "/": createDefaultThemeFilesystemSidebar("./src/routes/", {
+            sort: (a, b) => {
+              if (a.filePath.includes("i18n-provider")) return 1;
+              if (b.filePath.includes("i18n-provider")) return -1;
+              if (a.filePath.includes("index")) return -1;
+              if (a.filePath > b.filePath) return 1;
+              if (b.filePath > a.filePath) return -1;
+              return 0;
+            },
+          }),
+        },
+      },
     }),
     solidStart(solidbase.startConfig()),
     nitro({
       prerender: {
-        crawlLinks: true
-      }
-    })
-  ]
+        crawlLinks: true,
+      },
+    }),
+  ],
 });

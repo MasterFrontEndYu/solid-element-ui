@@ -11,7 +11,7 @@
         "solid-element-ui": "workspace:*",
         "@kobalte/solidbase": "0.6.13",
         "@solidjs/meta": "^0.29.4",
-        "@solidjs/router": "^1.0.0",
+        "@solidjs/router": "^0.15.4",
         "@solidjs/start": "^2.0.0",
         "nitro": "^3.0.260610-beta",
         "solid-js": "^1.9.14",
@@ -21,7 +21,7 @@
     },
     "overrides": {
         "@iconify-json/ri": "^1.2.5",
-        "@solidjs/router": "^1.0.0"
+        "@solidjs/router": "^0.15.4"
     },
     "devDependencies": {
         "@iconify-json/ri": "^1.2.10",

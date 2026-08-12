@@ -2,10 +2,10 @@
   "name": "example-with-solidbase",
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
+    "dev": "vp dev",
+    "build": "vp build",
     "start": "node .output/server/index.mjs",
-    "preview": "vite preview"
+    "preview": "vp preview"
   },
   "dependencies": {
     "@iconify-json/ri": "^1.2.5",
@@ -16,7 +16,7 @@
     "nitro": "^3.0.260610-beta",
     "resolve": "^1.22.12",
     "solid-js": "^1.9.14",
-    "vite": "^8.0.0"
+    "vite": "catalog:"
   },
   "devDependencies": {},
   "engines": {

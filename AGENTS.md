@@ -165,7 +165,7 @@ Defined in global.css: `accordion-down`, `fade-in`, `fade-out`, `slide-in`, `col
 - **Routing**: File-based routing via `@solidjs/start/router` (FileRoutes)
 - **Content**: MDX files in `apps/docs/src/routes/` with `@vinxi/plugin-mdx` + `solid-mdx`
 - **Layout**: `app.tsx` → Nav (top bar with theme selector) + Aside (sidebar component nav) + main content
-- **Styling**: Uses `@tailwindcss/typography` — wrap demos in `not-prose` class to escape prose styles
+- **Styling**: Uses `@tailwindcss/typography` — wrap demos in `` class to escape prose styles
 - **API tables**: Manually written Markdown tables in MDX files
 - **404 route**: `[...404].mdx`
 - Route filter: `getFilteredRoutes.ts` filters out 404, color-\*, rating-group routes

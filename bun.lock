@@ -23,7 +23,6 @@
         "@solidjs/router": "^0.15.4",
         "@solidjs/start": "^2.0.0",
         "@tailwindcss/typography": "^0.5.20",
-        "@tailwindcss/vite": "^4.3.3",
         "lucide-solid": "^1.31.0",
         "nitro": "^3.0.260610-beta",
         "resolve": "^1.22.12",
@@ -35,6 +34,7 @@
       },
       "devDependencies": {
         "@iconify-json/ri": "^1.2.10",
+        "@tailwindcss/vite": "^4.3.3",
         "esbuild": "^0.28.2",
       },
     },
@@ -46,6 +46,7 @@
         "lucide-solid": "^1.31.0",
         "tailwind-merge": "^3.6.0",
         "tailwind-variants": "^3.3.1",
+        "tailwindcss": "^4.3.3",
       },
       "devDependencies": {
         "@tailwindcss/vite": "^4.3.3",

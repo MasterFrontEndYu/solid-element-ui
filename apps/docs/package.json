@@ -13,7 +13,6 @@
         "@solidjs/router": "^0.15.4",
         "@solidjs/start": "^2.0.0",
         "@tailwindcss/typography": "^0.5.20",
-        "@tailwindcss/vite": "^4.3.3",
         "lucide-solid": "^1.31.0",
         "nitro": "^3.0.260610-beta",
         "resolve": "^1.22.12",
@@ -28,6 +27,7 @@
         "@solidjs/router": "^0.15.4"
     },
     "devDependencies": {
+        "@tailwindcss/vite": "^4.3.3",
         "@iconify-json/ri": "^1.2.10",
         "esbuild": "^0.28.2"
     },

@@ -22,7 +22,8 @@
         "vite": "catalog:",
         "vite-plugin-console-pipe": "^2.1.0",
         "vite-plugin-dts": "^5.0.3",
-        "vite-plus": "catalog:"
+        "vite-plus": "catalog:",
+        "vitest": "^4.1.10"
     },
     "overrides": {
         "vite": "catalog:"

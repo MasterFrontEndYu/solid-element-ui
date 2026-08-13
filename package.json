@@ -11,7 +11,8 @@
     "scripts": {
         "ready": "vp check && vp run -r test && vp run -r build",
         "dev": "vp run docs#dev",
-        "prepare": "vp config"
+        "prepare": "vp config",
+        "test": "vp test"
     },
     "devDependencies": {
         "@changesets/cli": "^3.0.0",

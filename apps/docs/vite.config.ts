@@ -2,6 +2,9 @@ import { defineConfig } from "vite";
 import { nitro } from "nitro/vite";
 import { solidStart } from "@solidjs/start/config";
 import { createSolidBase } from "@kobalte/solidbase/config";
+
+import tailwindcss from "@tailwindcss/vite";
+
 import path from "path";
 import {
   createDefaultThemeFilesystemSidebar,
@@ -29,6 +32,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    tailwindcss(),
     solidbase.plugin({
       title: "solid-element-ui",
       titleTemplate: ":title - ui",
@@ -44,6 +48,7 @@ export default defineConfig({
               if (b.filePath > a.filePath) return -1;
               return 0;
             },
+            filter: (item) => !item.filePath.includes("index"),
           }),
         },
       },

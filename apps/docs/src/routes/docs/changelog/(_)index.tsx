@@ -3,15 +3,15 @@ import { Navigate, redirect } from "@solidjs/router";
 const target = "./0-13-x";
 
 export const route = {
-	preload() {
-		return redirect(target);
-	},
+  preload() {
+    return redirect(target);
+  },
 };
 
 export function GET() {
-	throw redirect(target);
+  return redirect(target);
 }
 
 export default function () {
-	return <Navigate href={target} />;
+  return <Navigate href={target} />;
 }

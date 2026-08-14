@@ -9,7 +9,7 @@ export const route = {
 };
 
 export function GET() {
-  throw redirect(target);
+  return redirect(target);
 }
 
 export default function () {

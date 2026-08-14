@@ -13,6 +13,8 @@ import {
 
 const solidbase = createSolidBase(defaultTheme);
 
+const collator = new Intl.Collator(undefined, { numeric: true });
+
 export default defineConfig({
   resolve: {
     alias: {
@@ -31,8 +33,18 @@ export default defineConfig({
       titleTemplate: ":title - ui",
       description: "Fully featured, fully customisable static site generation for SolidStart",
       themeConfig: {
+        nav: [
+          {
+            text: "Components",
+            link: "/docs/core",
+          },
+          {
+            text: "Changelog",
+            link: "/docs/changelog",
+          },
+        ],
         sidebar: {
-          "/": createDefaultThemeFilesystemSidebar("./src/routes/", {
+          "/docs/core": createDefaultThemeFilesystemSidebar("./src/routes/docs/core", {
             sort: (a, b) => {
               if (a.filePath.includes("i18n-provider")) return 1;
               if (b.filePath.includes("i18n-provider")) return -1;
@@ -41,8 +53,17 @@ export default defineConfig({
               if (b.filePath > a.filePath) return -1;
               return 0;
             },
-            filter: (item) => !item.filePath.includes("index"),
           }),
+          "/docs/changelog": [
+            {
+              title: "Changelog",
+              items: createDefaultThemeFilesystemSidebar("./src/routes/docs/changelog", {
+                sort: (a, b) => {
+                  return collator.compare(b.filePath, a.filePath);
+                },
+              }),
+            },
+          ],
         },
       },
     }),

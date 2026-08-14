@@ -86,7 +86,6 @@ export const AlertDialog = (props: AlertDialogProps) => {
         <KAlertDialog.Content class={content()}>
           <div class={header()}>
             <KAlertDialog.Title class={title()}>{local.title}</KAlertDialog.Title>
-            {/* 这里使用 CloseButton 是正确的，因为它专门负责“取消/关闭” */}
             <KAlertDialog.CloseButton class={closeButton()}>
               <X size={18} />
             </KAlertDialog.CloseButton>

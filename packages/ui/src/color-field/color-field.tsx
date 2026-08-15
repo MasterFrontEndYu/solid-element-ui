@@ -1,5 +1,5 @@
 import { ColorField as KColorField } from "@kobalte/core/color-field";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 
 const colorFieldStyles = tv(
@@ -32,20 +32,20 @@ export interface ColorFieldProps extends ComponentProps<typeof KColorField> {
 }
 
 export const ColorField = (props: ColorFieldProps) => {
-  const [local, others] = splitProps(props, ["label", "desc", "error", "class"]);
+  const others = omit(props, "label", "desc", "error", "class");
 
   return (
     <KColorField
-      class={root({ class: local.class })}
-      validationState={local.error ? "invalid" : "valid"}
+      class={root({ class: props.class })}
+      validationState={props.error ? "invalid" : "valid"}
       {...others}
     >
-      {local.label && <KColorField.Label class={label()}>{local.label}</KColorField.Label>}
+      {props.label && <KColorField.Label class={label()}>{props.label}</KColorField.Label>}
       <KColorField.Input class={input()} placeholder="#FFFFFF" />
-      {local.desc && !local.error && (
-        <KColorField.Description class={description()}>{local.desc}</KColorField.Description>
+      {props.desc && !props.error && (
+        <KColorField.Description class={description()}>{props.desc}</KColorField.Description>
       )}
-      <KColorField.ErrorMessage class={errorMessage()}>{local.error}</KColorField.ErrorMessage>
+      <KColorField.ErrorMessage class={errorMessage()}>{props.error}</KColorField.ErrorMessage>
     </KColorField>
   );
 };

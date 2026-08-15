@@ -1,5 +1,5 @@
 import { Badge as KBadge } from "@kobalte/core/badge";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const badgeStyles = tv(
@@ -28,13 +28,13 @@ type BadgeVariants = VariantProps<typeof badgeStyles>;
 export interface BadgeProps extends ComponentProps<typeof KBadge>, BadgeVariants {}
 
 export const Badge = (props: BadgeProps) => {
-  const [local, variantProps, others] = splitProps(props, ["class"], ["variant"]);
+  const others = omit(props, "class", "variant");
 
   return (
     <KBadge
       class={badgeStyles({
-        variant: variantProps.variant,
-        class: local.class,
+        variant: props.variant,
+        class: props.class,
       })}
       {...others}
     />

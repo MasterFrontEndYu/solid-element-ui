@@ -1,5 +1,6 @@
 import { ToggleButton as KToggle } from "@kobalte/core/toggle-button";
-import { splitProps, type JSX, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv, type VariantProps } from "tailwind-variants";
 
 // TODO 切换样式问题
@@ -44,23 +45,19 @@ export interface ToggleButtonProps
 }
 
 export const ToggleButton = (props: ToggleButtonProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["class", "children"],
-    ["variant", "size"],
-  );
+  const others = omit(props, "class", "children", "variant", "size");
 
   return (
     <KToggle
       class={toggleStyles({
-        variant: variantProps.variant,
-        size: variantProps.size,
-        class: local.class,
+        variant: props.variant,
+        size: props.size,
+        class: props.class,
       })}
       {...others}
     >
-      {(state) =>
-        typeof local.children === "function" ? (local.children as any)(state) : local.children
+      {(state: any) =>
+        typeof props.children === "function" ? (props.children as any)(state) : props.children
       }
     </KToggle>
   );

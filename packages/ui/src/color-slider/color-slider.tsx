@@ -1,5 +1,5 @@
 import { ColorSlider as KColorSlider } from "@kobalte/core/color-slider";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 
 // TODO defaultValue,还有channel 的问题
@@ -31,13 +31,13 @@ export interface ColorSliderProps extends ComponentProps<typeof KColorSlider> {
 }
 
 export const ColorSlider = (props: ColorSliderProps) => {
-  const [local, others] = splitProps(props, ["label", "showValue", "class"]);
+  const others = omit(props, "label", "showValue", "class");
 
   return (
-    <KColorSlider class={root({ class: local.class })} {...others}>
+    <KColorSlider class={root({ class: props.class })} {...others}>
       <div class="flex w-full justify-between items-center">
-        {local.label && <KColorSlider.Label class={label()}>{local.label}</KColorSlider.Label>}
-        {local.showValue && <KColorSlider.ValueLabel class={valueLabel()} />}
+        {props.label && <KColorSlider.Label class={label()}>{props.label}</KColorSlider.Label>}
+        {props.showValue && <KColorSlider.ValueLabel class={valueLabel()} />}
       </div>
       <KColorSlider.Track
         class={track()}

@@ -1,5 +1,6 @@
 import { HoverCard as KHoverCard } from "@kobalte/core/hover-card";
-import { splitProps, type ComponentProps, type JSX } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const hoverCardStyles = tv(
@@ -35,22 +36,18 @@ export interface HoverCardProps extends ComponentProps<typeof KHoverCard>, Hover
 }
 
 export const HoverCard = (props: HoverCardProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["trigger", "children", "showArrow"],
-    ["size"],
-  );
+  const others = omit(props, "trigger", "children", "showArrow", "size");
 
-  const styles = hoverCardStyles({ size: variantProps.size });
+  const styles = hoverCardStyles({ size: props.size });
 
   return (
     <KHoverCard openDelay={200} closeDelay={300} {...others}>
-      <KHoverCard.Trigger>{local.trigger}</KHoverCard.Trigger>
+      <KHoverCard.Trigger>{props.trigger}</KHoverCard.Trigger>
 
       <KHoverCard.Portal>
         <KHoverCard.Content class={styles.content()}>
-          {local.showArrow && <KHoverCard.Arrow class={styles.arrow()} />}
-          {local.children}
+          {props.showArrow && <KHoverCard.Arrow class={styles.arrow()} />}
+          {props.children}
         </KHoverCard.Content>
       </KHoverCard.Portal>
     </KHoverCard>

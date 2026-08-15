@@ -1,5 +1,5 @@
 import { Alert as KAlert } from "@kobalte/core/alert";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { Info, CircleAlert, CircleCheck, CircleX } from "lucide-solid";
 
@@ -56,29 +56,25 @@ const iconMap = {
 };
 
 export const Alert = (props: AlertProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["title", "icon", "children", "class"],
-    ["variant"],
-  );
+  const others = omit(props, "title", "icon", "children", "class", "variant");
 
-  const { root, content, title, children, icon } = alertStyles(variantProps);
+  const { root, content, title, children, icon } = alertStyles({ variant: props.variant });
 
   const RenderedIcon = () => {
-    if (local.icon === false) return null;
-    if (typeof local.icon === "object") return local.icon;
+    if (props.icon === false) return null;
+    if (typeof props.icon === "object") return props.icon;
 
-    const Icon = iconMap[variantProps.variant || "info"];
+    const Icon = iconMap[props.variant || "info"];
     return <Icon size={18} class={icon()} />;
   };
 
   // 5. 渲染组件
   return (
-    <KAlert class={`${root()} ${local.class || ""}`.trim()} {...others}>
+    <KAlert class={`${root()} ${props.class || ""}`.trim()} {...others}>
       <RenderedIcon />
       <div class={content()}>
-        {local.title && <h5 class={title()}>{local.title}</h5>}
-        <div class={children()}>{local.children}</div>
+        {props.title && <h5 class={title()}>{props.title}</h5>}
+        <div class={children()}>{props.children}</div>
       </div>
     </KAlert>
   );

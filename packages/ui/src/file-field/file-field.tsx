@@ -1,5 +1,5 @@
 import { TextField as KTextField } from "@kobalte/core/text-field";
-import { splitProps, type ComponentProps, Show, createSignal } from "solid-js";
+import { omit, type ComponentProps, Show, createSignal } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { CloudUpload } from "lucide-solid";
 
@@ -51,17 +51,23 @@ export interface FileFieldProps
 }
 
 export const FileField = (props: FileFieldProps) => {
-  const [local, variantProps, others] = splitProps(
+  const others = omit(
     props,
-    ["label", "description", "class", "accept", "multiple", "onChange"],
-    ["validationState", "isDisabled"],
+    "label",
+    "description",
+    "class",
+    "accept",
+    "multiple",
+    "onChange",
+    "validationState",
+    "isDisabled",
   );
 
   const [files, setFiles] = createSignal<File[]>([]);
   const styles = () =>
     fileFieldStyles({
-      validationState: variantProps.validationState,
-      isDisabled: variantProps.isDisabled,
+      validationState: props.validationState,
+      isDisabled: props.isDisabled,
     });
 
   const onFileChange = (e: Event) => {
@@ -69,35 +75,35 @@ export const FileField = (props: FileFieldProps) => {
     if (target.files) {
       const fileList = Array.from(target.files);
       setFiles(fileList);
-      local.onChange?.(fileList);
+      props.onChange?.(fileList);
     }
   };
 
   return (
     <KTextField
-      class={styles().root({ class: local.class })}
-      validationState={variantProps.validationState}
-      disabled={variantProps.isDisabled}
+      class={styles().root({ class: props.class })}
+      validationState={props.validationState}
+      disabled={props.isDisabled}
       {...others}
     >
-      <Show when={local.label}>
-        <KTextField.Label class={styles().label()}>{local.label}</KTextField.Label>
+      <Show when={props.label}>
+        <KTextField.Label class={styles().label()}>{props.label}</KTextField.Label>
       </Show>
 
       <label class={styles().dropzone()}>
         <KTextField.Input
           type="file"
           class="sr-only"
-          accept={local.accept}
-          multiple={local.multiple}
+          accept={props.accept}
+          multiple={props.multiple}
           onChange={onFileChange}
         />
         <CloudUpload class={styles().icon()} />
         <div class="text-sm font-medium text-slate-600 dark:text-slate-400">
           {files().length > 0 ? `已选择 ${files().length} 个文件` : "点击或拖拽上传文件"}
         </div>
-        <Show when={local.description}>
-          <p class={styles().description()}>{local.description}</p>
+        <Show when={props.description}>
+          <p class={styles().description()}>{props.description}</p>
         </Show>
       </label>
 

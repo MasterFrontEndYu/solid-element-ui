@@ -1,5 +1,5 @@
 import { TimeField as KTimeField } from "@kobalte/core/time-field";
-import { splitProps, type ComponentProps, Show } from "solid-js";
+import { omit, type ComponentProps, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const timeFieldStyles = tv({
@@ -44,35 +44,31 @@ export interface TimeFieldProps
 }
 
 export const TimeField = (props: TimeFieldProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["label", "description", "errorMessage", "class"],
-    ["size"],
-  );
+  const others = omit(props, "label", "description", "errorMessage", "class", "size");
 
-  const styles = timeFieldStyles(variantProps);
+  const styles = timeFieldStyles({ size: props.size });
 
   return (
     <KTimeField
-      class={styles.root({ class: local.class })}
-      validationState={local.errorMessage ? "invalid" : "valid"}
+      class={styles.root({ class: props.class })}
+      validationState={props.errorMessage ? "invalid" : "valid"}
       {...others}
     >
-      <Show when={local.label}>
-        <KTimeField.Label class={styles.label()}>{local.label}</KTimeField.Label>
+      <Show when={props.label}>
+        <KTimeField.Label class={styles.label()}>{props.label}</KTimeField.Label>
       </Show>
 
       <KTimeField.Input>{(segment) => <KTimeField.Segment segment={segment()} />}</KTimeField.Input>
 
-      <Show when={local.description}>
+      <Show when={props.description}>
         <KTimeField.Description class={styles.description()}>
-          {local.description}
+          {props.description}
         </KTimeField.Description>
       </Show>
 
-      <Show when={local.errorMessage}>
+      <Show when={props.errorMessage}>
         <KTimeField.ErrorMessage class={styles.errorMessage()}>
-          {local.errorMessage}
+          {props.errorMessage}
         </KTimeField.ErrorMessage>
       </Show>
     </KTimeField>

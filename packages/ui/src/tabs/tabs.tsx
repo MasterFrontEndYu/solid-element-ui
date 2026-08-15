@@ -1,5 +1,6 @@
 import { Tabs as KTabs } from "@kobalte/core/tabs";
-import { splitProps, type JSX, For } from "solid-js";
+import { omit, For } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
 
 const tabsStyles = tv(
@@ -40,12 +41,12 @@ interface TabsProps {
 }
 
 export const Tabs = (props: TabsProps) => {
-  const [local, others] = splitProps(props, ["items", "class"]);
+  const others = omit(props, "items", "class");
 
   return (
-    <KTabs class={root({ class: local.class })} {...others}>
+    <KTabs class={root({ class: props.class })} {...others}>
       <KTabs.List class={list()}>
-        <For each={local.items}>
+        <For each={props.items}>
           {(item) => (
             <KTabs.Trigger class={trigger()} value={item.value} disabled={item.disabled}>
               {item.label}
@@ -55,7 +56,7 @@ export const Tabs = (props: TabsProps) => {
         <KTabs.Indicator class={indicator()} />
       </KTabs.List>
 
-      <For each={local.items}>
+      <For each={props.items}>
         {(item) => (
           <KTabs.Content class={content()} value={item.value}>
             {item.content}

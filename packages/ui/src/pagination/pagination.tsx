@@ -1,5 +1,5 @@
 import { Pagination as KPagination } from "@kobalte/core/pagination";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 import { ChevronLeft, ChevronRight, Ellipsis } from "lucide-solid";
 
@@ -32,12 +32,12 @@ export interface PaginationProps extends ComponentProps<typeof KPagination> {}
 
 export const Pagination = (props: PaginationProps) => {
   // 显式提取 count 以满足类型约束，同时清理 others
-  const [local, others] = splitProps(props, ["class", "count"]);
+  const others = omit(props, "class", "count");
 
   return (
     <KPagination
-      class={s.root({ class: local.class })}
-      count={local.count}
+      class={s.root({ class: props.class })}
+      count={props.count}
       {...others}
       itemComponent={(p) => (
         <KPagination.Item page={p.page} class={s.item()}>

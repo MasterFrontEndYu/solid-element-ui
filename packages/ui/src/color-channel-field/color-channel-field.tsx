@@ -1,5 +1,5 @@
 import { ColorChannelField as KColorChannelField } from "@kobalte/core/color-channel-field";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 
 const fieldStyles = tv(
@@ -29,12 +29,12 @@ export interface ColorChannelFieldProps extends ComponentProps<typeof KColorChan
 // TODO channel 问题
 
 export const ColorChannelField = (props: ColorChannelFieldProps) => {
-  const [local, others] = splitProps(props, ["label", "class"]);
+  const others = omit(props, "label", "class");
 
   return (
-    <KColorChannelField class={root({ class: local.class })} {...others}>
-      {local.label && (
-        <KColorChannelField.Label class={label()}>{local.label}</KColorChannelField.Label>
+    <KColorChannelField class={root({ class: props.class })} {...others}>
+      {props.label && (
+        <KColorChannelField.Label class={label()}>{props.label}</KColorChannelField.Label>
       )}
       <KColorChannelField.Input class={input()} />
     </KColorChannelField>

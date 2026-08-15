@@ -1,5 +1,5 @@
 import { Separator as KSeparator } from "@kobalte/core/separator";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const separatorStyles = tv(
@@ -42,21 +42,17 @@ export interface SeparatorProps extends ComponentProps<typeof KSeparator>, Separ
 }
 
 export const Separator = (props: SeparatorProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["class"],
-    ["orientation", "thickness", "variant"],
-  );
+  const others = omit(props, "class", "orientation", "thickness", "variant");
 
   return (
     <KSeparator
       class={separatorStyles({
-        orientation: variantProps.orientation,
-        thickness: variantProps.thickness,
-        variant: variantProps.variant,
-        class: local.class,
+        orientation: props.orientation,
+        thickness: props.thickness,
+        variant: props.variant,
+        class: props.class,
       })}
-      orientation={variantProps.orientation}
+      orientation={props.orientation}
       {...others}
     />
   );

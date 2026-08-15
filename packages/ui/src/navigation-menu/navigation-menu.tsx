@@ -1,5 +1,6 @@
 import { NavigationMenu as KNavigationMenu } from "@kobalte/core/navigation-menu";
-import { splitProps, type ComponentProps, type JSX, For, Show } from "solid-js";
+import { omit, type ComponentProps, For, Show } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
 
 // TODO 不显示问题
@@ -36,11 +37,11 @@ export interface NavigationMenuProps extends ComponentProps<typeof KNavigationMe
 }
 
 export const NavigationMenu = (props: NavigationMenuProps) => {
-  const [local, others] = splitProps(props, ["items", "class"]);
+  const others = omit(props, "items", "class");
 
   return (
-    <KNavigationMenu class={root({ class: local.class })} {...others}>
-      <For each={local.items}>
+    <KNavigationMenu class={root({ class: props.class })} {...others}>
+      <For each={props.items}>
         {(item) => (
           <KNavigationMenu.Menu>
             <Show

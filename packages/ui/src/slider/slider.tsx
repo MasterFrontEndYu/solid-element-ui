@@ -1,5 +1,5 @@
 import { Slider as KSlider } from "@kobalte/core/slider";
-import { splitProps, type ComponentProps, For, Show } from "solid-js";
+import { omit, type ComponentProps, For, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 // FIXME 点击轨道时报错
@@ -54,22 +54,18 @@ export interface SliderProps extends Omit<ComponentProps<typeof KSlider>, "class
 }
 
 export const Slider = (props: SliderProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["label", "showValue", "class"],
-    ["variant", "size"],
-  );
+  const others = omit(props, "label", "showValue", "class", "variant", "size");
 
-  const styles = sliderStyles(variantProps);
+  const styles = sliderStyles({ variant: props.variant, size: props.size });
 
   return (
-    <KSlider class={styles.root({ class: local.class })} {...others}>
-      <Show when={local.label || local.showValue}>
+    <KSlider class={styles.root({ class: props.class })} {...others}>
+      <Show when={props.label || props.showValue}>
         <div class={styles.labelWrapper()}>
-          <Show when={local.label}>
-            <KSlider.Label class={styles.label()}>{local.label}</KSlider.Label>
+          <Show when={props.label}>
+            <KSlider.Label class={styles.label()}>{props.label}</KSlider.Label>
           </Show>
-          <Show when={local.showValue}>
+          <Show when={props.showValue}>
             <KSlider.ValueLabel class={styles.value()} />
           </Show>
         </div>

@@ -1,5 +1,5 @@
 import { TextField as KSearch } from "@kobalte/core/text-field";
-import { splitProps, type ComponentProps, Show } from "solid-js";
+import { omit, type ComponentProps, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { Search as SearchIcon, CircleX } from "lucide-solid";
 
@@ -60,27 +60,33 @@ export interface SearchProps extends Omit<ComponentProps<typeof KSearch>, "class
 }
 
 export const Search = (props: SearchProps) => {
-  const [local, variantProps, others] = splitProps(
+  const others = omit(
     props,
-    ["class", "placeholder", "allowClear", "onClear", "value", "onChange"],
-    ["size", "ringColor"],
+    "class",
+    "placeholder",
+    "allowClear",
+    "onClear",
+    "value",
+    "onChange",
+    "size",
+    "ringColor",
   );
 
-  const styles = searchStyles(variantProps);
+  const styles = searchStyles({ size: props.size, ringColor: props.ringColor });
 
   return (
     <KSearch
-      class={styles.root({ class: local.class })}
-      value={local.value}
-      onChange={local.onChange}
+      class={styles.root({ class: props.class })}
+      value={props.value}
+      onChange={props.onChange}
       {...others}
     >
       <div class={styles.inputWrapper()}>
         <SearchIcon class={styles.icon()} />
-        <KSearch.Input class={styles.input()} placeholder={local.placeholder ?? "搜索..."} />
-        <Show when={local.allowClear && local.value}>
-          <button onClick={() => local.onClear?.()} class={styles.clear()}>
-            <CircleX fill="currentColor" class="text-white dark:text-slate-950" />
+        <KSearch.Input class={styles.input()} placeholder={props.placeholder ?? "搜索..."} />
+        <Show when={props.allowClear && props.value}>
+          <button onClick={() => props.onClear?.()} class={styles.clear()}>
+            <CircleX class="text-white dark:text-slate-950" />
           </button>
         </Show>
       </div>

@@ -1,5 +1,5 @@
 import { ColorArea as KColorArea } from "@kobalte/core/color-area";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 
 const colorAreaStyles = tv(
@@ -24,10 +24,10 @@ const { root, background, thumb } = colorAreaStyles();
 export interface ColorAreaProps extends ComponentProps<typeof KColorArea> {}
 
 export const ColorArea = (props: ColorAreaProps) => {
-  const [local, others] = splitProps(props, ["class"]);
+  const others = omit(props, "class");
 
   return (
-    <KColorArea class={root({ class: local.class })} {...others}>
+    <KColorArea class={root({ class: props.class })} {...others}>
       <KColorArea.Background
         class={background()}
         // 默认背景，通常实际使用时会根据 Hue 滑块动态改变这里的红色部分
@@ -38,8 +38,6 @@ export const ColorArea = (props: ColorAreaProps) => {
       />
       <KColorArea.Thumb class={thumb()}>
         {/* 修复点：ColorArea 需要分别定义 X 和 Y 的隐藏输入框 */}
-        <KColorArea.HiddenInputX />
-        <KColorArea.HiddenInputY />
       </KColorArea.Thumb>
     </KColorArea>
   );

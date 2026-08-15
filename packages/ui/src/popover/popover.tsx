@@ -1,6 +1,7 @@
 import { Popover as KPopover } from "@kobalte/core/popover";
 import { CrossIcon } from "lucide-solid";
-import { splitProps, type ComponentProps, type JSX } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
 
 // FIXME 与其他的气泡样式不统一的问题
@@ -30,23 +31,23 @@ export interface PopoverProps extends ComponentProps<typeof KPopover> {
 }
 
 export const Popover = (props: PopoverProps) => {
-  const [local, others] = splitProps(props, ["trigger", "children", "title"]);
+  const others = omit(props, "trigger", "children", "title");
 
   return (
     <KPopover {...others}>
-      <KPopover.Trigger class="inline-flex">{local.trigger}</KPopover.Trigger>
+      <KPopover.Trigger class="inline-flex">{props.trigger}</KPopover.Trigger>
 
       <KPopover.Portal>
         <KPopover.Content class={content()}>
           <KPopover.Arrow class={arrow()} />
 
           <div class="flex">
-            <KPopover.Title>{local.title}</KPopover.Title>
+            <KPopover.Title>{props.title}</KPopover.Title>
             <KPopover.CloseButton>
               <CrossIcon />
             </KPopover.CloseButton>
           </div>
-          <KPopover.Description>{local.children}</KPopover.Description>
+          <KPopover.Description>{props.children}</KPopover.Description>
         </KPopover.Content>
       </KPopover.Portal>
     </KPopover>

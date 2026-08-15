@@ -1,7 +1,7 @@
 import { Toast as KToast, toaster } from "@kobalte/core/toast";
 
-import { isServer } from "solid-js/web";
-import { splitProps, type ComponentProps, Show, type ParentProps } from "solid-js";
+import { isServer } from "@solidjs/web";
+import { omit, type ComponentProps, Show, type ParentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { X, CircleCheck, CircleAlert, Info, TriangleAlert } from "lucide-solid";
 
@@ -81,25 +81,23 @@ export const ToastProvider = (props: ParentProps) => {
 };
 
 const Toast = (props: ToastProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["title", "description", "class", "toastId"],
-    ["variant"],
-  );
+  const others = omit(props, "title", "description", "class", "toastId", "variant");
 
-  const { root, icon, content, title, description, closeButton } = toastStyles(variantProps);
+  const { root, icon, content, title, description, closeButton } = toastStyles({
+    variant: props.variant,
+  });
   // 显式回退到 info，确保 Icon 组件始终存在
-  const Icon = iconMap[variantProps.variant ?? "info"];
+  const Icon = iconMap[props.variant ?? "info"];
 
   return (
-    <KToast toastId={local.toastId} class={root({ class: local.class })} {...others}>
+    <KToast toastId={props.toastId} class={root({ class: props.class })} {...others}>
       <Icon class={icon()} />
       <div class={content()}>
-        <Show when={local.title}>
-          <KToast.Title class={title()}>{local.title}</KToast.Title>
+        <Show when={props.title}>
+          <KToast.Title class={title()}>{props.title}</KToast.Title>
         </Show>
-        <Show when={local.description}>
-          <KToast.Description class={description()}>{local.description}</KToast.Description>
+        <Show when={props.description}>
+          <KToast.Description class={description()}>{props.description}</KToast.Description>
         </Show>
       </div>
       <KToast.CloseButton class={closeButton()}>

@@ -1,5 +1,5 @@
 import { ColorSwatch as KColorSwatch } from "@kobalte/core/color-swatch";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 
 const colorSwatchStyles = tv(
@@ -21,7 +21,7 @@ const colorSwatchStyles = tv(
 export interface ColorSwatchProps extends ComponentProps<typeof KColorSwatch> {}
 
 export const ColorSwatch = (props: ColorSwatchProps) => {
-  const [local, others] = splitProps(props, ["class", "style"]);
+  const others = omit(props, "class", "style");
 
-  return <KColorSwatch class={colorSwatchStyles({ class: local.class })} {...others} />;
+  return <KColorSwatch class={colorSwatchStyles({ class: props.class })} {...others} />;
 };

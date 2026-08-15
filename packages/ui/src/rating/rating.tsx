@@ -1,5 +1,5 @@
 import { Rating as KRating } from "@kobalte/core/rating";
-import { splitProps, type ComponentProps, Show, Index } from "solid-js";
+import { omit, type ComponentProps, Show, For } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { StarIcon } from "lucide-solid";
 
@@ -52,26 +52,22 @@ export interface RatingGroupProps
  * 自动处理星星循环、高亮逻辑及表单集成
  */
 export const RatingGroup = (props: RatingGroupProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["label", "count", "class"],
-    ["color", "size"],
-  );
+  const others = omit(props, "label", "count", "class", "color", "size");
 
   const s = () =>
     ratingStyles({
-      color: variantProps.color,
-      size: variantProps.size,
+      color: props.color,
+      size: props.size,
     });
 
   return (
-    <KRating class={s().root({ class: local.class })} {...others}>
-      <Show when={local.label}>
-        <KRating.Label class={s().label()}>{local.label}</KRating.Label>
+    <KRating class={s().root({ class: props.class })} {...others}>
+      <Show when={props.label}>
+        <KRating.Label class={s().label()}>{props.label}</KRating.Label>
       </Show>
 
       <KRating.Control class={s().control()}>
-        <Index each={Array(5)}>
+        <For each={Array(5)}>
           {(_) => (
             <KRating.Item class={s().item()}>
               <KRating.ItemControl>
@@ -79,7 +75,7 @@ export const RatingGroup = (props: RatingGroupProps) => {
               </KRating.ItemControl>
             </KRating.Item>
           )}
-        </Index>
+        </For>
       </KRating.Control>
     </KRating>
   );

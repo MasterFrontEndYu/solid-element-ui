@@ -56,7 +56,7 @@ export const ToggleButton = (props: ToggleButtonProps) => {
       })}
       {...others}
     >
-      {(state) =>
+      {(state: any) =>
         typeof props.children === "function" ? (props.children as any)(state) : props.children
       }
     </KToggle>

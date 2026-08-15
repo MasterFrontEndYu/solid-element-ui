@@ -86,7 +86,7 @@ export const Search = (props: SearchProps) => {
         <KSearch.Input class={styles.input()} placeholder={props.placeholder ?? "搜索..."} />
         <Show when={props.allowClear && props.value}>
           <button onClick={() => props.onClear?.()} class={styles.clear()}>
-            <CircleX fill="currentColor" class="text-white dark:text-slate-950" />
+            <CircleX class="text-white dark:text-slate-950" />
           </button>
         </Show>
       </div>

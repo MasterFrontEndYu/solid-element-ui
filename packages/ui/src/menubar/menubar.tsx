@@ -57,9 +57,5 @@ export const Menubar = Object.assign(
       const others = omit(props, "class");
       return <KMenubar.Separator class={s.separator({ class: props.class })} {...others} />;
     },
-    Shortcut: (props: ComponentProps<"span">) => {
-      const others = omit(props, "class");
-      return <span class={s.shortcut({ class: props.class })} {...others} />;
-    },
   },
 );

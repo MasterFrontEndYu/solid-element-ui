@@ -38,8 +38,6 @@ export const ColorArea = (props: ColorAreaProps) => {
       />
       <KColorArea.Thumb class={thumb()}>
         {/* 修复点：ColorArea 需要分别定义 X 和 Y 的隐藏输入框 */}
-        <KColorArea.HiddenInputX />
-        <KColorArea.HiddenInputY />
       </KColorArea.Thumb>
     </KColorArea>
   );

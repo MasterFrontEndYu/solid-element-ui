@@ -1,5 +1,6 @@
 import { Button as KButton } from "@kobalte/core/button";
-import { splitProps, type JSX, type ComponentProps, Show } from "solid-js";
+import { omit, type ComponentProps, Show } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv, type VariantProps } from "tailwind-variants";
 import { LoaderCircle } from "lucide-solid";
 
@@ -174,37 +175,45 @@ export interface ButtonProps extends ComponentProps<typeof KButton>, ButtonVaria
 }
 
 export const Button = (props: ButtonProps) => {
-  const [local, variantKeys, others] = splitProps(
+  const others = omit(
     props,
-    ["class", "children", "loading", "leftIcon", "rightIcon", "disabled"],
-    ["variant", "size", "color", "loading"],
+    "class",
+    "children",
+    "loading",
+    "leftIcon",
+    "rightIcon",
+    "disabled",
+    "variant",
+    "size",
+    "color",
   );
 
   // 2. 调用 styles 获取 slots
-  // 注意：将 local.class 传入 base 槽位
   const styles = () =>
     buttonStyles({
-      ...variantKeys,
-      class: local.class,
+      variant: props.variant,
+      size: props.size,
+      color: props.color,
+      class: props.class,
     });
 
   return (
-    <KButton class={styles().base()} disabled={local.disabled || local.loading} {...others}>
+    <KButton class={styles().base()} disabled={props.disabled || props.loading} {...others}>
       {/* Loading 状态显示 */}
-      <Show when={local.loading}>
+      <Show when={props.loading}>
         <LoaderCircle class={styles().icon()} />
       </Show>
 
       {/* 非 Loading 状态下的 Left Icon */}
-      <Show when={!local.loading && local.leftIcon}>
-        <span class="mr-2 inline-flex">{local.leftIcon}</span>
+      <Show when={!props.loading && props.leftIcon}>
+        <span class="mr-2 inline-flex">{props.leftIcon}</span>
       </Show>
 
-      {local.children}
+      {props.children}
 
       {/* Right Icon */}
-      <Show when={local.rightIcon}>
-        <span class="ml-2 inline-flex">{local.rightIcon}</span>
+      <Show when={props.rightIcon}>
+        <span class="ml-2 inline-flex">{props.rightIcon}</span>
       </Show>
     </KButton>
   );

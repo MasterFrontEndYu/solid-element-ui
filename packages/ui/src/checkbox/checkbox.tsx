@@ -1,5 +1,6 @@
 import { Checkbox as KCheckbox } from "@kobalte/core/checkbox";
-import { splitProps, type ComponentProps, type JSX } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
 import { Check } from "lucide-solid";
 
@@ -33,19 +34,19 @@ export interface CheckboxProps extends ComponentProps<typeof KCheckbox> {
 }
 
 export const Checkbox = (props: CheckboxProps) => {
-  const [local, others] = splitProps(props, ["label", "class", "description", "errorMessage"]);
+  const others = omit(props, "label", "class", "description", "errorMessage");
 
   return (
-    <KCheckbox class={root({ class: local.class })} {...others}>
+    <KCheckbox class={root({ class: props.class })} {...others}>
       <KCheckbox.Input />
       <KCheckbox.Control class={control()}>
         <KCheckbox.Indicator class={indicator()}>
           <Check class={indicator()} stroke-width={3} />
         </KCheckbox.Indicator>
       </KCheckbox.Control>
-      {local.label && <KCheckbox.Label class={label()}>{local.label}</KCheckbox.Label>}
-      <KCheckbox.Description class={description()}>{local.description}</KCheckbox.Description>
-      <KCheckbox.ErrorMessage class={errorMessage()}>{local.errorMessage}</KCheckbox.ErrorMessage>
+      {props.label && <KCheckbox.Label class={label()}>{props.label}</KCheckbox.Label>}
+      <KCheckbox.Description class={description()}>{props.description}</KCheckbox.Description>
+      <KCheckbox.ErrorMessage class={errorMessage()}>{props.errorMessage}</KCheckbox.ErrorMessage>
     </KCheckbox>
   );
 };

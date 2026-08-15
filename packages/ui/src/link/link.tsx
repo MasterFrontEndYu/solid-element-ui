@@ -1,5 +1,5 @@
 import { Link as KLink } from "@kobalte/core/link";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const linkStyles = tv(
@@ -35,28 +35,24 @@ export interface LinkProps extends ComponentProps<typeof KLink>, LinkVariants {
 }
 
 export const Link = (props: LinkProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["class", "external", "children", "href"],
-    ["variant", "underline"],
-  );
+  const others = omit(props, "class", "external", "children", "href", "variant", "underline");
 
   const styles = () =>
     linkStyles({
-      variant: variantProps.variant,
-      underline: variantProps.underline,
-      class: local.class,
+      variant: props.variant,
+      underline: props.underline,
+      class: props.class,
     });
 
   return (
     <KLink
-      href={local.href}
-      target={local.external ? "_blank" : undefined}
-      rel={local.external ? "noopener noreferrer" : undefined}
+      href={props.href}
+      target={props.external ? "_blank" : undefined}
+      rel={props.external ? "noopener noreferrer" : undefined}
       class={styles()}
       {...others}
     >
-      {local.children}
+      {props.children}
     </KLink>
   );
 };

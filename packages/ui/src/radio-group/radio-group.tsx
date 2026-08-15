@@ -1,5 +1,5 @@
 import { RadioGroup as KRadioGroup } from "@kobalte/core/radio-group";
-import { splitProps, type ComponentProps, For, Show } from "solid-js";
+import { omit, type ComponentProps, For, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const radioStyles = tv(
@@ -51,21 +51,17 @@ export interface RadioGroupProps
  * 自动处理循环渲染、选中指示器以及水平/垂直布局
  */
 export const RadioGroup = (props: RadioGroupProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["label", "options", "class"],
-    ["orientation"],
-  );
+  const others = omit(props, "label", "options", "class", "orientation");
 
-  const s = () => radioStyles({ orientation: variantProps.orientation });
+  const s = () => radioStyles({ orientation: props.orientation });
 
   return (
-    <KRadioGroup class={s().root({ class: local.class })} {...others}>
-      <Show when={local.label}>
-        <KRadioGroup.Label class={s().label()}>{local.label}</KRadioGroup.Label>
+    <KRadioGroup class={s().root({ class: props.class })} {...others}>
+      <Show when={props.label}>
+        <KRadioGroup.Label class={s().label()}>{props.label}</KRadioGroup.Label>
       </Show>
 
-      <For each={local.options}>
+      <For each={props.options}>
         {(option) => (
           <KRadioGroup.Item value={option.value} disabled={option.disabled} class={s().item()}>
             <KRadioGroup.ItemInput />

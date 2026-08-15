@@ -1,5 +1,5 @@
 import { Combobox as KCombobox } from "@kobalte/core/combobox";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 import { Check, ChevronDown } from "lucide-solid";
 
@@ -40,14 +40,14 @@ export type ComboboxProps<T> = ComponentProps<typeof KCombobox<T>> & {
 };
 
 export const Combobox = <T extends string | object>(props: ComboboxProps<T>) => {
-  const [local, others] = splitProps(props as ComboboxProps<T>, ["label", "placeholder", "class"]);
+  const others = omit(props as ComboboxProps<T>, "label", "placeholder", "class");
 
   return (
-    <KCombobox<T> class={root({ class: local.class })} {...others}>
-      {local.label && <KCombobox.Label class={label()}>{local.label}</KCombobox.Label>}
+    <KCombobox<T> class={root({ class: props.class })} {...others}>
+      {props.label && <KCombobox.Label class={label()}>{props.label}</KCombobox.Label>}
 
       <KCombobox.Control class={control()}>
-        <KCombobox.Input class={input()} placeholder={local.placeholder} />
+        <KCombobox.Input class={input()} placeholder={props.placeholder} />
         <KCombobox.Trigger class={trigger()}>
           <KCombobox.Icon class={icon()}>
             <ChevronDown class="h-4 w-4" />

@@ -1,5 +1,6 @@
 import { Collapsible as KCollapsible } from "@kobalte/core/collapsible";
-import { splitProps, type JSX, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
 import { ChevronDown } from "lucide-solid";
 
@@ -28,17 +29,17 @@ interface CollapsibleProps extends ComponentProps<typeof KCollapsible> {
 }
 
 export const Collapsible = (props: CollapsibleProps) => {
-  const [local, others] = splitProps(props, ["title", "children", "class"]);
+  const others = omit(props, "title", "children", "class");
 
   return (
-    <KCollapsible class={root({ class: local.class })} {...others}>
+    <KCollapsible class={root({ class: props.class })} {...others}>
       <KCollapsible.Trigger class={trigger()}>
-        <span>{local.title}</span>
+        <span>{props.title}</span>
         <ChevronDown class={icon()} />
       </KCollapsible.Trigger>
 
       <KCollapsible.Content class={content()}>
-        <div class={contentInner()}>{local.children}</div>
+        <div class={contentInner()}>{props.children}</div>
       </KCollapsible.Content>
     </KCollapsible>
   );

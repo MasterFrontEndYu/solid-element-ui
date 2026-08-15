@@ -1,5 +1,5 @@
 import { Image as KImage } from "@kobalte/core/image";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const imageStyles = tv(
@@ -37,19 +37,15 @@ export interface ImageProps extends ComponentProps<typeof KImage>, ImageVariants
 }
 
 export const Image = (props: ImageProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["src", "alt", "fallback", "class"],
-    ["radius"],
-  );
+  const others = omit(props, "src", "alt", "fallback", "class", "radius");
 
-  const styles = imageStyles({ radius: variantProps.radius });
+  const styles = imageStyles({ radius: props.radius });
 
   return (
-    <KImage class={styles.root({ class: local.class })} {...others}>
-      <KImage.Img src={local.src} alt={local.alt} class={styles.img()} />
+    <KImage class={styles.root({ class: props.class })} {...others}>
+      <KImage.Img src={props.src} alt={props.alt} class={styles.img()} />
       <KImage.Fallback class={styles.fallback()}>
-        {local.fallback || (local.alt ? local.alt.slice(0, 2).toUpperCase() : "IMG")}
+        {props.fallback || (props.alt ? props.alt.slice(0, 2).toUpperCase() : "IMG")}
       </KImage.Fallback>
     </KImage>
   );

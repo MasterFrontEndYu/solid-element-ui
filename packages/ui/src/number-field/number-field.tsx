@@ -1,5 +1,5 @@
 import { NumberField as KNumberField } from "@kobalte/core/number-field";
-import { splitProps, type ComponentProps, Show } from "solid-js";
+import { omit, type ComponentProps, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { ChevronUp, ChevronDown } from "lucide-solid";
 
@@ -38,13 +38,13 @@ export interface NumberFieldProps
 
 export const NumberField = (props: NumberFieldProps) => {
   // 严格处理属性，防止 TS 报错“已声明但未使用”
-  const [local, others] = splitProps(props, ["label", "description", "class"]);
+  const others = omit(props, "label", "description", "class");
   const s = numberFieldStyles();
 
   return (
-    <KNumberField class={s.root({ class: local.class })} {...others}>
-      <Show when={local.label}>
-        <KNumberField.Label class={s.label()}>{local.label}</KNumberField.Label>
+    <KNumberField class={s.root({ class: props.class })} {...others}>
+      <Show when={props.label}>
+        <KNumberField.Label class={s.label()}>{props.label}</KNumberField.Label>
       </Show>
 
       <div class={s.container()}>
@@ -63,7 +63,7 @@ export const NumberField = (props: NumberFieldProps) => {
         </div>
       </div>
 
-      <Show when={local.description}>
+      <Show when={props.description}>
         <KNumberField.Description class="text-xs text-slate-500 ml-1 mt-1" />
       </Show>
       <KNumberField.ErrorMessage class={s.errorMessage()} />

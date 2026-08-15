@@ -1,5 +1,6 @@
 import { Dialog as KDialog } from "@kobalte/core/dialog";
-import { splitProps, type JSX, Show } from "solid-js";
+import { Show } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
 import { X } from "lucide-solid";
 
@@ -52,39 +53,30 @@ interface DialogProps {
 }
 
 export const Dialog = (props: DialogProps) => {
-  const [local] = splitProps(props, [
-    "trigger",
-    "title",
-    "description",
-    "footer",
-    "children",
-    "class",
-  ]);
-
   return (
     <KDialog open={props.open} onOpenChange={props.onOpenChange}>
-      <Show when={local.trigger}>
-        <KDialog.Trigger class="inline-block">{local.trigger}</KDialog.Trigger>
+      <Show when={props.trigger}>
+        <KDialog.Trigger class="inline-block">{props.trigger}</KDialog.Trigger>
       </Show>
 
       <KDialog.Portal>
         <KDialog.Overlay class={overlay()} />
         <KDialog.Content
-          class={content({ class: local.class })}
+          class={content({ class: props.class })}
           style={{ "pointer-events": "auto" }}
         >
           <div class="flex justify-between items-center">
-            <KDialog.Title class={title()}>{local.title}</KDialog.Title>
+            <KDialog.Title class={title()}>{props.title}</KDialog.Title>
             <KDialog.CloseButton class={closeButton()}>
               <X size={18} />
               <span class="sr-only">关闭</span>
             </KDialog.CloseButton>
           </div>
-          <Show when={local.description}>
-            <KDialog.Description class={description()}>{local.description}</KDialog.Description>
+          <Show when={props.description}>
+            <KDialog.Description class={description()}>{props.description}</KDialog.Description>
           </Show>
 
-          <div class="mt-6">{local.children}</div>
+          <div class="mt-6">{props.children}</div>
         </KDialog.Content>
       </KDialog.Portal>
     </KDialog>

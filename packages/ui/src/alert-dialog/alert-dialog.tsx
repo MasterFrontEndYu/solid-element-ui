@@ -1,5 +1,6 @@
 import { AlertDialog as KAlertDialog } from "@kobalte/core/alert-dialog";
-import { splitProps, type JSX, type ComponentProps, createSignal } from "solid-js";
+import { omit, type ComponentProps, createSignal } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
 import { X } from "lucide-solid";
 import { Button } from "../button/button";
@@ -44,24 +45,17 @@ export const AlertDialog = (props: AlertDialogProps) => {
   const [isOpen, setIsOpen] = createSignal(false);
   const [loading, setLoading] = createSignal(false);
 
-  const [local, others] = splitProps(props, [
-    "trigger",
-    "title",
-    "description",
-    "action",
-    "cancel",
-    "onConfirm",
-  ]);
+  const others = omit(props, "trigger", "title", "description", "action", "cancel", "onConfirm");
 
   const handleConfirm = async (e: MouseEvent) => {
     // 阻止默认行为和冒泡，确保点击不会误触发 Kobalte 的内部关闭逻辑
     e.preventDefault();
     e.stopPropagation();
 
-    if (local.onConfirm) {
+    if (props.onConfirm) {
       setLoading(true);
       try {
-        await local.onConfirm();
+        await props.onConfirm();
         // 只有逻辑成功执行后，才手动关闭
         setIsOpen(false);
       } catch (error) {
@@ -78,33 +72,33 @@ export const AlertDialog = (props: AlertDialogProps) => {
   return (
     <KAlertDialog {...others} open={isOpen()} onOpenChange={setIsOpen}>
       <div onClick={() => setIsOpen(true)} class="inline-block">
-        {local.trigger}
+        {props.trigger}
       </div>
 
       <KAlertDialog.Portal>
         <KAlertDialog.Overlay class={overlay()} />
         <KAlertDialog.Content class={content()}>
           <div class={header()}>
-            <KAlertDialog.Title class={title()}>{local.title}</KAlertDialog.Title>
+            <KAlertDialog.Title class={title()}>{props.title}</KAlertDialog.Title>
             <KAlertDialog.CloseButton class={closeButton()}>
               <X size={18} />
             </KAlertDialog.CloseButton>
           </div>
 
           <div class="mt-2">
-            {local.description && (
+            {props.description && (
               <KAlertDialog.Description class={description()}>
-                {local.description}
+                {props.description}
               </KAlertDialog.Description>
             )}
           </div>
 
           <div class={footer()}>
             <KAlertDialog.CloseButton>
-              {local.cancel || <Button variant="outline">取消</Button>}
+              {props.cancel || <Button variant="outline">取消</Button>}
             </KAlertDialog.CloseButton>
             <div onClick={handleConfirm}>
-              {local.action || (
+              {props.action || (
                 <Button color="primary" loading={loading()}>
                   确认
                 </Button>

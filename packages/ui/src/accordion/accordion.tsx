@@ -1,5 +1,6 @@
 import { Accordion as KAccordion, type AccordionRootProps } from "@kobalte/core/accordion";
-import { For, type JSX, splitProps } from "solid-js";
+import { For, omit } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { ChevronDown } from "lucide-solid";
 import { tv, type VariantProps } from "tailwind-variants";
 
@@ -43,11 +44,11 @@ interface AccordionProps extends AccordionRootProps, VariantProps<typeof accordi
 }
 
 export const Accordion = (props: AccordionProps) => {
-  const [local, others] = splitProps(props, ["items", "class"]);
+  const others = omit(props, "items", "class");
 
   return (
-    <KAccordion class={root({ class: local.class })} {...others}>
-      <For each={local.items}>
+    <KAccordion class={root({ class: props.class })} {...others}>
+      <For each={props.items}>
         {(itemData) => (
           <KAccordion.Item value={itemData.value} disabled={itemData.disabled} class={item()}>
             <KAccordion.Header class={header()}>

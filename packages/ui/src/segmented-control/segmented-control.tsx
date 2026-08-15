@@ -1,5 +1,5 @@
 import { SegmentedControl as KSegmented } from "@kobalte/core/segmented-control";
-import { splitProps, For, type ComponentProps } from "solid-js";
+import { omit, For, type ComponentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 // FIXME 样式问题
@@ -53,15 +53,15 @@ export interface SegmentedControlProps
 }
 
 export const SegmentedControl = (props: SegmentedControlProps) => {
-  const [local, variantProps, others] = splitProps(props, ["options", "class", "label"], ["size"]);
+  const others = omit(props, "options", "class", "label", "size");
 
-  const styles = segmentedStyles(variantProps);
+  const styles = segmentedStyles({ size: props.size });
 
   return (
-    <KSegmented class={styles.root({ class: local.class })} {...others}>
-      {local.label && <KSegmented.Label class={styles.label()}>{local.label}</KSegmented.Label>}
+    <KSegmented class={styles.root({ class: props.class })} {...others}>
+      {props.label && <KSegmented.Label class={styles.label()}>{props.label}</KSegmented.Label>}
       <div class={styles.container()}>
-        <For each={local.options}>
+        <For each={props.options}>
           {(option) => (
             <KSegmented.Item value={option.value} disabled={option.disabled} class={styles.item()}>
               <KSegmented.ItemInput />

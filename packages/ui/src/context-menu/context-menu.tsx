@@ -1,5 +1,6 @@
 import { ContextMenu as KContextMenu } from "@kobalte/core/context-menu";
-import { splitProps, For, Show, type JSX } from "solid-js";
+import { For, Show } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
 import { ChevronRight } from "lucide-solid";
 
@@ -80,14 +81,12 @@ const RenderMenuItems = (props: { items: ContextMenuItemConfig[] }) => {
 };
 
 export const ContextMenu = (props: UnifiedContextMenuProps) => {
-  const [local] = splitProps(props, ["items", "children", "class"]);
-
   return (
     <KContextMenu>
-      <KContextMenu.Trigger class={local.class}>{local.children}</KContextMenu.Trigger>
+      <KContextMenu.Trigger class={props.class}>{props.children}</KContextMenu.Trigger>
       <KContextMenu.Portal>
         <KContextMenu.Content class={content()}>
-          <RenderMenuItems items={local.items} />
+          <RenderMenuItems items={props.items} />
         </KContextMenu.Content>
       </KContextMenu.Portal>
     </KContextMenu>

@@ -1,5 +1,5 @@
 import { Switch as KSwitch } from "@kobalte/core/switch";
-import { splitProps, type ComponentProps, Show } from "solid-js";
+import { omit, type ComponentProps, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const switchStyles = tv(
@@ -65,29 +65,25 @@ export interface SwitchProps extends Omit<ComponentProps<typeof KSwitch>, "class
 }
 
 export const Switch = (props: SwitchProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["label", "description", "class"],
-    ["size", "variant"],
-  );
+  const others = omit(props, "label", "description", "class", "size", "variant");
 
-  const styles = switchStyles(variantProps);
+  const styles = switchStyles({ size: props.size, variant: props.variant });
 
   return (
-    <KSwitch class={styles.root({ class: local.class })} {...others}>
+    <KSwitch class={styles.root({ class: props.class })} {...others}>
       <KSwitch.Input />
       <KSwitch.Control class={styles.control()}>
         <KSwitch.Thumb class={styles.thumb()} />
       </KSwitch.Control>
 
-      <Show when={local.label || local.description}>
+      <Show when={props.label || props.description}>
         <div class="flex flex-col gap-0.5">
-          <Show when={local.label}>
-            <KSwitch.Label class={styles.label()}>{local.label}</KSwitch.Label>
+          <Show when={props.label}>
+            <KSwitch.Label class={styles.label()}>{props.label}</KSwitch.Label>
           </Show>
-          <Show when={local.description}>
+          <Show when={props.description}>
             <KSwitch.Description class={styles.description()}>
-              {local.description}
+              {props.description}
             </KSwitch.Description>
           </Show>
         </div>

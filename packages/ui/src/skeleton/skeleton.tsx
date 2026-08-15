@@ -1,5 +1,5 @@
 import { Skeleton as KSkeleton } from "@kobalte/core/skeleton";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const skeletonStyles = tv(
@@ -39,24 +39,20 @@ export interface SkeletonProps
 
 export const Skeleton = (props: SkeletonProps) => {
   // 显式提取这些属性，避免传给 KSkeleton 引起类型或运行时错误
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["class", "width", "height", "style"],
-    ["variant", "animation"],
-  );
+  const others = omit(props, "class", "width", "height", "style", "variant", "animation");
 
   const mergedStyle = () => ({
-    width: typeof local.width === "number" ? `${local.width}px` : local.width,
-    height: typeof local.height === "number" ? `${local.height}px` : local.height,
-    ...(typeof local.style === "object" ? local.style : {}),
+    width: typeof props.width === "number" ? `${props.width}px` : props.width,
+    height: typeof props.height === "number" ? `${props.height}px` : props.height,
+    ...(typeof props.style === "object" ? props.style : {}),
   });
 
   return (
     <KSkeleton
       class={skeletonStyles({
-        variant: variantProps.variant,
-        animation: variantProps.animation,
-        class: local.class,
+        variant: props.variant,
+        animation: props.animation,
+        class: props.class,
       })}
       style={mergedStyle()}
       {...others}

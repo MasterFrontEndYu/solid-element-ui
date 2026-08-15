@@ -1,5 +1,6 @@
 import { Breadcrumbs as KBreadcrumbs } from "@kobalte/core/breadcrumbs";
-import { For, type JSX, splitProps, type ComponentProps } from "solid-js";
+import { For, omit, type ComponentProps } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
 import { ChevronRight } from "lucide-solid";
 
@@ -34,25 +35,25 @@ interface BreadcrumbsProps extends ComponentProps<typeof KBreadcrumbs> {
 }
 
 export const Breadcrumbs = (props: BreadcrumbsProps) => {
-  const [local, others] = splitProps(props, ["items", "separatorIcon", "class"]);
+  const others = omit(props, "items", "separatorIcon", "class");
 
   return (
     <KBreadcrumbs class={root()} {...others}>
-      <For each={local.items}>
+      <For each={props.items}>
         {(breadcrumb, index) => (
           <>
             <KBreadcrumbs.Link
               href={breadcrumb.href}
               current={breadcrumb.current}
               disabled={breadcrumb.disabled}
-              class={link({ class: local.class })}
+              class={link({ class: props.class })}
             >
               {breadcrumb.title}
             </KBreadcrumbs.Link>
 
-            {index() < local.items.length - 1 && (
+            {index() < props.items.length - 1 && (
               <span aria-hidden="true" class={separator()}>
-                {local.separatorIcon || <ChevronRight size={16} />}
+                {props.separatorIcon || <ChevronRight size={16} />}
               </span>
             )}
           </>

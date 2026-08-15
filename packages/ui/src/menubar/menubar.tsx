@@ -1,5 +1,5 @@
 import { Menubar as KMenubar } from "@kobalte/core/menubar";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 
 // TODO 1. 格式
@@ -32,34 +32,34 @@ const s = menubarStyles();
 
 export const Menubar = Object.assign(
   (props: ComponentProps<typeof KMenubar>) => {
-    const [local, others] = splitProps(props, ["class"]);
-    return <KMenubar class={s.root({ class: local.class })} {...others} />;
+    const others = omit(props, "class");
+    return <KMenubar class={s.root({ class: props.class })} {...others} />;
   },
   {
     Menu: KMenubar.Menu,
     Trigger: (props: ComponentProps<typeof KMenubar.Trigger>) => {
-      const [local, others] = splitProps(props, ["class"]);
-      return <KMenubar.Trigger class={s.trigger({ class: local.class })} {...others} />;
+      const others = omit(props, "class");
+      return <KMenubar.Trigger class={s.trigger({ class: props.class })} {...others} />;
     },
     Content: (props: ComponentProps<typeof KMenubar.Content>) => {
-      const [local, others] = splitProps(props, ["class"]);
+      const others = omit(props, "class");
       return (
         <KMenubar.Portal>
-          <KMenubar.Content class={s.content({ class: local.class })} {...others} />
+          <KMenubar.Content class={s.content({ class: props.class })} {...others} />
         </KMenubar.Portal>
       );
     },
     Item: (props: ComponentProps<typeof KMenubar.Item>) => {
-      const [local, others] = splitProps(props, ["class"]);
-      return <KMenubar.Item class={s.item({ class: local.class })} {...others} />;
+      const others = omit(props, "class");
+      return <KMenubar.Item class={s.item({ class: props.class })} {...others} />;
     },
     Separator: (props: ComponentProps<typeof KMenubar.Separator>) => {
-      const [local, others] = splitProps(props, ["class"]);
-      return <KMenubar.Separator class={s.separator({ class: local.class })} {...others} />;
+      const others = omit(props, "class");
+      return <KMenubar.Separator class={s.separator({ class: props.class })} {...others} />;
     },
     Shortcut: (props: ComponentProps<"span">) => {
-      const [local, others] = splitProps(props, ["class"]);
-      return <span class={s.shortcut({ class: local.class })} {...others} />;
+      const others = omit(props, "class");
+      return <span class={s.shortcut({ class: props.class })} {...others} />;
     },
   },
 );

@@ -1,5 +1,6 @@
 import { DropdownMenu as KDropdownMenu } from "@kobalte/core/dropdown-menu";
-import { splitProps, type JSX, For, Show } from "solid-js";
+import { For, Show } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
 import { ChevronRight } from "lucide-solid";
 
@@ -79,17 +80,15 @@ const RenderMenuItems = (props: { items: DropdownItemConfig[] }) => {
 };
 
 export const DropdownMenu = (props: DropdownMenuProps) => {
-  const [local] = splitProps(props, ["trigger", "items", "placement", "class"]);
-
   return (
-    <KDropdownMenu placement={local.placement ?? "bottom-start"}>
+    <KDropdownMenu placement={props.placement ?? "bottom-start"}>
       <KDropdownMenu.Trigger as="div" class={trigger()}>
-        {local.trigger}
+        {props.trigger}
       </KDropdownMenu.Trigger>
 
       <KDropdownMenu.Portal>
-        <KDropdownMenu.Content class={content({ class: local.class })}>
-          <RenderMenuItems items={local.items} />
+        <KDropdownMenu.Content class={content({ class: props.class })}>
+          <RenderMenuItems items={props.items} />
         </KDropdownMenu.Content>
       </KDropdownMenu.Portal>
     </KDropdownMenu>

@@ -1,5 +1,6 @@
 import { Tooltip as KTooltip } from "@kobalte/core/tooltip";
-import { splitProps, type JSX, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const tooltipStyles = tv(
@@ -42,19 +43,19 @@ export interface TooltipProps
 
 export const Tooltip = (props: TooltipProps) => {
   // 1. 分离属性
-  const [local, variantProps, others] = splitProps(props, ["children", "content"], ["variant"]);
+  const others = omit(props, "children", "content", "variant");
 
   // 2. 生成样式
-  const styles = tooltipStyles(variantProps);
+  const styles = tooltipStyles({ variant: props.variant });
 
   return (
     <KTooltip gutter={4} openDelay={200} {...others}>
-      <KTooltip.Trigger class="block">{local.children}</KTooltip.Trigger>
+      <KTooltip.Trigger class="block">{props.children}</KTooltip.Trigger>
 
       <KTooltip.Portal>
         <KTooltip.Content class={styles.content()}>
           <KTooltip.Arrow class={styles.arrow()} />
-          {local.content}
+          {props.content}
         </KTooltip.Content>
       </KTooltip.Portal>
     </KTooltip>

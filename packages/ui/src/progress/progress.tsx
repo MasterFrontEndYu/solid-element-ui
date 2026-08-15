@@ -1,5 +1,5 @@
 import { Progress as KProgress } from "@kobalte/core/progress";
-import { splitProps, type ComponentProps, Show } from "solid-js";
+import { omit, type ComponentProps, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 // FIXME  进度条问题，value 直接占满
@@ -46,25 +46,21 @@ export interface ProgressProps
 }
 
 export const Progress = (props: ProgressProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["label", "showValue", "class"],
-    ["size", "radius"],
-  );
+  const others = omit(props, "label", "showValue", "class", "size", "radius");
 
   const { root, labelContainer, track, fill } = progressStyles({
-    size: variantProps.size,
-    radius: variantProps.radius,
+    size: props.size,
+    radius: props.radius,
   });
 
   return (
-    <KProgress class={root({ class: local.class })} {...others}>
-      <Show when={local.label || local.showValue}>
+    <KProgress class={root({ class: props.class })} {...others}>
+      <Show when={props.label || props.showValue}>
         <div class={labelContainer()}>
-          <Show when={local.label}>
-            <KProgress.Label>{local.label}</KProgress.Label>
+          <Show when={props.label}>
+            <KProgress.Label>{props.label}</KProgress.Label>
           </Show>
-          <Show when={local.showValue}>
+          <Show when={props.showValue}>
             <KProgress.ValueLabel class="text-xs text-slate-500" />
           </Show>
         </div>

@@ -1,5 +1,5 @@
 import { TextField as KTextField } from "@kobalte/core/text-field";
-import { splitProps, type ComponentProps, Show } from "solid-js";
+import { omit, type ComponentProps, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const textFieldStyles = tv(
@@ -47,35 +47,40 @@ export interface TextFieldProps
 }
 
 export const TextField = (props: TextFieldProps) => {
-  const [local, variantProps, others] = splitProps(
+  const others = omit(
     props,
-    ["label", "description", "errorMessage", "placeholder", "type", "class"],
-    ["size"],
+    "label",
+    "description",
+    "errorMessage",
+    "placeholder",
+    "type",
+    "class",
+    "size",
   );
 
-  const styles = textFieldStyles(variantProps);
+  const styles = textFieldStyles({ size: props.size });
 
   return (
     <KTextField
-      class={styles.root({ class: local.class })}
-      validationState={local.errorMessage ? "invalid" : "valid"}
+      class={styles.root({ class: props.class })}
+      validationState={props.errorMessage ? "invalid" : "valid"}
       {...others}
     >
-      <Show when={local.label}>
-        <KTextField.Label class={styles.label()}>{local.label}</KTextField.Label>
+      <Show when={props.label}>
+        <KTextField.Label class={styles.label()}>{props.label}</KTextField.Label>
       </Show>
 
-      <KTextField.Input class={styles.input()} type={local.type} placeholder={local.placeholder} />
+      <KTextField.Input class={styles.input()} type={props.type} placeholder={props.placeholder} />
 
-      <Show when={local.description}>
+      <Show when={props.description}>
         <KTextField.Description class={styles.description()}>
-          {local.description}
+          {props.description}
         </KTextField.Description>
       </Show>
 
-      <Show when={local.errorMessage}>
+      <Show when={props.errorMessage}>
         <KTextField.ErrorMessage class={styles.errorMessage()}>
-          {local.errorMessage}
+          {props.errorMessage}
         </KTextField.ErrorMessage>
       </Show>
     </KTextField>

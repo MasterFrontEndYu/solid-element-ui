@@ -1,5 +1,6 @@
 import { ToggleGroup as KToggleGroup } from "@kobalte/core/toggle-group";
-import { splitProps, For, type ComponentProps, type JSX } from "solid-js";
+import { omit, For, type ComponentProps } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import { tv, type VariantProps } from "tailwind-variants";
 
 // TODO 单选，多选出现问题
@@ -57,17 +58,13 @@ export interface ToggleGroupProps
 }
 
 export const ToggleGroup = (props: ToggleGroupProps) => {
-  const [local, variantProps, others] = splitProps(
-    props,
-    ["options", "class"],
-    ["size", "variant"],
-  );
+  const others = omit(props, "options", "class", "size", "variant");
 
-  const styles = toggleGroupStyles(variantProps);
+  const styles = toggleGroupStyles({ size: props.size, variant: props.variant });
 
   return (
-    <KToggleGroup class={styles.root({ class: local.class })} {...others}>
-      <For each={local.options}>
+    <KToggleGroup class={styles.root({ class: props.class })} {...others}>
+      <For each={props.options}>
         {(option) => (
           <KToggleGroup.Item value={option.value} disabled={option.disabled} class={styles.item()}>
             {option.label}

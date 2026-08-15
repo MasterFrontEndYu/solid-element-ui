@@ -1,5 +1,5 @@
 import { ColorWheel as KColorWheel } from "@kobalte/core/color-wheel";
-import { splitProps, type ComponentProps } from "solid-js";
+import { omit, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
 
 // FIXME 颜色选项都有源代码问题，注意查看原始kobalte的问题。
@@ -28,15 +28,15 @@ export interface ColorWheelProps extends ComponentProps<typeof KColorWheel> {
 }
 
 export const ColorWheel = (props: ColorWheelProps) => {
-  const [local, others] = splitProps(props, ["size", "class"]);
+  const others = omit(props, "size", "class");
 
   return (
-    <KColorWheel class={root({ class: local.class })} {...others}>
+    <KColorWheel class={root({ class: props.class })} {...others}>
       <KColorWheel.Track
         class={track()}
         style={{
-          width: `${local.size || 160}px`,
-          height: `${local.size || 160}px`,
+          width: `${props.size || 160}px`,
+          height: `${props.size || 160}px`,
           background: "var(--kb-color-wheel-track-background)",
         }}
       >

@@ -3,10 +3,7 @@ import solid from "@solidjs/vite-plugin";
 import { resolve } from "path";
 import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
-  plugins: [
-    solid(),
-    tailwindcss(),
-  ],
+  plugins: [solid(), tailwindcss()],
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.tsx"),
@@ -16,8 +13,8 @@ export default defineConfig({
     rollupOptions: {
       external: [
         "solid-js",
-        "solid-js/web",
-        "solid-js/store",
+        "@solidjs/web",
+        "@solidjs/store",
         "@kobalte/core",
         "tailwind-variants",
         "tailwind-merge",

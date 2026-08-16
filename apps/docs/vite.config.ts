@@ -23,7 +23,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ["solid-js", "solid-js/web", "solid-js/store", "tailwind-merge"],
+      external: ["solid-js", "tailwind-merge"],
     },
   },
   plugins: [

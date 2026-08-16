@@ -11,14 +11,7 @@ export default defineConfig({
       fileName: "index",
     },
     rollupOptions: {
-      external: [
-        "solid-js",
-        "@solidjs/web",
-        "@solidjs/store",
-        "@kobalte/core",
-        "tailwind-variants",
-        "tailwind-merge",
-      ],
+      external: ["solid-js", "@kobalte/core", "tailwind-variants", "tailwind-merge"],
     },
   },
-});
+} as any);

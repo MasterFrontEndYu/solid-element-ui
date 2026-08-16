@@ -15,4 +15,4 @@ export default defineConfig({
     cache: true,
   },
   plugins: [consolePipe()],
-});
+} as any);

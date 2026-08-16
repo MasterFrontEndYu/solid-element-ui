@@ -1,16 +1,10 @@
 import { defineConfig } from "vite-plus";
 import solid from "@solidjs/vite-plugin";
 import { resolve } from "path";
-import dts from "vite-plugin-dts";
 import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [
     solid(),
-    dts({
-      include: ["src"],
-      insertTypesEntry: true,
-      entryRoot: "src",
-    }),
     tailwindcss(),
   ],
   build: {

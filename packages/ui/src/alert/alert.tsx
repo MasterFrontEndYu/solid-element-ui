@@ -1,7 +1,7 @@
 import { Alert as KAlert } from "@kobalte/core/alert";
 import { omit, type ComponentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Info, CircleAlert, CircleCheck, CircleX } from "lucide-solid";
+import { Info, CircleAlert, CircleCheck, CircleX } from "../icons";
 
 const alertStyles = tv(
   {

@@ -2,7 +2,7 @@ import { Checkbox as KCheckbox } from "@kobalte/core/checkbox";
 import { omit, type ComponentProps } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
-import { Check } from "lucide-solid";
+import { Check } from "../icons";
 
 // TODO 添加checkbox 的几种形状尺寸,看情况吧
 

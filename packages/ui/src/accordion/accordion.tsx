@@ -1,7 +1,7 @@
 import { Accordion as KAccordion, type AccordionRootProps } from "@kobalte/core/accordion";
 import { For, omit } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { ChevronDown } from "lucide-solid";
+import { ChevronDown } from "../icons";
 import { tv, type VariantProps } from "tailwind-variants";
 
 // 1. 定义样式

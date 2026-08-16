@@ -3,7 +3,7 @@ import { Toast as KToast, toaster } from "@kobalte/core/toast";
 import { isServer } from "@solidjs/web";
 import { omit, type ComponentProps, Show, type ParentProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { X, CircleCheck, CircleAlert, Info, TriangleAlert } from "lucide-solid";
+import { X, CircleCheck, CircleAlert, Info, TriangleAlert } from "../icons";
 
 const toastStyles = tv(
   {

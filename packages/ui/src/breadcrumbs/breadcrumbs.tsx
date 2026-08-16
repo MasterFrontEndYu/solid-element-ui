@@ -2,7 +2,7 @@ import { Breadcrumbs as KBreadcrumbs } from "@kobalte/core/breadcrumbs";
 import { For, omit, type ComponentProps } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
-import { ChevronRight } from "lucide-solid";
+import { ChevronRight } from "../icons";
 
 // TODO 1. 定义样式
 //      2. icon 支持自定义

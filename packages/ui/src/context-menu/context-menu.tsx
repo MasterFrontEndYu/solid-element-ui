@@ -2,7 +2,7 @@ import { ContextMenu as KContextMenu } from "@kobalte/core/context-menu";
 import { For, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
-import { ChevronRight } from "lucide-solid";
+import { ChevronRight } from "../icons";
 
 // TODO 样式修改
 

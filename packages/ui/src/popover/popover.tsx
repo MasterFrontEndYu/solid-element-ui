@@ -1,5 +1,5 @@
 import { Popover as KPopover } from "@kobalte/core/popover";
-import { CrossIcon } from "lucide-solid";
+import { CrossIcon } from "../icons";
 import { omit, type ComponentProps } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";

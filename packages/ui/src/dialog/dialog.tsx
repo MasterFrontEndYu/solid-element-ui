@@ -2,7 +2,7 @@ import { Dialog as KDialog } from "@kobalte/core/dialog";
 import { Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
-import { X } from "lucide-solid";
+import { X } from "../icons";
 
 //TODO 修改footer，可自定义或是自带，方法传入等等
 // FIXME title 和close icon 平行。

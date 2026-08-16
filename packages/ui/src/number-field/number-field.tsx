@@ -1,7 +1,7 @@
 import { NumberField as KNumberField } from "@kobalte/core/number-field";
 import { omit, type ComponentProps, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { ChevronUp, ChevronDown } from "lucide-solid";
+import { ChevronUp, ChevronDown } from "../icons";
 
 const numberFieldStyles = tv(
   {

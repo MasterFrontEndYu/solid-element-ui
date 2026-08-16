@@ -1,7 +1,7 @@
 import { TextField as KTextField } from "@kobalte/core/text-field";
 import { omit, type ComponentProps, Show, createSignal } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { CloudUpload } from "lucide-solid";
+import { CloudUpload } from "../icons";
 
 //TODO 样式修改，移除 UploadCloud这种已废弃的icon
 

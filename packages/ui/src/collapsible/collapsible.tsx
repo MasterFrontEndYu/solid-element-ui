@@ -2,7 +2,7 @@ import { Collapsible as KCollapsible } from "@kobalte/core/collapsible";
 import { omit, type ComponentProps } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
-import { ChevronDown } from "lucide-solid";
+import { ChevronDown } from "../icons";
 
 const collapsibleStyles = tv(
   {

@@ -1,7 +1,7 @@
 import { Combobox as KCombobox } from "@kobalte/core/combobox";
 import { omit, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
-import { Check, ChevronDown } from "lucide-solid";
+import { Check, ChevronDown } from "../icons";
 
 // FIXME 缺少Description，ErrorMessage，验证
 

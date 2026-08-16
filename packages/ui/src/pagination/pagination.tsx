@@ -1,7 +1,7 @@
 import { Pagination as KPagination } from "@kobalte/core/pagination";
 import { omit, type ComponentProps } from "solid-js";
 import { tv } from "tailwind-variants";
-import { ChevronLeft, ChevronRight, Ellipsis } from "lucide-solid";
+import { ChevronLeft, ChevronRight, Ellipsis } from "../icons";
 
 // FIXME 样式修改，
 

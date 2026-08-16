@@ -1,7 +1,7 @@
 import { TextField as KSearch } from "@kobalte/core/text-field";
 import { omit, type ComponentProps, Show } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Search as SearchIcon, CircleX } from "lucide-solid";
+import { Search as SearchIcon, CircleX } from "../icons";
 
 const searchStyles = tv(
   {

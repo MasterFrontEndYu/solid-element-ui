@@ -1,7 +1,7 @@
 import { Select as KSelect } from "@kobalte/core/select";
 import { omit, Show, createMemo } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { ChevronDown, Check } from "lucide-solid";
+import { ChevronDown, Check } from "../icons";
 
 const selectStyles = tv(
   {

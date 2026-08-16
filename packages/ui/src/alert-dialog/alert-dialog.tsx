@@ -2,7 +2,7 @@ import { AlertDialog as KAlertDialog } from "@kobalte/core/alert-dialog";
 import { omit, type ComponentProps, createSignal } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { tv } from "tailwind-variants";
-import { X } from "lucide-solid";
+import { X } from "../icons";
 import { Button } from "../button/button";
 
 const alertDialogStyles = tv(

@@ -2,7 +2,7 @@ import { Button as KButton } from "@kobalte/core/button";
 import { omit, type ComponentProps, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { tv, type VariantProps } from "tailwind-variants";
-import { LoaderCircle } from "lucide-solid";
+import { LoaderCircle } from "../icons";
 
 // --- 样式定义保持不变 ---
 const buttonStyles = tv(

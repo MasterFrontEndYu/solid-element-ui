@@ -1,5 +1,6 @@
 {
-    "name": "example-with-solidbase",
+    "name": "example-solidbase",
+    "version": "0.0.0",
     "private": true,
     "type": "module",
     "scripts": {
@@ -18,10 +19,10 @@
         "nitro": "^3.0.260610-beta",
         "resolve": "^1.22.12",
         "solid-element-ui": "workspace:*",
-        "solid-js": "^2.0.0-rc.0",
+        "solid-js": "catalog:",
         "tailwindcss": "^4.3.3",
-        "vite": "^0.2.9",
-        "vite-plus": "^0.2.9"
+        "vite": "catalog:",
+        "vite-plus": "catalog:"
     },
     "overrides": {
         "@iconify-json/ri": "^1.2.5",

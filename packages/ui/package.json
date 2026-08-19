@@ -50,18 +50,18 @@
     },
     "dependencies": {
         "@kobalte/core": "2.0.0-alpha.0",
-        "@solidjs/web": "2.0.0-rc.0",
+        "@solidjs/web": "catalog:",
         "tailwind-merge": "^3.6.0",
         "tailwind-variants": "^3.3.1",
-        "tailwindcss": "^4.3.3"
+        "tailwindcss": "catalog:"
     },
     "devDependencies": {
-        "@solidjs/vite-plugin": "3.0.0-next.28",
-        "@tailwindcss/vite": "^4.3.3",
-        "typescript": "^7.0.2",
+        "@solidjs/vite-plugin": "catalog:",
+        "@tailwindcss/vite": "catalog:",
+        "typescript": "catalog:",
         "vite-plus": "catalog:"
     },
     "peerDependencies": {
-        "solid-js": "^2.0.0-rc.0"
+        "solid-js": "catalog:"
     }
 }

@@ -1,3 +1,4 @@
+@layer ui-lib, base, components, utilities;
 @import "tailwindcss";
 
 @import "../node_modules/solid-element-ui/src/style/theme.css";

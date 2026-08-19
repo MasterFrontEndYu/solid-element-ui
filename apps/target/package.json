@@ -16,6 +16,8 @@
         "@solidjs/vite-plugin": "catalog:",
         "filesystem-routing": "0.2.1",
         "typescript": "^5.9.2",
+        "tailwindcss": "catalog:",
+        "@tailwindcss/vite": "catalog:",
         "vite": "catalog:"
     },
     "dependencies": {

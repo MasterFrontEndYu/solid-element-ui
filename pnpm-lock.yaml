@@ -277,7 +277,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
       solid-js:
-        specifier: ^2.0.0-rc.0
+        specifier: 'catalog:'
         version: 2.0.0-rc.0
       tailwindcss:
         specifier: ^4.3.3
@@ -286,7 +286,7 @@ importers:
         specifier: npm:@voidzero-dev/vite-plus-core@0.2.9
         version: '@voidzero-dev/vite-plus-core@0.2.9(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(typescript@5.9.3)(yaml@2.9.0)'
       vite-plus:
-        specifier: ^0.2.9
+        specifier: 'catalog:'
         version: 0.2.9(@types/node@26.2.0)(@voidzero-dev/vite-plus-core@0.2.9(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(typescript@5.9.3)(yaml@2.9.0))(esbuild@0.28.2)(jiti@2.7.0)(jsdom@25.0.1)(typescript@5.9.3)(yaml@2.9.0)
     devDependencies:
       '@iconify-json/ri':
@@ -323,9 +323,15 @@ importers:
       '@solidjs/vite-plugin':
         specifier: 'catalog:'
         version: 3.0.0-next.28(@solidjs/web@2.0.0-rc.0(solid-js@2.0.0-rc.0))(@testing-library/jest-dom@6.10.0(@testing-library/dom@10.4.1))(@voidzero-dev/vite-plus-core@0.2.9(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(typescript@5.9.3)(yaml@2.9.0))(solid-js@2.0.0-rc.0)
+      '@tailwindcss/vite':
+        specifier: 'catalog:'
+        version: 4.3.3(@voidzero-dev/vite-plus-core@0.2.9(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(typescript@5.9.3)(yaml@2.9.0))
       filesystem-routing:
         specifier: 0.2.1
         version: 0.2.1(@voidzero-dev/vite-plus-core@0.2.9(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(typescript@5.9.3)(yaml@2.9.0))
+      tailwindcss:
+        specifier: 'catalog:'
+        version: 4.3.3
       typescript:
         specifier: ^5.9.2
         version: 5.9.3

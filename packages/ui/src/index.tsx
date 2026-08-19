@@ -1,4 +1,4 @@
-import "./style/global.css";
+import "./style/theme.css";
 
 // TODO 组件 form , data等
 // TODO background-color 等颜色相关的属性,添加 dark 模式的支持

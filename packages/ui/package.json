@@ -39,7 +39,7 @@
             "browser": "./dist/index.js",
             "default": "./dist/index.js"
         },
-        "./index.css": "./dist/global.css"
+        "./theme.css": "./dist/theme.css"
     },
     "publishConfig": {
         "access": "public",

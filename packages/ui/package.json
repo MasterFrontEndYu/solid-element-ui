@@ -46,7 +46,7 @@
         "registry": "https://registry.npmjs.org"
     },
     "scripts": {
-        "build": "tsc -b && vp build"
+        "build": "vp build"
     },
     "dependencies": {
         "@kobalte/core": "2.0.0-alpha.0",

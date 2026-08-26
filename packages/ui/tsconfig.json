@@ -19,13 +19,13 @@
     "rootDir": ".",
     "paths": {
       "solid-element-ui": [
-        "./src/index.tsx"
+        "./core/index.tsx"
       ]
     }
   },
   "include": [
-    "src/**/*",
-    "src/index.tsx",
+    "core/**/*",
+    "core/index.tsx",
     "globals.d.ts"
   ]
 }

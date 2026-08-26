@@ -1,7 +1,7 @@
 import { Pagination as KPagination } from "@kobalte/core/pagination";
 import { omit, type ComponentProps } from "solid-js";
 import { ChevronLeft, ChevronRight, Ellipsis } from "../icons";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 // FIXME 样式修改，
 
@@ -13,28 +13,28 @@ export const Pagination = (props: PaginationProps) => {
 
   return (
     <KPagination
-      class={fullClass.root}
+      class={defaultClass.root}
       count={props.count}
       {...others}
       itemComponent={(p) => (
-        <KPagination.Item page={p.page} class={fullClass.item}>
+        <KPagination.Item page={p.page} class={defaultClass.item}>
           {p.page}
         </KPagination.Item>
       )}
       ellipsisComponent={() => (
-        <KPagination.Ellipsis class={fullClass.ellipsis}>
+        <KPagination.Ellipsis class={defaultClass.ellipsis}>
           <Ellipsis size={16} />
         </KPagination.Ellipsis>
       )}
     >
-      <div class={fullClass.itemsContainer}>
-        <KPagination.Previous class={fullClass.trigger}>
+      <div class={defaultClass.itemsContainer}>
+        <KPagination.Previous class={defaultClass.trigger}>
           <ChevronLeft size={16} />
         </KPagination.Previous>
 
         <KPagination.Items />
 
-        <KPagination.Next class={fullClass.trigger}>
+        <KPagination.Next class={defaultClass.trigger}>
           <ChevronRight size={16} />
         </KPagination.Next>
       </div>

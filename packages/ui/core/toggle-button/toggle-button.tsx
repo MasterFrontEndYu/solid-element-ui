@@ -1,7 +1,7 @@
 import { ToggleButton as KToggle } from "@kobalte/core/toggle-button";
 import { omit, type ComponentProps } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 // TODO 切换样式问题
 
@@ -16,7 +16,7 @@ export const ToggleButton = (props: ToggleButtonProps) => {
 
   return (
     <KToggle
-      class={fullClass.root}
+      class={defaultClass.root}
       {...others}
     >
       {(state: any) =>

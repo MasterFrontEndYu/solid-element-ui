@@ -1,7 +1,7 @@
 import { Select as KSelect } from "@kobalte/core/select";
 import { omit, Show, createMemo } from "solid-js";
 import { ChevronDown, Check } from "../icons";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 interface Option {
   label: string;
@@ -66,11 +66,11 @@ export const Select = (props: SelectProps) => {
       value={selectedOption()}
       defaultValue={defaultOption()}
       onChange={handleValueChange}
-      class={fullClass.root}
+      class={defaultClass.root}
       {...others}
       itemComponent={(itemProps) => (
-        <KSelect.Item item={itemProps.item} class={fullClass.item}>
-          <KSelect.ItemIndicator class={fullClass.itemIndicator}>
+        <KSelect.Item item={itemProps.item} class={defaultClass.item}>
+          <KSelect.ItemIndicator class={defaultClass.itemIndicator}>
             <Check size={14} />
           </KSelect.ItemIndicator>
           <KSelect.ItemLabel>{itemProps.item.textValue}</KSelect.ItemLabel>
@@ -78,10 +78,10 @@ export const Select = (props: SelectProps) => {
       )}
     >
       <Show when={props.label}>
-        <KSelect.Label class={fullClass.label}>{props.label}</KSelect.Label>
+        <KSelect.Label class={defaultClass.label}>{props.label}</KSelect.Label>
       </Show>
 
-      <KSelect.Trigger class={fullClass.trigger}>
+      <KSelect.Trigger class={defaultClass.trigger}>
         <KSelect.Value<Option>>
           {(state) => (
             <Show when={state.selectedOption()} fallback={props.placeholder}>
@@ -95,13 +95,13 @@ export const Select = (props: SelectProps) => {
       </KSelect.Trigger>
 
       <KSelect.Portal>
-        <KSelect.Content class={fullClass.content}>
-          <KSelect.Listbox class={fullClass.listbox} />
+        <KSelect.Content class={defaultClass.content}>
+          <KSelect.Listbox class={defaultClass.listbox} />
         </KSelect.Content>
       </KSelect.Portal>
 
       <Show when={props.description}>
-        <KSelect.Description class={fullClass.description}>{props.description}</KSelect.Description>
+        <KSelect.Description class={defaultClass.description}>{props.description}</KSelect.Description>
       </Show>
     </KSelect>
   );

@@ -2,7 +2,7 @@ import { Breadcrumbs as KBreadcrumbs } from "@kobalte/core/breadcrumbs";
 import { For, omit, type ComponentProps } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { ChevronRight } from "../icons";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 // TODO 1. 定义样式
 //      2. icon 支持自定义
@@ -23,7 +23,7 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
   const others = omit(props, "items", "separatorIcon", "class");
 
   return (
-    <KBreadcrumbs class={fullClass.root} {...others}>
+    <KBreadcrumbs class={defaultClass.root} {...others}>
       <For each={props.items}>
         {(breadcrumb, index) => (
           <>
@@ -31,13 +31,13 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
               href={breadcrumb.href}
               current={breadcrumb.current}
               disabled={breadcrumb.disabled}
-              class={fullClass.link}
+              class={defaultClass.link}
             >
               {breadcrumb.title}
             </KBreadcrumbs.Link>
 
             {index() < props.items.length - 1 && (
-              <span aria-hidden="true" class={fullClass.separator}>
+              <span aria-hidden="true" class={defaultClass.separator}>
                 {props.separatorIcon || <ChevronRight size={16} />}
               </span>
             )}

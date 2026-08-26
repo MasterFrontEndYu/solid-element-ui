@@ -1,7 +1,7 @@
 import { NumberField as KNumberField } from "@kobalte/core/number-field";
 import { omit, type ComponentProps, Show } from "solid-js";
 import { ChevronUp, ChevronDown } from "../icons";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 export interface NumberFieldProps
   extends Omit<ComponentProps<typeof KNumberField>, "class"> {
@@ -15,19 +15,19 @@ export const NumberField = (props: NumberFieldProps) => {
   const others = omit(props, "label", "description", "class");
 
   return (
-    <KNumberField class={fullClass.root} {...others}>
+    <KNumberField class={defaultClass.root} {...others}>
       <Show when={props.label}>
-        <KNumberField.Label class={fullClass.label}>{props.label}</KNumberField.Label>
+        <KNumberField.Label class={defaultClass.label}>{props.label}</KNumberField.Label>
       </Show>
 
-      <div class={fullClass.container}>
-        <KNumberField.Input class={fullClass.input} />
-        <div class={fullClass.controls}>
-          <KNumberField.IncrementTrigger class={fullClass.stepper}>
+      <div class={defaultClass.container}>
+        <KNumberField.Input class={defaultClass.input} />
+        <div class={defaultClass.controls}>
+          <KNumberField.IncrementTrigger class={defaultClass.stepper}>
             <ChevronUp size={14} />
           </KNumberField.IncrementTrigger>
           <KNumberField.DecrementTrigger
-            class={`${fullClass.stepper} border-t border-slate-200 dark:border-slate-800`}
+            class={`${defaultClass.stepper} border-t border-slate-200 dark:border-slate-800`}
           >
             <ChevronDown size={14} />
           </KNumberField.DecrementTrigger>
@@ -37,7 +37,7 @@ export const NumberField = (props: NumberFieldProps) => {
       <Show when={props.description}>
         <KNumberField.Description class="text-xs text-slate-500 ml-1 mt-1" />
       </Show>
-      <KNumberField.ErrorMessage class={fullClass.errorMessage} />
+      <KNumberField.ErrorMessage class={defaultClass.errorMessage} />
     </KNumberField>
   );
 };

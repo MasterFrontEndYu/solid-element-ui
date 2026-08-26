@@ -1,7 +1,7 @@
 import { Alert as KAlert } from "@kobalte/core/alert";
 import { omit, type ComponentProps } from "solid-js";
 import { Info, CircleAlert, CircleCheck, CircleX } from "../icons";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 
 
@@ -26,16 +26,16 @@ export const Alert = (props: AlertProps) => {
     if (typeof props.icon === "object") return props.icon;
 
     const Icon = iconMap[props.variant || "info"];
-    return <Icon size={18} class={fullClass.icon} />;
+    return <Icon size={18} class={defaultClass.icon} />;
   };
 
   // 5. 渲染组件
   return (
-    <KAlert class={fullClass.root} {...others}>
+    <KAlert class={defaultClass.root} {...others}>
       <RenderedIcon />
-      <div class={fullClass.content}>
-        {props.title && <h5 class={fullClass.title}>{props.title}</h5>}
-        <div class={fullClass.children}>{props.children}</div>
+      <div class={defaultClass.content}>
+        {props.title && <h5 class={defaultClass.title}>{props.title}</h5>}
+        <div class={defaultClass.children}>{props.children}</div>
       </div>
     </KAlert>
   );

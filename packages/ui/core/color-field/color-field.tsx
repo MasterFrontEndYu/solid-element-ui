@@ -1,6 +1,6 @@
 import { ColorField as KColorField } from "@kobalte/core/color-field";
 import { omit, type ComponentProps } from "solid-js";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 export interface ColorFieldProps extends ComponentProps<typeof KColorField> {
   label?: string;
@@ -13,16 +13,16 @@ export const ColorField = (props: ColorFieldProps) => {
 
   return (
     <KColorField
-      class={fullClass.root}
+      class={defaultClass.root}
       validationState={props.error ? "invalid" : "valid"}
       {...others}
     >
-      {props.label && <KColorField.Label class={fullClass.label}>{props.label}</KColorField.Label>}
-      <KColorField.Input class={fullClass.input} placeholder="#FFFFFF" />
+      {props.label && <KColorField.Label class={defaultClass.label}>{props.label}</KColorField.Label>}
+      <KColorField.Input class={defaultClass.input} placeholder="#FFFFFF" />
       {props.desc && !props.error && (
-        <KColorField.Description class={fullClass.description}>{props.desc}</KColorField.Description>
+        <KColorField.Description class={defaultClass.description}>{props.desc}</KColorField.Description>
       )}
-      <KColorField.ErrorMessage class={fullClass.errorMessage}>{props.error}</KColorField.ErrorMessage>
+      <KColorField.ErrorMessage class={defaultClass.errorMessage}>{props.error}</KColorField.ErrorMessage>
     </KColorField>
   );
 };

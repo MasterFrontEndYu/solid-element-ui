@@ -1,7 +1,7 @@
 import { HoverCard as KHoverCard } from "@kobalte/core/hover-card";
 import { omit, type ComponentProps } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 export interface HoverCardProps extends ComponentProps<typeof KHoverCard> {
   trigger: JSX.Element;
@@ -16,8 +16,8 @@ export const HoverCard = (props: HoverCardProps) => {
       <KHoverCard.Trigger>{props.trigger}</KHoverCard.Trigger>
 
       <KHoverCard.Portal>
-        <KHoverCard.Content class={fullClass.content}>
-          {props.showArrow && <KHoverCard.Arrow class={fullClass.arrow} />}
+        <KHoverCard.Content class={defaultClass.content}>
+          {props.showArrow && <KHoverCard.Arrow class={defaultClass.arrow} />}
           {props.children}
         </KHoverCard.Content>
       </KHoverCard.Portal>

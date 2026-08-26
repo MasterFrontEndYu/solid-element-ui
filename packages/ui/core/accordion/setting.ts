@@ -1,4 +1,4 @@
-export const fullClass = {
+export const defaultClass = {
   root: "w-full divide-y divide-base border border-base rounded-lg overflow-hidden",
   item: "group",
   header: "flex",

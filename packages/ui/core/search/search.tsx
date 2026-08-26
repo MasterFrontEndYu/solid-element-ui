@@ -1,7 +1,7 @@
 import { TextField as KSearch } from "@kobalte/core/text-field";
 import { omit, type ComponentProps, Show } from "solid-js";
 import { Search as SearchIcon, CircleX } from "../icons";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 export interface SearchProps extends Omit<ComponentProps<typeof KSearch>, "class"> {
   class?: string;
@@ -25,16 +25,16 @@ export const Search = (props: SearchProps) => {
 
   return (
     <KSearch
-      class={fullClass.root}
+      class={defaultClass.root}
       value={props.value}
       onChange={props.onChange}
       {...others}
     >
-      <div class={fullClass.inputWrapper}>
-        <SearchIcon class={fullClass.icon} />
-        <KSearch.Input class={fullClass.input} placeholder={props.placeholder ?? "搜索..."} />
+      <div class={defaultClass.inputWrapper}>
+        <SearchIcon class={defaultClass.icon} />
+        <KSearch.Input class={defaultClass.input} placeholder={props.placeholder ?? "搜索..."} />
         <Show when={props.allowClear && props.value}>
-          <button onClick={() => props.onClear?.()} class={fullClass.clear}>
+          <button onClick={() => props.onClear?.()} class={defaultClass.clear}>
             <CircleX class="text-white dark:text-slate-950" />
           </button>
         </Show>

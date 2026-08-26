@@ -1,6 +1,6 @@
 import { TimeField as KTimeField } from "@kobalte/core/time-field";
 import { omit, type ComponentProps, Show } from "solid-js";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 export interface TimeFieldProps
   extends Omit<ComponentProps<typeof KTimeField>, "class"> {
@@ -15,24 +15,24 @@ export const TimeField = (props: TimeFieldProps) => {
 
   return (
     <KTimeField
-      class={fullClass.root}
+      class={defaultClass.root}
       validationState={props.errorMessage ? "invalid" : "valid"}
       {...others}
     >
       <Show when={props.label}>
-        <KTimeField.Label class={fullClass.label}>{props.label}</KTimeField.Label>
+        <KTimeField.Label class={defaultClass.label}>{props.label}</KTimeField.Label>
       </Show>
 
       <KTimeField.Input>{(segment) => <KTimeField.Segment segment={segment()} />}</KTimeField.Input>
 
       <Show when={props.description}>
-        <KTimeField.Description class={fullClass.description}>
+        <KTimeField.Description class={defaultClass.description}>
           {props.description}
         </KTimeField.Description>
       </Show>
 
       <Show when={props.errorMessage}>
-        <KTimeField.ErrorMessage class={fullClass.errorMessage}>
+        <KTimeField.ErrorMessage class={defaultClass.errorMessage}>
           {props.errorMessage}
         </KTimeField.ErrorMessage>
       </Show>

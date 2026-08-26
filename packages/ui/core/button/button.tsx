@@ -2,7 +2,7 @@ import { Button as KButton } from "@kobalte/core/button";
 import { omit, type ComponentProps, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { LoaderCircle } from "../icons";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 
 
@@ -27,10 +27,10 @@ export const Button = (props: ButtonProps) => {
   );
 
   return (
-    <KButton class={fullClass.base} disabled={props.disabled || props.loading} {...others}>
+    <KButton class={defaultClass.base} disabled={props.disabled || props.loading} {...others}>
       {/* Loading 状态显示 */}
       <Show when={props.loading}>
-        <LoaderCircle class={fullClass.icon} />
+        <LoaderCircle class={defaultClass.icon} />
       </Show>
 
       {/* 非 Loading 状态下的 Left Icon */}

@@ -1,6 +1,6 @@
 import { Separator as KSeparator } from "@kobalte/core/separator";
 import { omit, type ComponentProps } from "solid-js";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 export interface SeparatorProps extends ComponentProps<typeof KSeparator> {
   orientation?: "horizontal" | "vertical";
@@ -12,7 +12,7 @@ export const Separator = (props: SeparatorProps) => {
 
   return (
     <KSeparator
-      class={fullClass.root}
+      class={defaultClass.root}
       orientation={props.orientation}
       {...others}
     />

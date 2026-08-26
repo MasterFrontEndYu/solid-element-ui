@@ -1,7 +1,7 @@
 import { Tabs as KTabs } from "@kobalte/core/tabs";
 import { omit, For } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 export type TabItem = {
   value: string;
@@ -23,21 +23,21 @@ export const Tabs = (props: TabsProps) => {
   const others = omit(props, "items", "class");
 
   return (
-    <KTabs class={fullClass.root} {...others}>
-      <KTabs.List class={fullClass.list}>
+    <KTabs class={defaultClass.root} {...others}>
+      <KTabs.List class={defaultClass.list}>
         <For each={props.items}>
           {(item) => (
-            <KTabs.Trigger class={fullClass.trigger} value={item.value} disabled={item.disabled}>
+            <KTabs.Trigger class={defaultClass.trigger} value={item.value} disabled={item.disabled}>
               {item.label}
             </KTabs.Trigger>
           )}
         </For>
-        <KTabs.Indicator class={fullClass.indicator} />
+        <KTabs.Indicator class={defaultClass.indicator} />
       </KTabs.List>
 
       <For each={props.items}>
         {(item) => (
-          <KTabs.Content class={fullClass.content} value={item.value}>
+          <KTabs.Content class={defaultClass.content} value={item.value}>
             {item.content}
           </KTabs.Content>
         )}

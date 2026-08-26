@@ -1,4 +1,4 @@
-export const fullClass = {
+export const defaultClass = {
     root: "flex flex-col gap-1.5 w-full antialiased",
     label: "text-sm font-medium text-main ml-1",
     container: "relative flex items-center rounded-md border border-slate-200 bg-app transition-shadow shadow-sm focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500",

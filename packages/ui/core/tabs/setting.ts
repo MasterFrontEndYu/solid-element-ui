@@ -1,4 +1,4 @@
-export const fullClass = {
+export const defaultClass = {
     root: "flex flex-col w-full",
     list: "relative flex items-center border-b border-base",
     trigger: "relative flex h-9 items-center justify-center px-4 text-sm font-medium transition-colors outline-none select-none cursor-pointer text-muted hover:text-muted/80 data-[selected]:text-main",

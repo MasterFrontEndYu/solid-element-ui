@@ -1,4 +1,4 @@
-export const fullClass = {
+export const defaultClass = {
     root: "flex flex-col gap-3 antialiased",
     label: "text-sm font-semibold text-main mb-1",
     item: "group flex items-center gap-3 cursor-pointer disabled:cursor-not-allowed",

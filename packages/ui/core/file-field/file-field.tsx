@@ -1,7 +1,7 @@
 import { TextField as KTextField } from "@kobalte/core/text-field";
 import { omit, type ComponentProps, Show, createSignal } from "solid-js";
 import { CloudUpload } from "../icons";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 //TODO 样式修改，移除 UploadCloud这种已废弃的icon
 
@@ -41,16 +41,16 @@ export const FileField = (props: FileFieldProps) => {
 
   return (
     <KTextField
-      class={fullClass.root}
+      class={defaultClass.root}
       validationState={props.validationState}
       disabled={props.isDisabled}
       {...others}
     >
       <Show when={props.label}>
-        <KTextField.Label class={fullClass.label}>{props.label}</KTextField.Label>
+        <KTextField.Label class={defaultClass.label}>{props.label}</KTextField.Label>
       </Show>
 
-      <label class={fullClass.dropzone}>
+      <label class={defaultClass.dropzone}>
         <KTextField.Input
           type="file"
           class="sr-only"
@@ -58,16 +58,16 @@ export const FileField = (props: FileFieldProps) => {
           multiple={props.multiple}
           onChange={onFileChange}
         />
-        <CloudUpload class={fullClass.icon} />
+        <CloudUpload class={defaultClass.icon} />
         <div class="text-sm font-medium text-slate-600 dark:text-slate-400">
           {files().length > 0 ? `已选择 ${files().length} 个文件` : "点击或拖拽上传文件"}
         </div>
         <Show when={props.description}>
-          <p class={fullClass.description}>{props.description}</p>
+          <p class={defaultClass.description}>{props.description}</p>
         </Show>
       </label>
 
-      <KTextField.ErrorMessage class={fullClass.errorMessage} />
+      <KTextField.ErrorMessage class={defaultClass.errorMessage} />
     </KTextField>
   );
 };

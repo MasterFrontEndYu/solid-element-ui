@@ -2,7 +2,7 @@ import { Popover as KPopover } from "@kobalte/core/popover";
 import { CrossIcon } from "../icons";
 import { omit, type ComponentProps } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 // FIXME 与其他的气泡样式不统一的问题
 // Description，而不是内敛。
@@ -21,8 +21,8 @@ export const Popover = (props: PopoverProps) => {
       <KPopover.Trigger class="inline-flex">{props.trigger}</KPopover.Trigger>
 
       <KPopover.Portal>
-        <KPopover.Content class={fullClass.content}>
-          <KPopover.Arrow class={fullClass.arrow} />
+        <KPopover.Content class={defaultClass.content}>
+          <KPopover.Arrow class={defaultClass.arrow} />
 
           <div class="flex">
             <KPopover.Title>{props.title}</KPopover.Title>

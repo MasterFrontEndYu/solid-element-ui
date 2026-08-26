@@ -1,6 +1,6 @@
 import { ColorSlider as KColorSlider } from "@kobalte/core/color-slider";
 import { omit, type ComponentProps } from "solid-js";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 // TODO defaultValue,还有channel 的问题
 
@@ -13,18 +13,18 @@ export const ColorSlider = (props: ColorSliderProps) => {
   const others = omit(props, "label", "showValue", "class");
 
   return (
-    <KColorSlider class={fullClass.root} {...others}>
+    <KColorSlider class={defaultClass.root} {...others}>
       <div class="flex w-full justify-between items-center">
-        {props.label && <KColorSlider.Label class={fullClass.label}>{props.label}</KColorSlider.Label>}
-        {props.showValue && <KColorSlider.ValueLabel class={fullClass.valueLabel} />}
+        {props.label && <KColorSlider.Label class={defaultClass.label}>{props.label}</KColorSlider.Label>}
+        {props.showValue && <KColorSlider.ValueLabel class={defaultClass.valueLabel} />}
       </div>
       <KColorSlider.Track
-        class={fullClass.track}
+        class={defaultClass.track}
         style={{
           background: "var(--kb-color-slider-track-background)",
         }}
       >
-        <KColorSlider.Thumb class={fullClass.thumb}>
+        <KColorSlider.Thumb class={defaultClass.thumb}>
           <KColorSlider.Input />
         </KColorSlider.Thumb>
       </KColorSlider.Track>

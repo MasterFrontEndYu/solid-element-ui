@@ -1,6 +1,6 @@
 import { Progress as KProgress } from "@kobalte/core/progress";
 import { omit, type ComponentProps, Show } from "solid-js";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 // FIXME  进度条问题，value 直接占满
 
@@ -14,9 +14,9 @@ export const Progress = (props: ProgressProps) => {
   const others = omit(props, "label", "showValue", "class", "size", "radius");
 
   return (
-    <KProgress class={fullClass.root} {...others}>
+    <KProgress class={defaultClass.root} {...others}>
       <Show when={props.label || props.showValue}>
-        <div class={fullClass.labelContainer}>
+        <div class={defaultClass.labelContainer}>
           <Show when={props.label}>
             <KProgress.Label>{props.label}</KProgress.Label>
           </Show>
@@ -26,8 +26,8 @@ export const Progress = (props: ProgressProps) => {
         </div>
       </Show>
 
-      <KProgress.Track class={fullClass.track}>
-        <KProgress.Fill class={fullClass.fill} style={{ width: "var(--kb-progress-fill-width)" }} />
+      <KProgress.Track class={defaultClass.track}>
+        <KProgress.Fill class={defaultClass.fill} style={{ width: "var(--kb-progress-fill-width)" }} />
       </KProgress.Track>
     </KProgress>
   );

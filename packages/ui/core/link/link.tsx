@@ -1,6 +1,6 @@
 import { Link as KLink } from "@kobalte/core/link";
 import { omit, type ComponentProps } from "solid-js";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 export interface LinkProps extends ComponentProps<typeof KLink> {
   external?: boolean;
@@ -14,7 +14,7 @@ export const Link = (props: LinkProps) => {
       href={props.href}
       target={props.external ? "_blank" : undefined}
       rel={props.external ? "noopener noreferrer" : undefined}
-      class={fullClass.root}
+      class={defaultClass.root}
       {...others}
     >
       {props.children}

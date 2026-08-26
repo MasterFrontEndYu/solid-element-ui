@@ -1,4 +1,4 @@
-export const fullClass = {
+export const defaultClass = {
     root: "relative flex flex-col items-center select-none touch-none w-full gap-2",
     labelWrapper: "flex w-full justify-between items-center",
     label: "text-sm font-medium text-muted",

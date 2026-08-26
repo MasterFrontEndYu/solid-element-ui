@@ -3,7 +3,7 @@ import { Toast as KToast, toaster } from "@kobalte/core/toast";
 import { isServer } from "@solidjs/web";
 import { omit, type ComponentProps, Show, type ParentProps } from "solid-js";
 import { X, CircleCheck, CircleAlert, Info, TriangleAlert } from "../icons";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 export interface ToastProps extends Omit<ComponentProps<typeof KToast>, "class"> {
   title?: string;
@@ -37,17 +37,17 @@ const Toast = (props: ToastProps) => {
   const Icon = iconMap[props.variant ?? "info"];
 
   return (
-    <KToast toastId={props.toastId} class={fullClass.root} {...others}>
-      <Icon class={fullClass.icon} />
-      <div class={fullClass.content}>
+    <KToast toastId={props.toastId} class={defaultClass.root} {...others}>
+      <Icon class={defaultClass.icon} />
+      <div class={defaultClass.content}>
         <Show when={props.title}>
-          <KToast.Title class={fullClass.title}>{props.title}</KToast.Title>
+          <KToast.Title class={defaultClass.title}>{props.title}</KToast.Title>
         </Show>
         <Show when={props.description}>
-          <KToast.Description class={fullClass.description}>{props.description}</KToast.Description>
+          <KToast.Description class={defaultClass.description}>{props.description}</KToast.Description>
         </Show>
       </div>
-      <KToast.CloseButton class={fullClass.closeButton}>
+      <KToast.CloseButton class={defaultClass.closeButton}>
         <X size={16} />
       </KToast.CloseButton>
     </KToast>

@@ -2,7 +2,7 @@ import { ContextMenu as KContextMenu } from "@kobalte/core/context-menu";
 import { For, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { ChevronRight } from "../icons";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 // TODO 样式修改
 
@@ -28,13 +28,13 @@ const RenderMenuItems = (props: { items: ContextMenuItemConfig[] }) => {
       {(itemConfig) => (
         <Show
           when={!itemConfig.separator}
-          fallback={<KContextMenu.Separator class={fullClass.separator} />}
+          fallback={<KContextMenu.Separator class={defaultClass.separator} />}
         >
           <Show
             when={itemConfig.children && itemConfig.children.length > 0}
             fallback={
               <KContextMenu.Item
-                class={fullClass.item}
+                class={defaultClass.item}
                 disabled={itemConfig.disabled}
                 onSelect={() => itemConfig.onClick?.()}
               >
@@ -44,12 +44,12 @@ const RenderMenuItems = (props: { items: ContextMenuItemConfig[] }) => {
           >
             {/* 渲染子菜单 */}
             <KContextMenu.Sub>
-              <KContextMenu.SubTrigger class={fullClass.item}>
+              <KContextMenu.SubTrigger class={defaultClass.item}>
                 {itemConfig.label}
-                <ChevronRight class={fullClass.subIcon} />
+                <ChevronRight class={defaultClass.subIcon} />
               </KContextMenu.SubTrigger>
               <KContextMenu.Portal>
-                <KContextMenu.SubContent class={fullClass.content}>
+                <KContextMenu.SubContent class={defaultClass.content}>
                   <RenderMenuItems items={itemConfig.children!} />
                 </KContextMenu.SubContent>
               </KContextMenu.Portal>
@@ -66,7 +66,7 @@ export const ContextMenu = (props: UnifiedContextMenuProps) => {
     <KContextMenu>
       <KContextMenu.Trigger class={props.class}>{props.children}</KContextMenu.Trigger>
       <KContextMenu.Portal>
-        <KContextMenu.Content class={fullClass.content}>
+        <KContextMenu.Content class={defaultClass.content}>
           <RenderMenuItems items={props.items} />
         </KContextMenu.Content>
       </KContextMenu.Portal>

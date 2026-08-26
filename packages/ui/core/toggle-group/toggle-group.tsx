@@ -1,7 +1,7 @@
 import { ToggleGroup as KToggleGroup } from "@kobalte/core/toggle-group";
 import { omit, For, type ComponentProps } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 // TODO 单选，多选出现问题
 
@@ -21,10 +21,10 @@ export const ToggleGroup = (props: ToggleGroupProps) => {
   const others = omit(props, "options", "class", "size", "variant");
 
   return (
-    <KToggleGroup class={fullClass.root} {...others}>
+    <KToggleGroup class={defaultClass.root} {...others}>
       <For each={props.options}>
         {(option) => (
-          <KToggleGroup.Item value={option.value} disabled={option.disabled} class={fullClass.item}>
+          <KToggleGroup.Item value={option.value} disabled={option.disabled} class={defaultClass.item}>
             {option.label}
           </KToggleGroup.Item>
         )}

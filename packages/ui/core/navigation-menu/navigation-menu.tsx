@@ -1,7 +1,7 @@
 import { NavigationMenu as KNavigationMenu } from "@kobalte/core/navigation-menu";
 import { omit, type ComponentProps, For, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 // TODO 不显示问题
 
@@ -19,19 +19,19 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
   const others = omit(props, "items", "class");
 
   return (
-    <KNavigationMenu class={fullClass.root} {...others}>
+    <KNavigationMenu class={defaultClass.root} {...others}>
       <For each={props.items}>
         {(item) => (
           <KNavigationMenu.Menu>
             <Show
               when={item.content}
               fallback={
-                <KNavigationMenu.Trigger as="a" href={item.href} class={fullClass.trigger}>
+                <KNavigationMenu.Trigger as="a" href={item.href} class={defaultClass.trigger}>
                   {item.title}
                 </KNavigationMenu.Trigger>
               }
             >
-              <KNavigationMenu.Trigger class={fullClass.trigger}>
+              <KNavigationMenu.Trigger class={defaultClass.trigger}>
                 {item.title}
                 <svg
                   class="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180"
@@ -48,13 +48,13 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
                 </svg>
               </KNavigationMenu.Trigger>
               <KNavigationMenu.Portal>
-                <KNavigationMenu.Content class={fullClass.content}>{item.content}</KNavigationMenu.Content>
+                <KNavigationMenu.Content class={defaultClass.content}>{item.content}</KNavigationMenu.Content>
               </KNavigationMenu.Portal>
             </Show>
           </KNavigationMenu.Menu>
         )}
       </For>
-      <KNavigationMenu.Viewport class={fullClass.viewport}>
+      <KNavigationMenu.Viewport class={defaultClass.viewport}>
         <KNavigationMenu.Arrow />
       </KNavigationMenu.Viewport>
     </KNavigationMenu>

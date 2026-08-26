@@ -1,7 +1,7 @@
 import { Rating as KRating } from "@kobalte/core/rating";
 import { omit, type ComponentProps, Show, For } from "solid-js";
 import { StarIcon } from "../icons";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 export interface RatingGroupProps
   extends Omit<ComponentProps<typeof KRating>, "children" | "class"> {
@@ -18,15 +18,15 @@ export const RatingGroup = (props: RatingGroupProps) => {
   const others = omit(props, "label", "count", "class", "color", "size");
 
   return (
-    <KRating class={fullClass.root} {...others}>
+    <KRating class={defaultClass.root} {...others}>
       <Show when={props.label}>
-        <KRating.Label class={fullClass.label}>{props.label}</KRating.Label>
+        <KRating.Label class={defaultClass.label}>{props.label}</KRating.Label>
       </Show>
 
-      <KRating.Control class={fullClass.control}>
+      <KRating.Control class={defaultClass.control}>
         <For each={Array(5)}>
           {(_) => (
-            <KRating.Item class={fullClass.item}>
+            <KRating.Item class={defaultClass.item}>
               <KRating.ItemControl>
                 <StarIcon />
               </KRating.ItemControl>

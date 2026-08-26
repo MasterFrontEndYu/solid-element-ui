@@ -3,7 +3,7 @@ import { omit, type ComponentProps, createSignal } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { X } from "../icons";
 import { Button } from "../button/button";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 interface AlertDialogProps extends ComponentProps<typeof KAlertDialog> {
   trigger: JSX.Element;
@@ -50,24 +50,24 @@ export const AlertDialog = (props: AlertDialogProps) => {
       </div>
 
       <KAlertDialog.Portal>
-        <KAlertDialog.Overlay class={fullClass.overlay} />
-        <KAlertDialog.Content class={fullClass.content}>
-          <div class={fullClass.header}>
-            <KAlertDialog.Title class={fullClass.title}>{props.title}</KAlertDialog.Title>
-            <KAlertDialog.CloseButton class={fullClass.closeButton}>
+        <KAlertDialog.Overlay class={defaultClass.overlay} />
+        <KAlertDialog.Content class={defaultClass.content}>
+          <div class={defaultClass.header}>
+            <KAlertDialog.Title class={defaultClass.title}>{props.title}</KAlertDialog.Title>
+            <KAlertDialog.CloseButton class={defaultClass.closeButton}>
               <X size={18} />
             </KAlertDialog.CloseButton>
           </div>
 
           <div class="mt-2">
             {props.description && (
-              <KAlertDialog.Description class={fullClass.description}>
+              <KAlertDialog.Description class={defaultClass.description}>
                 {props.description}
               </KAlertDialog.Description>
             )}
           </div>
 
-          <div class={fullClass.footer}>
+          <div class={defaultClass.footer}>
             <KAlertDialog.CloseButton>
               {props.cancel || <Button variant="outline">取消</Button>}
             </KAlertDialog.CloseButton>

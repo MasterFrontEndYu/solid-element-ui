@@ -1,6 +1,6 @@
 import { RadioGroup as KRadioGroup } from "@kobalte/core/radio-group";
 import { omit, type ComponentProps, For, Show } from "solid-js";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 export interface RadioOption {
   label: string;
@@ -23,19 +23,19 @@ export const RadioGroup = (props: RadioGroupProps) => {
   const others = omit(props, "label", "options", "class", "orientation");
 
   return (
-    <KRadioGroup class={fullClass.root} {...others}>
+    <KRadioGroup class={defaultClass.root} {...others}>
       <Show when={props.label}>
-        <KRadioGroup.Label class={fullClass.label}>{props.label}</KRadioGroup.Label>
+        <KRadioGroup.Label class={defaultClass.label}>{props.label}</KRadioGroup.Label>
       </Show>
 
       <For each={props.options}>
         {(option) => (
-          <KRadioGroup.Item value={option.value} disabled={option.disabled} class={fullClass.item}>
+          <KRadioGroup.Item value={option.value} disabled={option.disabled} class={defaultClass.item}>
             <KRadioGroup.ItemInput />
-            <KRadioGroup.ItemControl class={fullClass.control}>
-              <KRadioGroup.ItemIndicator class={fullClass.indicator} />
+            <KRadioGroup.ItemControl class={defaultClass.control}>
+              <KRadioGroup.ItemIndicator class={defaultClass.indicator} />
             </KRadioGroup.ItemControl>
-            <KRadioGroup.ItemLabel class={fullClass.itemLabel}>{option.label}</KRadioGroup.ItemLabel>
+            <KRadioGroup.ItemLabel class={defaultClass.itemLabel}>{option.label}</KRadioGroup.ItemLabel>
           </KRadioGroup.Item>
         )}
       </For>

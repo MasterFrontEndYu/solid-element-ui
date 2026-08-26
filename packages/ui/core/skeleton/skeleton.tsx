@@ -1,6 +1,6 @@
 import { Skeleton as KSkeleton } from "@kobalte/core/skeleton";
 import { omit, type ComponentProps } from "solid-js";
-import { fullClass } from "./setting";
+import { defaultClass } from "./setting";
 
 // 核心修正：使用 Omit 排除掉冲突的 width 和 height
 export interface SkeletonProps
@@ -22,7 +22,7 @@ export const Skeleton = (props: SkeletonProps) => {
 
   return (
     <KSkeleton
-      class={fullClass.root}
+      class={defaultClass.root}
       style={mergedStyle()}
       {...others}
     />

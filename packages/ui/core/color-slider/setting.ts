@@ -1,4 +1,4 @@
-export const fullClass = {
+export const defaultClass = {
     root: "relative flex flex-col items-center select-none touch-none w-full gap-2",
     label: "text-sm font-medium text-zinc-900 dark:text-zinc-100 self-start",
     track: "relative h-3 w-full rounded-full border border-black/5 dark:border-white/10",

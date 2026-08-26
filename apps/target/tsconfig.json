@@ -22,10 +22,10 @@
         "./src/*"
       ],
       "solid-element-ui": [
-        "../../packages/ui/src/index.tsx"
+        "../../packages/ui/core/index.tsx"
       ],
       "solid-element-ui/*": [
-        "../../packages/ui/src/*"
+        "../../packages/ui/core/*"
       ]
     }
   }

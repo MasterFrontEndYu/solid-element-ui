@@ -6,7 +6,7 @@ export default function Counter() {
   const [count, setCount] = createSignal(0);
   return (
     <div>
-      <Button variant="default">default</Button>
+      <Button>default</Button>
     </div>
   );
 }

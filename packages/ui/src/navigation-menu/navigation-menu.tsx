@@ -1,30 +1,9 @@
 import { NavigationMenu as KNavigationMenu } from "@kobalte/core/navigation-menu";
 import { omit, type ComponentProps, For, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { tv } from "tailwind-variants";
+import { fullClass } from "./setting";
 
 // TODO 不显示问题
-
-const navStyles = tv(
-  {
-    slots: {
-      root: "relative z-10 flex w-full justify-center antialiased",
-      trigger: [
-        "group inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all",
-        "hover:bg-slate-100 hover:text-slate-900 data-[state=open]:bg-slate-100/50",
-        "dark:hover:bg-slate-800 dark:hover:text-slate-50",
-      ],
-      content: "absolute left-0 top-0 w-full p-2 animate-in fade-in zoom-in-95 duration-200",
-      viewport:
-        "relative mt-1.5 h-(--kb-navigation-menu-viewport-height) w-(--kb-navigation-menu-viewport-width) origin-[top_center] overflow-hidden rounded-md border bg-white shadow-xl dark:bg-slate-950 dark:border-slate-800 transition-[width,height] duration-300",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-const { root, trigger, content, viewport } = navStyles();
 
 interface NavItem {
   title: string;
@@ -40,19 +19,19 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
   const others = omit(props, "items", "class");
 
   return (
-    <KNavigationMenu class={root({ class: props.class })} {...others}>
+    <KNavigationMenu class={fullClass.root} {...others}>
       <For each={props.items}>
         {(item) => (
           <KNavigationMenu.Menu>
             <Show
               when={item.content}
               fallback={
-                <KNavigationMenu.Trigger as="a" href={item.href} class={trigger()}>
+                <KNavigationMenu.Trigger as="a" href={item.href} class={fullClass.trigger}>
                   {item.title}
                 </KNavigationMenu.Trigger>
               }
             >
-              <KNavigationMenu.Trigger class={trigger()}>
+              <KNavigationMenu.Trigger class={fullClass.trigger}>
                 {item.title}
                 <svg
                   class="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180"
@@ -69,13 +48,13 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
                 </svg>
               </KNavigationMenu.Trigger>
               <KNavigationMenu.Portal>
-                <KNavigationMenu.Content class={content()}>{item.content}</KNavigationMenu.Content>
+                <KNavigationMenu.Content class={fullClass.content}>{item.content}</KNavigationMenu.Content>
               </KNavigationMenu.Portal>
             </Show>
           </KNavigationMenu.Menu>
         )}
       </For>
-      <KNavigationMenu.Viewport class={viewport()}>
+      <KNavigationMenu.Viewport class={fullClass.viewport}>
         <KNavigationMenu.Arrow />
       </KNavigationMenu.Viewport>
     </KNavigationMenu>

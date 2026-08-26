@@ -1,29 +1,10 @@
 import { ContextMenu as KContextMenu } from "@kobalte/core/context-menu";
 import { For, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { tv } from "tailwind-variants";
 import { ChevronRight } from "../icons";
+import { fullClass } from "./setting";
 
 // TODO 样式修改
-
-const menuStyles = tv(
-  {
-    slots: {
-      content: [
-        "z-50 min-w-[10rem] overflow-hidden rounded-md border border-light bg-app p-1 text-main shadow-md dark:text-zinc-50",
-        "data-[expanded]:animate-in data-[closed]:animate-out",
-      ],
-      item: "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 ",
-      separator: "-mx-1 my-1 h-px border-light",
-      subIcon: "ml-auto h-4 w-4",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-const { content, item, separator, subIcon } = menuStyles();
 
 // 定义配置项类型
 export type ContextMenuItemConfig = {
@@ -47,13 +28,13 @@ const RenderMenuItems = (props: { items: ContextMenuItemConfig[] }) => {
       {(itemConfig) => (
         <Show
           when={!itemConfig.separator}
-          fallback={<KContextMenu.Separator class={separator()} />}
+          fallback={<KContextMenu.Separator class={fullClass.separator} />}
         >
           <Show
             when={itemConfig.children && itemConfig.children.length > 0}
             fallback={
               <KContextMenu.Item
-                class={item()}
+                class={fullClass.item}
                 disabled={itemConfig.disabled}
                 onSelect={() => itemConfig.onClick?.()}
               >
@@ -63,12 +44,12 @@ const RenderMenuItems = (props: { items: ContextMenuItemConfig[] }) => {
           >
             {/* 渲染子菜单 */}
             <KContextMenu.Sub>
-              <KContextMenu.SubTrigger class={item()}>
+              <KContextMenu.SubTrigger class={fullClass.item}>
                 {itemConfig.label}
-                <ChevronRight class={subIcon()} />
+                <ChevronRight class={fullClass.subIcon} />
               </KContextMenu.SubTrigger>
               <KContextMenu.Portal>
-                <KContextMenu.SubContent class={content()}>
+                <KContextMenu.SubContent class={fullClass.content}>
                   <RenderMenuItems items={itemConfig.children!} />
                 </KContextMenu.SubContent>
               </KContextMenu.Portal>
@@ -85,7 +66,7 @@ export const ContextMenu = (props: UnifiedContextMenuProps) => {
     <KContextMenu>
       <KContextMenu.Trigger class={props.class}>{props.children}</KContextMenu.Trigger>
       <KContextMenu.Portal>
-        <KContextMenu.Content class={content()}>
+        <KContextMenu.Content class={fullClass.content}>
           <RenderMenuItems items={props.items} />
         </KContextMenu.Content>
       </KContextMenu.Portal>

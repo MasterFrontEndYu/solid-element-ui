@@ -1,36 +1,9 @@
 import { HoverCard as KHoverCard } from "@kobalte/core/hover-card";
 import { omit, type ComponentProps } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { tv, type VariantProps } from "tailwind-variants";
+import { fullClass } from "./setting";
 
-const hoverCardStyles = tv(
-  {
-    slots: {
-      content: [
-        "z-50 w-64 rounded-xl border border-light bg-app p-4 shadow-lg outline-none",
-        "data-[expanded]:animate-in data-[closed]:animate-out",
-      ],
-      arrow: "fill-white stroke-slate-200 dark:fill-slate-900 dark:stroke-slate-800",
-    },
-    variants: {
-      size: {
-        sm: { content: "w-48 p-3" },
-        md: { content: "w-64 p-4" },
-        lg: { content: "w-80 p-6" },
-      },
-    },
-    defaultVariants: {
-      size: "md",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-type HoverCardVariants = VariantProps<typeof hoverCardStyles>;
-
-export interface HoverCardProps extends ComponentProps<typeof KHoverCard>, HoverCardVariants {
+export interface HoverCardProps extends ComponentProps<typeof KHoverCard> {
   trigger: JSX.Element;
   showArrow?: boolean;
 }
@@ -38,15 +11,13 @@ export interface HoverCardProps extends ComponentProps<typeof KHoverCard>, Hover
 export const HoverCard = (props: HoverCardProps) => {
   const others = omit(props, "trigger", "children", "showArrow", "size");
 
-  const styles = hoverCardStyles({ size: props.size });
-
   return (
     <KHoverCard openDelay={200} closeDelay={300} {...others}>
       <KHoverCard.Trigger>{props.trigger}</KHoverCard.Trigger>
 
       <KHoverCard.Portal>
-        <KHoverCard.Content class={styles.content()}>
-          {props.showArrow && <KHoverCard.Arrow class={styles.arrow()} />}
+        <KHoverCard.Content class={fullClass.content}>
+          {props.showArrow && <KHoverCard.Arrow class={fullClass.arrow} />}
           {props.children}
         </KHoverCard.Content>
       </KHoverCard.Portal>

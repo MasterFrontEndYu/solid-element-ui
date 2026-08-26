@@ -1,36 +1,10 @@
 import { NumberField as KNumberField } from "@kobalte/core/number-field";
 import { omit, type ComponentProps, Show } from "solid-js";
-import { tv, type VariantProps } from "tailwind-variants";
 import { ChevronUp, ChevronDown } from "../icons";
-
-const numberFieldStyles = tv(
-  {
-    slots: {
-      root: "flex flex-col gap-1.5 w-full antialiased",
-      label: "text-sm font-medium text-main ml-1",
-      container: [
-        "relative flex items-center rounded-md border border-slate-200 bg-app transition-shadow shadow-sm",
-        "focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500",
-      ],
-      input:
-        "flex-1 bg-transparent px-3 py-2 text-sm outline-none placeholder:text-muted disabled:cursor-not-allowed",
-      controls: "flex flex-col border-l border-slate-200 dark:border-slate-800",
-      stepper: [
-        "flex h-1/2 w-8 items-center justify-center transition-colors hover:bg-foreground active:bg-foreground",
-        "disabled:opacity-30 disabled:pointer-events-none",
-      ],
-      errorMessage: "text-xs text-danger font-medium ml-1 mt-1",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-type NumberFieldVariants = VariantProps<typeof numberFieldStyles>;
+import { fullClass } from "./setting";
 
 export interface NumberFieldProps
-  extends Omit<ComponentProps<typeof KNumberField>, "class">, NumberFieldVariants {
+  extends Omit<ComponentProps<typeof KNumberField>, "class"> {
   label?: string;
   description?: string;
   class?: string;
@@ -39,24 +13,21 @@ export interface NumberFieldProps
 export const NumberField = (props: NumberFieldProps) => {
   // 严格处理属性，防止 TS 报错“已声明但未使用”
   const others = omit(props, "label", "description", "class");
-  const s = numberFieldStyles();
 
   return (
-    <KNumberField class={s.root({ class: props.class })} {...others}>
+    <KNumberField class={fullClass.root} {...others}>
       <Show when={props.label}>
-        <KNumberField.Label class={s.label()}>{props.label}</KNumberField.Label>
+        <KNumberField.Label class={fullClass.label}>{props.label}</KNumberField.Label>
       </Show>
 
-      <div class={s.container()}>
-        <KNumberField.Input class={s.input()} />
-        <div class={s.controls()}>
-          <KNumberField.IncrementTrigger class={s.stepper()}>
+      <div class={fullClass.container}>
+        <KNumberField.Input class={fullClass.input} />
+        <div class={fullClass.controls}>
+          <KNumberField.IncrementTrigger class={fullClass.stepper}>
             <ChevronUp size={14} />
           </KNumberField.IncrementTrigger>
           <KNumberField.DecrementTrigger
-            class={s.stepper({
-              class: "border-t border-slate-200 dark:border-slate-800",
-            })}
+            class={`${fullClass.stepper} border-t border-slate-200 dark:border-slate-800`}
           >
             <ChevronDown size={14} />
           </KNumberField.DecrementTrigger>
@@ -66,7 +37,7 @@ export const NumberField = (props: NumberFieldProps) => {
       <Show when={props.description}>
         <KNumberField.Description class="text-xs text-slate-500 ml-1 mt-1" />
       </Show>
-      <KNumberField.ErrorMessage class={s.errorMessage()} />
+      <KNumberField.ErrorMessage class={fullClass.errorMessage} />
     </KNumberField>
   );
 };

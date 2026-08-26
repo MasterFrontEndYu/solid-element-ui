@@ -1,43 +1,15 @@
 import { Meter as KMeter } from "@kobalte/core/meter";
 import { omit, type ComponentProps } from "solid-js";
-import { tv, type VariantProps } from "tailwind-variants";
+import { fullClass } from "./setting";
 
 // TODO 1. 格式
 
-const meterStyles = tv(
-  {
-    slots: {
-      root: "flex flex-col gap-2 w-full antialiased",
-      labelContainer: "flex justify-between items-center text-sm font-medium text-main",
-      track: "h-2.5 w-full rounded-full bg-foreground overflow-hidden",
-      fill: "h-full transition-all duration-500 ease-out rounded-full",
-    },
-    variants: {
-      color: {
-        primary: { fill: "bg-primary" },
-        success: { fill: "bg-success" },
-        warning: { fill: "bg-warning" },
-        danger: { fill: "bg-danger" },
-      },
-    },
-    defaultVariants: {
-      color: "primary",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-type MeterVariants = VariantProps<typeof meterStyles>;
-
 export const Meter = Object.assign(
-  (props: ComponentProps<typeof KMeter> & MeterVariants) => {
+  (props: ComponentProps<typeof KMeter>) => {
     const others = omit(props, "class", "color");
-    const s = () => meterStyles({ color: props.color });
 
     return (
-      <KMeter class={s().root({ class: props.class })} {...others}>
+      <KMeter class={fullClass.root} {...others}>
         {others.children}
       </KMeter>
     );
@@ -46,7 +18,7 @@ export const Meter = Object.assign(
     Label: (props: ComponentProps<typeof KMeter.Label>) => {
       const others = omit(props, "class");
       return (
-        <KMeter.Label class={meterStyles().labelContainer({ class: props.class })} {...others} />
+        <KMeter.Label class={fullClass.labelContainer} {...others} />
       );
     },
     ValueLabel: (props: ComponentProps<typeof KMeter.ValueLabel>) => {
@@ -55,12 +27,12 @@ export const Meter = Object.assign(
     },
     Track: (props: ComponentProps<typeof KMeter.Track>) => {
       const others = omit(props, "class");
-      return <KMeter.Track class={meterStyles().track({ class: props.class })} {...others} />;
+      return <KMeter.Track class={fullClass.track} {...others} />;
     },
     Fill: (props: ComponentProps<typeof KMeter.Fill>) => {
       const others = omit(props, "class");
       // 注意：Fill 不需要手动设置宽度，Kobalte 会通过 style 注入百分比
-      return <KMeter.Fill class={meterStyles().fill({ class: props.class })} {...others} />;
+      return <KMeter.Fill class={fullClass.fill} {...others} />;
     },
   },
 );

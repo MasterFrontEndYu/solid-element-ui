@@ -1,1 +1,3 @@
-console.log("a");
+export const fullClass = {
+    root: "bg-foreground",
+}

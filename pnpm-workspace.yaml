@@ -8,20 +8,23 @@ catalogMode: prefer
 catalog:
   "@types/node": ^24
   typescript: ^7.0.2
-  vite: npm:@voidzero-dev/vite-plus-core@0.2.9
-  vite-plus: 0.2.9
+  vite: npm:@voidzero-dev/vite-plus-core@0.3.0
+  vite-plus: 0.3.0
   tailwindcss: ^4.3.3
   "@tailwindcss/vite": ^4.3.3
   solid-js: ^2.0.0-rc.0
   "@solidjs/vite-plugin": 3.0.0-next.28
   "@solidjs/web": 2.0.0-rc.0
-  vitest: "^4.1.10"
+  vitest: 4.1.11
 overrides:
-  vite: "catalog:"
+  vite@*: "catalog:"
+  vitest@*: "catalog:"
 peerDependencyRules:
   allowAny:
     - vite
+    - vitest
   allowedVersions:
     vite: "*"
+    vitest: "*"
 allowBuilds:
   esbuild: false

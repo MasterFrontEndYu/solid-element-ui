@@ -1,51 +1,14 @@
 import { Alert as KAlert } from "@kobalte/core/alert";
 import { omit, type ComponentProps } from "solid-js";
-import { tv, type VariantProps } from "tailwind-variants";
 import { Info, CircleAlert, CircleCheck, CircleX } from "../icons";
+import { fullClass } from "./setting";
 
-const alertStyles = tv(
-  {
-    slots: {
-      root: "relative w-full rounded-lg border p-4 flex gap-3 antialiased text-main",
-      content: "flex flex-col gap-1 text-left",
-      title: "font-semibold leading-none tracking-tight",
-      children: "text-md leading-relaxed opacity-90",
-      icon: "shrink-0",
-    },
-    variants: {
-      variant: {
-        info: {
-          root: "bg-primary/20 border-primary/80",
-          icon: "text-primary",
-        },
-        success: {
-          root: "bg-success/20 border-success/80 ",
-          icon: "text-success",
-        },
-        warning: {
-          root: "bg-warning/20 border-warning/80 ",
-          icon: "text-warning",
-        },
-        danger: {
-          root: "bg-danger/20 border-danger/80 ",
-          icon: "text-danger",
-        },
-      },
-    },
-    defaultVariants: {
-      variant: "info",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
 
-type AlertVariants = VariantProps<typeof alertStyles>;
 
-export interface AlertProps extends ComponentProps<typeof KAlert>, AlertVariants {
+export interface AlertProps extends ComponentProps<typeof KAlert> {
   title?: string;
   icon?: boolean;
+  variant?: "info" | "success" | "warning" | "danger";
 }
 
 const iconMap = {
@@ -58,23 +21,21 @@ const iconMap = {
 export const Alert = (props: AlertProps) => {
   const others = omit(props, "title", "icon", "children", "class", "variant");
 
-  const { root, content, title, children, icon } = alertStyles({ variant: props.variant });
-
   const RenderedIcon = () => {
     if (props.icon === false) return null;
     if (typeof props.icon === "object") return props.icon;
 
     const Icon = iconMap[props.variant || "info"];
-    return <Icon size={18} class={icon()} />;
+    return <Icon size={18} class={fullClass.icon} />;
   };
 
   // 5. 渲染组件
   return (
-    <KAlert class={`${root()} ${props.class || ""}`.trim()} {...others}>
+    <KAlert class={fullClass.root} {...others}>
       <RenderedIcon />
-      <div class={content()}>
-        {props.title && <h5 class={title()}>{props.title}</h5>}
-        <div class={children()}>{props.children}</div>
+      <div class={fullClass.content}>
+        {props.title && <h5 class={fullClass.title}>{props.title}</h5>}
+        <div class={fullClass.children}>{props.children}</div>
       </div>
     </KAlert>
   );

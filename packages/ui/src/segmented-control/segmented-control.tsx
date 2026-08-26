@@ -1,43 +1,8 @@
 import { SegmentedControl as KSegmented } from "@kobalte/core/segmented-control";
 import { omit, For, type ComponentProps } from "solid-js";
-import { tv, type VariantProps } from "tailwind-variants";
+import { fullClass } from "./setting";
 
 // FIXME 样式问题
-
-const segmentedStyles = tv(
-  {
-    slots: {
-      root: "relative flex flex-col",
-      container: "relative flex items-center w-full rounded-lg bg-foreground p-1 text-main",
-      item: [
-        " z-10 inline-flex flex-1 items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-all cursor-pointer",
-        "outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2",
-        "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-        " transition-colors duration-200",
-      ],
-      indicator:
-        "absolute z-0 bg-app shadow-sm rounded-md transition-all duration-200 ease-in-out ",
-      label:
-        "mb-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-      itemLabel: "flex w-full cursor-pointer items-center justify-center",
-    },
-    variants: {
-      size: {
-        sm: { root: "p-0.5", item: "px-2 py-1 text-xs" },
-        md: { root: "p-1", item: "px-3 py-1.5 text-sm" },
-        lg: { root: "p-1.5", item: "px-6 py-2 text-base" },
-      },
-    },
-    defaultVariants: {
-      size: "md",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-type SegmentedVariants = VariantProps<typeof segmentedStyles>;
 
 interface Option {
   label: string;
@@ -46,7 +11,7 @@ interface Option {
 }
 
 export interface SegmentedControlProps
-  extends Omit<ComponentProps<typeof KSegmented>, "class">, SegmentedVariants {
+  extends Omit<ComponentProps<typeof KSegmented>, "class"> {
   options: Option[];
   label?: string;
   class?: string;
@@ -55,21 +20,19 @@ export interface SegmentedControlProps
 export const SegmentedControl = (props: SegmentedControlProps) => {
   const others = omit(props, "options", "class", "label", "size");
 
-  const styles = segmentedStyles({ size: props.size });
-
   return (
-    <KSegmented class={styles.root({ class: props.class })} {...others}>
-      {props.label && <KSegmented.Label class={styles.label()}>{props.label}</KSegmented.Label>}
-      <div class={styles.container()}>
+    <KSegmented class={fullClass.root} {...others}>
+      {props.label && <KSegmented.Label class={fullClass.label}>{props.label}</KSegmented.Label>}
+      <div class={fullClass.container}>
         <For each={props.options}>
           {(option) => (
-            <KSegmented.Item value={option.value} disabled={option.disabled} class={styles.item()}>
+            <KSegmented.Item value={option.value} disabled={option.disabled} class={fullClass.item}>
               <KSegmented.ItemInput />
-              <KSegmented.ItemLabel class={styles.itemLabel()}>{option.label}</KSegmented.ItemLabel>
+              <KSegmented.ItemLabel class={fullClass.itemLabel}>{option.label}</KSegmented.ItemLabel>
             </KSegmented.Item>
           )}
         </For>
-        <KSegmented.Indicator class={styles.indicator()} />
+        <KSegmented.Indicator class={fullClass.indicator} />
       </div>
     </KSegmented>
   );

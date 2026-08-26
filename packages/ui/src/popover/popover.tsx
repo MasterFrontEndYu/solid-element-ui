@@ -2,28 +2,11 @@ import { Popover as KPopover } from "@kobalte/core/popover";
 import { CrossIcon } from "../icons";
 import { omit, type ComponentProps } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { tv } from "tailwind-variants";
+import { fullClass } from "./setting";
 
 // FIXME 与其他的气泡样式不统一的问题
 // Description，而不是内敛。
 // trigger用内部，而其他放在标签属性
-
-const popoverStyles = tv(
-  {
-    slots: {
-      content: [
-        "z-50 w-72 rounded-md border border-light bg-app p-4 shadow-md outline-none antialiased text-main",
-        "data-[expanded]:animate-in data-[closed]:animate-out",
-      ],
-      arrow: "fill-app stroke-slate-200 dark:stroke-slate-800",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-const { content, arrow } = popoverStyles();
 
 export interface PopoverProps extends ComponentProps<typeof KPopover> {
   trigger: JSX.Element;
@@ -38,8 +21,8 @@ export const Popover = (props: PopoverProps) => {
       <KPopover.Trigger class="inline-flex">{props.trigger}</KPopover.Trigger>
 
       <KPopover.Portal>
-        <KPopover.Content class={content()}>
-          <KPopover.Arrow class={arrow()} />
+        <KPopover.Content class={fullClass.content}>
+          <KPopover.Arrow class={fullClass.arrow} />
 
           <div class="flex">
             <KPopover.Title>{props.title}</KPopover.Title>

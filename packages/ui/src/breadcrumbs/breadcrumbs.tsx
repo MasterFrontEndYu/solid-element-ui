@@ -1,26 +1,11 @@
 import { Breadcrumbs as KBreadcrumbs } from "@kobalte/core/breadcrumbs";
 import { For, omit, type ComponentProps } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { tv } from "tailwind-variants";
 import { ChevronRight } from "../icons";
+import { fullClass } from "./setting";
 
 // TODO 1. 定义样式
 //      2. icon 支持自定义
-
-const breadcrumbStyles = tv(
-  {
-    slots: {
-      root: "flex w-full justify-start items-center gap-2",
-      link: "text-md transition-colors text-main data-[current]:text-main/50 data-[disabled]:pointer-events-none no-underline",
-      separator: "flex h-4 w-4 items-center justify-center text-main/80",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-const { root, link, separator } = breadcrumbStyles();
 
 export interface BreadcrumbItem {
   title: JSX.Element;
@@ -38,7 +23,7 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
   const others = omit(props, "items", "separatorIcon", "class");
 
   return (
-    <KBreadcrumbs class={root()} {...others}>
+    <KBreadcrumbs class={fullClass.root} {...others}>
       <For each={props.items}>
         {(breadcrumb, index) => (
           <>
@@ -46,13 +31,13 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
               href={breadcrumb.href}
               current={breadcrumb.current}
               disabled={breadcrumb.disabled}
-              class={link({ class: props.class })}
+              class={fullClass.link}
             >
               {breadcrumb.title}
             </KBreadcrumbs.Link>
 
             {index() < props.items.length - 1 && (
-              <span aria-hidden="true" class={separator()}>
+              <span aria-hidden="true" class={fullClass.separator}>
                 {props.separatorIcon || <ChevronRight size={16} />}
               </span>
             )}

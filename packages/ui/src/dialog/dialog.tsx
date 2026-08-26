@@ -1,36 +1,11 @@
 import { Dialog as KDialog } from "@kobalte/core/dialog";
 import { Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { tv } from "tailwind-variants";
 import { X } from "../icons";
+import { fullClass } from "./setting";
 
 //TODO 修改footer，可自定义或是自带，方法传入等等
 // FIXME title 和close icon 平行。
-
-const dialogStyles = tv(
-  {
-    slots: {
-      overlay: [
-        "fixed inset-0 z-50 backdrop-blur-sm animate-in duration-200",
-        "data-[expanded]:animate-in data-[closed]:animate-out",
-      ],
-      content: [
-        [
-          "fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-base bg-app text-main p-4 shadow-lg rounded-xl",
-          "data-[expanded]:animate-in data-[closed]:animate-out",
-        ],
-      ],
-      title: "text-lg font-semibold leading-none text-zinc-950 dark:text-zinc-50",
-      description: "text-sm text-zinc-500 dark:text-zinc-400 mt-2",
-      closeButton: "rounded-sm opacity-70 transition-opacity hover:opacity-100 dark:text-zinc-400",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-const { overlay, content, title, description, closeButton } = dialogStyles();
 
 interface DialogProps {
   // 状态控制
@@ -60,20 +35,20 @@ export const Dialog = (props: DialogProps) => {
       </Show>
 
       <KDialog.Portal>
-        <KDialog.Overlay class={overlay()} />
+        <KDialog.Overlay class={fullClass.overlay} />
         <KDialog.Content
-          class={content({ class: props.class })}
+          class={fullClass.content}
           style={{ "pointer-events": "auto" }}
         >
           <div class="flex justify-between items-center">
-            <KDialog.Title class={title()}>{props.title}</KDialog.Title>
-            <KDialog.CloseButton class={closeButton()}>
+            <KDialog.Title class={fullClass.title}>{props.title}</KDialog.Title>
+            <KDialog.CloseButton class={fullClass.closeButton}>
               <X size={18} />
               <span class="sr-only">关闭</span>
             </KDialog.CloseButton>
           </div>
           <Show when={props.description}>
-            <KDialog.Description class={description()}>{props.description}</KDialog.Description>
+            <KDialog.Description class={fullClass.description}>{props.description}</KDialog.Description>
           </Show>
 
           <div class="mt-6">{props.children}</div>

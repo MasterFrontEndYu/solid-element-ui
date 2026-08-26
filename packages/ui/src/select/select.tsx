@@ -1,47 +1,7 @@
 import { Select as KSelect } from "@kobalte/core/select";
 import { omit, Show, createMemo } from "solid-js";
-import { tv, type VariantProps } from "tailwind-variants";
 import { ChevronDown, Check } from "../icons";
-
-const selectStyles = tv(
-  {
-    slots: {
-      root: "flex flex-col gap-1.5 w-full",
-      label: "text-sm font-medium text-muted",
-      trigger: [
-        "flex h-10 w-full text-main items-center justify-between rounded-md border border-light bg-app px-3 py-2 text-sm",
-        "ring-offset-white placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-blue-500",
-        "disabled:cursor-not-allowed disabled:opacity-50",
-      ],
-      content: [
-        "relative z-50 min-w-[8rem] overflow-hidden rounded-md border border-light bg-app shadow-md text-main",
-        "data-[expanded]:animate-in data-[closed]:animate-out",
-      ],
-      listbox: "p-1",
-      item: [
-        "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none",
-        "focus:bg-foreground focus:text-main data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      ],
-      itemIndicator: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center",
-      description: "mt-1 text-xs text-muted",
-    },
-    variants: {
-      size: {
-        sm: { trigger: "h-8 text-xs", item: "py-1 text-xs" },
-        md: { trigger: "h-10 text-sm", item: "py-1.5 text-sm" },
-        lg: { trigger: "h-12 text-base", item: "py-2 text-base" },
-      },
-    },
-    defaultVariants: {
-      size: "md",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-type SelectVariants = VariantProps<typeof selectStyles>;
+import { fullClass } from "./setting";
 
 interface Option {
   label: string;
@@ -50,7 +10,7 @@ interface Option {
 }
 
 // 重新定义接口，使 value 和 onChange 处理的是 string 类型
-export interface SelectProps extends SelectVariants {
+export interface SelectProps {
   options: Option[];
   value?: string;
   defaultValue?: string;
@@ -76,8 +36,6 @@ export const Select = (props: SelectProps) => {
     "onChange",
     "size",
   );
-
-  const styles = selectStyles({ size: props.size });
 
   const selectedOption = createMemo(() => {
     if (props.value === undefined) return undefined;
@@ -108,11 +66,11 @@ export const Select = (props: SelectProps) => {
       value={selectedOption()}
       defaultValue={defaultOption()}
       onChange={handleValueChange}
-      class={styles.root({ class: props.class })}
+      class={fullClass.root}
       {...others}
       itemComponent={(itemProps) => (
-        <KSelect.Item item={itemProps.item} class={styles.item()}>
-          <KSelect.ItemIndicator class={styles.itemIndicator()}>
+        <KSelect.Item item={itemProps.item} class={fullClass.item}>
+          <KSelect.ItemIndicator class={fullClass.itemIndicator}>
             <Check size={14} />
           </KSelect.ItemIndicator>
           <KSelect.ItemLabel>{itemProps.item.textValue}</KSelect.ItemLabel>
@@ -120,10 +78,10 @@ export const Select = (props: SelectProps) => {
       )}
     >
       <Show when={props.label}>
-        <KSelect.Label class={styles.label()}>{props.label}</KSelect.Label>
+        <KSelect.Label class={fullClass.label}>{props.label}</KSelect.Label>
       </Show>
 
-      <KSelect.Trigger class={styles.trigger()}>
+      <KSelect.Trigger class={fullClass.trigger}>
         <KSelect.Value<Option>>
           {(state) => (
             <Show when={state.selectedOption()} fallback={props.placeholder}>
@@ -137,13 +95,13 @@ export const Select = (props: SelectProps) => {
       </KSelect.Trigger>
 
       <KSelect.Portal>
-        <KSelect.Content class={styles.content()}>
-          <KSelect.Listbox class={styles.listbox()} />
+        <KSelect.Content class={fullClass.content}>
+          <KSelect.Listbox class={fullClass.listbox} />
         </KSelect.Content>
       </KSelect.Portal>
 
       <Show when={props.description}>
-        <KSelect.Description class={styles.description()}>{props.description}</KSelect.Description>
+        <KSelect.Description class={fullClass.description}>{props.description}</KSelect.Description>
       </Show>
     </KSelect>
   );

@@ -1,35 +1,9 @@
 import { AlertDialog as KAlertDialog } from "@kobalte/core/alert-dialog";
 import { omit, type ComponentProps, createSignal } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { tv } from "tailwind-variants";
 import { X } from "../icons";
 import { Button } from "../button/button";
-
-const alertDialogStyles = tv(
-  {
-    slots: {
-      overlay: [
-        "fixed inset-0 z-50 bg-black/50 backdrop-blur-sm",
-        " data-[expanded]:animate-in data-[closed]:animate-out ",
-      ],
-      content: [
-        "fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl bg-app p-4 shadow-xl ",
-        "data-[expanded]:animate-in data-[closed]:animate-out",
-      ],
-      header: "flex align-center justify-between",
-      title: "text-lg font-semibold text-main ",
-      description: "text-sm py-2 text-main",
-      footer: "mt-6 flex flex-row justify-end gap-3",
-      closeButton:
-        "rounded-sm opacity-70 text-main transition-opacity hover:opacity-100 focus:outline-none",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-const { overlay, content, header, title, description, footer, closeButton } = alertDialogStyles();
+import { fullClass } from "./setting";
 
 interface AlertDialogProps extends ComponentProps<typeof KAlertDialog> {
   trigger: JSX.Element;
@@ -76,24 +50,24 @@ export const AlertDialog = (props: AlertDialogProps) => {
       </div>
 
       <KAlertDialog.Portal>
-        <KAlertDialog.Overlay class={overlay()} />
-        <KAlertDialog.Content class={content()}>
-          <div class={header()}>
-            <KAlertDialog.Title class={title()}>{props.title}</KAlertDialog.Title>
-            <KAlertDialog.CloseButton class={closeButton()}>
+        <KAlertDialog.Overlay class={fullClass.overlay} />
+        <KAlertDialog.Content class={fullClass.content}>
+          <div class={fullClass.header}>
+            <KAlertDialog.Title class={fullClass.title}>{props.title}</KAlertDialog.Title>
+            <KAlertDialog.CloseButton class={fullClass.closeButton}>
               <X size={18} />
             </KAlertDialog.CloseButton>
           </div>
 
           <div class="mt-2">
             {props.description && (
-              <KAlertDialog.Description class={description()}>
+              <KAlertDialog.Description class={fullClass.description}>
                 {props.description}
               </KAlertDialog.Description>
             )}
           </div>
 
-          <div class={footer()}>
+          <div class={fullClass.footer}>
             <KAlertDialog.CloseButton>
               {props.cancel || <Button variant="outline">取消</Button>}
             </KAlertDialog.CloseButton>

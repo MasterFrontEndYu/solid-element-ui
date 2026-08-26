@@ -1,53 +1,18 @@
 import { TextField as KTextField } from "@kobalte/core/text-field";
 import { omit, type ComponentProps, Show, createSignal } from "solid-js";
-import { tv, type VariantProps } from "tailwind-variants";
 import { CloudUpload } from "../icons";
+import { fullClass } from "./setting";
 
 //TODO 样式修改，移除 UploadCloud这种已废弃的icon
 
-const fileFieldStyles = tv(
-  {
-    slots: {
-      root: "flex flex-col gap-1.5 w-full antialiased",
-      label: "text-sm font-medium text-slate-700 dark:text-slate-300 ml-1",
-      dropzone: [
-        "relative flex flex-col items-center justify-center w-full min-h-[140px]",
-        "border-2 border-dashed rounded-xl transition-all cursor-pointer",
-        "bg-slate-50/50 hover:bg-slate-100 dark:bg-slate-900/10 dark:hover:bg-slate-900/20",
-        "focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500",
-      ],
-      icon: "w-10 h-10 mb-3 text-slate-400",
-      description: "text-xs text-slate-500 dark:text-slate-400 mt-1",
-      errorMessage: "text-xs text-red-500 font-medium ml-1 mt-1",
-    },
-    variants: {
-      validationState: {
-        valid: {},
-        invalid: {
-          dropzone: "border-red-400 bg-red-50/30 dark:border-red-900/20",
-        },
-      },
-      isDisabled: {
-        true: {
-          dropzone: "opacity-50 cursor-not-allowed grayscale",
-        },
-      },
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-type FileFieldVariants = VariantProps<typeof fileFieldStyles>;
-
 export interface FileFieldProps
-  extends Omit<ComponentProps<typeof KTextField>, "value" | "onChange">, FileFieldVariants {
+  extends Omit<ComponentProps<typeof KTextField>, "value" | "onChange"> {
   label?: string;
   description?: string;
   accept?: string;
   multiple?: boolean;
   onChange?: (files: File[]) => void;
+  isDisabled?: boolean;
 }
 
 export const FileField = (props: FileFieldProps) => {
@@ -64,11 +29,6 @@ export const FileField = (props: FileFieldProps) => {
   );
 
   const [files, setFiles] = createSignal<File[]>([]);
-  const styles = () =>
-    fileFieldStyles({
-      validationState: props.validationState,
-      isDisabled: props.isDisabled,
-    });
 
   const onFileChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
@@ -81,16 +41,16 @@ export const FileField = (props: FileFieldProps) => {
 
   return (
     <KTextField
-      class={styles().root({ class: props.class })}
+      class={fullClass.root}
       validationState={props.validationState}
       disabled={props.isDisabled}
       {...others}
     >
       <Show when={props.label}>
-        <KTextField.Label class={styles().label()}>{props.label}</KTextField.Label>
+        <KTextField.Label class={fullClass.label}>{props.label}</KTextField.Label>
       </Show>
 
-      <label class={styles().dropzone()}>
+      <label class={fullClass.dropzone}>
         <KTextField.Input
           type="file"
           class="sr-only"
@@ -98,16 +58,16 @@ export const FileField = (props: FileFieldProps) => {
           multiple={props.multiple}
           onChange={onFileChange}
         />
-        <CloudUpload class={styles().icon()} />
+        <CloudUpload class={fullClass.icon} />
         <div class="text-sm font-medium text-slate-600 dark:text-slate-400">
           {files().length > 0 ? `已选择 ${files().length} 个文件` : "点击或拖拽上传文件"}
         </div>
         <Show when={props.description}>
-          <p class={styles().description()}>{props.description}</p>
+          <p class={fullClass.description}>{props.description}</p>
         </Show>
       </label>
 
-      <KTextField.ErrorMessage class={styles().errorMessage()} />
+      <KTextField.ErrorMessage class={fullClass.errorMessage} />
     </KTextField>
   );
 };

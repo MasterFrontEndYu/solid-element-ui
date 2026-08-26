@@ -1,37 +1,6 @@
 import { RadioGroup as KRadioGroup } from "@kobalte/core/radio-group";
 import { omit, type ComponentProps, For, Show } from "solid-js";
-import { tv, type VariantProps } from "tailwind-variants";
-
-const radioStyles = tv(
-  {
-    slots: {
-      root: "flex flex-col gap-3 antialiased",
-      label: "text-sm font-semibold text-main mb-1",
-      item: "group flex items-center gap-3 cursor-pointer disabled:cursor-not-allowed",
-      control: [
-        "flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-app transition-all shadow-sm",
-        "group-hover:border-light group-data-[checked]:border-primary group-data-[checked]:bg-primary",
-        "group-focus-visible:ring-2 group-focus-visible:ring-blue-500/20",
-      ],
-      indicator: "h-2 w-2 rounded-full bg-app shadow-sm",
-      itemLabel: "text-sm font-medium text-main group-data-[disabled]:opacity-50",
-    },
-    variants: {
-      orientation: {
-        horizontal: { root: "flex-row flex-wrap gap-6" },
-        vertical: { root: "flex-col" },
-      },
-    },
-    defaultVariants: {
-      orientation: "vertical",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-type RadioVariants = VariantProps<typeof radioStyles>;
+import { fullClass } from "./setting";
 
 export interface RadioOption {
   label: string;
@@ -40,7 +9,7 @@ export interface RadioOption {
 }
 
 export interface RadioGroupProps
-  extends Omit<ComponentProps<typeof KRadioGroup>, "children" | "class">, RadioVariants {
+  extends Omit<ComponentProps<typeof KRadioGroup>, "children" | "class"> {
   label?: string;
   options: RadioOption[];
   class?: string;
@@ -53,22 +22,20 @@ export interface RadioGroupProps
 export const RadioGroup = (props: RadioGroupProps) => {
   const others = omit(props, "label", "options", "class", "orientation");
 
-  const s = () => radioStyles({ orientation: props.orientation });
-
   return (
-    <KRadioGroup class={s().root({ class: props.class })} {...others}>
+    <KRadioGroup class={fullClass.root} {...others}>
       <Show when={props.label}>
-        <KRadioGroup.Label class={s().label()}>{props.label}</KRadioGroup.Label>
+        <KRadioGroup.Label class={fullClass.label}>{props.label}</KRadioGroup.Label>
       </Show>
 
       <For each={props.options}>
         {(option) => (
-          <KRadioGroup.Item value={option.value} disabled={option.disabled} class={s().item()}>
+          <KRadioGroup.Item value={option.value} disabled={option.disabled} class={fullClass.item}>
             <KRadioGroup.ItemInput />
-            <KRadioGroup.ItemControl class={s().control()}>
-              <KRadioGroup.ItemIndicator class={s().indicator()} />
+            <KRadioGroup.ItemControl class={fullClass.control}>
+              <KRadioGroup.ItemIndicator class={fullClass.indicator} />
             </KRadioGroup.ItemControl>
-            <KRadioGroup.ItemLabel class={s().itemLabel()}>{option.label}</KRadioGroup.ItemLabel>
+            <KRadioGroup.ItemLabel class={fullClass.itemLabel}>{option.label}</KRadioGroup.ItemLabel>
           </KRadioGroup.Item>
         )}
       </For>

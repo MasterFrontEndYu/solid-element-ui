@@ -1,55 +1,20 @@
 import { Link as KLink } from "@kobalte/core/link";
 import { omit, type ComponentProps } from "solid-js";
-import { tv, type VariantProps } from "tailwind-variants";
+import { fullClass } from "./setting";
 
-const linkStyles = tv(
-  {
-    base: "inline-flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm disabled:pointer-events-none disabled:opacity-50",
-    variants: {
-      variant: {
-        default: "text-main hover:text-main/80 underline-offset-4",
-        primary: "text-primary hover:text-primary/80 font-medium",
-        muted: "text-muted hover:text-muted/80",
-        button: "bg-reversal-bg text-reversal hover:reversal-bg/90 px-4 py-2 text-sm ",
-      },
-      underline: {
-        always: "underline",
-        hover: "no-underline hover:underline",
-        none: "no-underline",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      underline: "hover",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-type LinkVariants = VariantProps<typeof linkStyles>;
-
-export interface LinkProps extends ComponentProps<typeof KLink>, LinkVariants {
+export interface LinkProps extends ComponentProps<typeof KLink> {
   external?: boolean;
 }
 
 export const Link = (props: LinkProps) => {
   const others = omit(props, "class", "external", "children", "href", "variant", "underline");
 
-  const styles = () =>
-    linkStyles({
-      variant: props.variant,
-      underline: props.underline,
-      class: props.class,
-    });
-
   return (
     <KLink
       href={props.href}
       target={props.external ? "_blank" : undefined}
       rel={props.external ? "noopener noreferrer" : undefined}
-      class={styles()}
+      class={fullClass.root}
       {...others}
     >
       {props.children}

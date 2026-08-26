@@ -1,30 +1,10 @@
 import { DropdownMenu as KDropdownMenu } from "@kobalte/core/dropdown-menu";
 import { For, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { tv } from "tailwind-variants";
 import { ChevronRight } from "../icons";
+import { fullClass } from "./setting";
 
 // TODO  Dropdown Menu 样式
-
-const menuStyles = tv(
-  {
-    slots: {
-      trigger: "inline-block cursor-pointer",
-      content: [
-        "z-50 min-w-[8rem] overflow-hidden rounded-md border border-light bg-white p-1 text-zinc-950 shadow-md animate-in zoom-in-95 dark:bg-zinc-950 dark:text-zinc-50",
-        "data-[expanded]:animate-in data-[closed]:animate-out",
-      ],
-      item: "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-50",
-      separator: "-mx-1 my-1 h-px border-light",
-      subIcon: "ml-auto h-4 w-4",
-    },
-  },
-  {
-    twMerge: true,
-  },
-);
-
-const { content, item, separator, subIcon, trigger } = menuStyles();
 
 // 定义菜单项配置类型
 export type DropdownItemConfig = {
@@ -47,12 +27,12 @@ const RenderMenuItems = (props: { items: DropdownItemConfig[] }) => {
   return (
     <For each={props.items}>
       {(config) => (
-        <Show when={!config.separator} fallback={<KDropdownMenu.Separator class={separator()} />}>
+        <Show when={!config.separator} fallback={<KDropdownMenu.Separator class={fullClass.separator} />}>
           <Show
             when={config.children && config.children.length > 0}
             fallback={
               <KDropdownMenu.Item
-                class={item()}
+                class={fullClass.item}
                 disabled={config.disabled}
                 onSelect={() => config.onClick?.()}
               >
@@ -62,12 +42,12 @@ const RenderMenuItems = (props: { items: DropdownItemConfig[] }) => {
           >
             {/* 子菜单渲染逻辑 */}
             <KDropdownMenu.Sub>
-              <KDropdownMenu.SubTrigger class={item()}>
+              <KDropdownMenu.SubTrigger class={fullClass.item}>
                 {config.label}
-                <ChevronRight class={subIcon()} />
+                <ChevronRight class={fullClass.subIcon} />
               </KDropdownMenu.SubTrigger>
               <KDropdownMenu.Portal>
-                <KDropdownMenu.SubContent class={content()}>
+                <KDropdownMenu.SubContent class={fullClass.content}>
                   <RenderMenuItems items={config.children!} />
                 </KDropdownMenu.SubContent>
               </KDropdownMenu.Portal>
@@ -82,12 +62,12 @@ const RenderMenuItems = (props: { items: DropdownItemConfig[] }) => {
 export const DropdownMenu = (props: DropdownMenuProps) => {
   return (
     <KDropdownMenu placement={props.placement ?? "bottom-start"}>
-      <KDropdownMenu.Trigger as="div" class={trigger()}>
+      <KDropdownMenu.Trigger as="div" class={fullClass.trigger}>
         {props.trigger}
       </KDropdownMenu.Trigger>
 
       <KDropdownMenu.Portal>
-        <KDropdownMenu.Content class={content({ class: props.class })}>
+        <KDropdownMenu.Content class={fullClass.content}>
           <RenderMenuItems items={props.items} />
         </KDropdownMenu.Content>
       </KDropdownMenu.Portal>

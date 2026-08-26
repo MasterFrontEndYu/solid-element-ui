@@ -50,9 +50,7 @@
     },
     "dependencies": {
         "@kobalte/core": "2.0.0-alpha.0",
-        "@solidjs/web": "catalog:",
-        "tailwind-merge": "^3.6.0",
-        "tailwind-variants": "^3.3.1"
+        "tailwind-merge": "^3.6.0"
     },
     "devDependencies": {
         "@solidjs/vite-plugin": "catalog:",
@@ -62,6 +60,7 @@
         "vite-plus": "catalog:"
     },
     "peerDependencies": {
+        "@solidjs/web": "catalog:",
         "solid-js": "catalog:"
     }
 }

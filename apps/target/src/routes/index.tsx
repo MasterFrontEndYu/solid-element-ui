@@ -1,13 +1,10 @@
 import { Title } from "@solidjs/meta";
-import Counter from "../components/Counter";
-import logo from "../logo.svg";
 
 export default function Home() {
   return (
     <main>
       <Title>Home - Solid App</Title>
       <h1>Hello Solid!</h1>
-      <Counter />
       <p>
         Edit <code>src/routes/index.tsx</code> and save to reload.
       </p>

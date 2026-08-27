@@ -1,7 +1,7 @@
 import { Button } from "solid-element-ui";
 import { Search } from "lucide-solid";
 
-const DemoCode = () => {
+export default function ButtonDemo() {
   return (
     <>
       <div class=" flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 my-2">
@@ -83,6 +83,4 @@ const DemoCode = () => {
       </div>
     </>
   );
-};
-
-export { DemoCode };
+}

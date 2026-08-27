@@ -1,6 +1,6 @@
 import { AlertDialog, Button } from "solid-element-ui";
 
-const DemoCode = () => {
+export default function AlertDialogDemo() {
   return (
     <div class="p-4 bg-white  dark:bg-zinc-950 border rounded-lg space-x-2 space-y-2">
       <AlertDialog
@@ -27,6 +27,4 @@ const DemoCode = () => {
       />
     </div>
   );
-};
-
-export { DemoCode };
+}

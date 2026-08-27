@@ -1,6 +1,6 @@
 import { SegmentedControl } from "solid-element-ui";
 
-const DemoCode = () => {
+export default function SegmentedControlDemo() {
   return (
     <div class=" p-4 bg-white dark:bg-zinc-950 border rounded-lg space-y-2">
       <SegmentedControl
@@ -13,6 +13,4 @@ const DemoCode = () => {
       />
     </div>
   );
-};
-
-export { DemoCode };
+}

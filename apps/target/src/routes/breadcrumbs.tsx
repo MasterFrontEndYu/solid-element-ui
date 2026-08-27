@@ -6,12 +6,10 @@ export const navItems = [
   { title: "面包屑", current: true },
 ];
 
-const DemoCode = () => {
+export default function BreadcrumbsDemo() {
   return (
     <div class="  p-4 bg-white dark:bg-zinc-950 border rounded-lg">
       <Breadcrumbs class="" items={navItems} />
     </div>
   );
-};
-
-export { DemoCode };
+}

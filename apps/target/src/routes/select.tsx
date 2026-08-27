@@ -5,7 +5,7 @@ export const selectOptions = [
   { label: "Banana", value: "banana" },
   { label: "Blueberry", value: "blueberry", disabled: true },
 ];
-const DemoCode = () => {
+export default function SelectDemo() {
   return (
     <div class=" p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 space-y-2">
       <Select
@@ -16,6 +16,4 @@ const DemoCode = () => {
       />
     </div>
   );
-};
-
-export { DemoCode };
+}

@@ -1,6 +1,3 @@
-
-const DemoCode = () => {
-    return ;
-};
-
-export { DemoCode };
+export default function ColorWheelDemo() {
+  return;
+}

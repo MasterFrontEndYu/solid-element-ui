@@ -1,6 +1,6 @@
 import { Alert } from "solid-element-ui";
 
-const DemoCode = () => {
+export default function AlertDemo() {
   return (
     <div class="p-4 bg-white  dark:bg-zinc-950 border rounded-lg space-y-2">
       <Alert variant="success" title="成功" class="text-red-900" icon>
@@ -20,6 +20,4 @@ const DemoCode = () => {
       </Alert>
     </div>
   );
-};
-
-export { DemoCode };
+}

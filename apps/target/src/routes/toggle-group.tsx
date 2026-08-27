@@ -1,9 +1,8 @@
 import { ToggleGroup } from "solid-element-ui";
-import { TextAlignStart, TextAlignCenter, TextAlignEnd } from "lucide-solid";
-const DemoCode = () => {
+export default function ToggleGroupDemo() {
   return (
     <div class="flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2 space-y-2 flex-wrap ">
-      <ToggleGroup
+      {/* <ToggleGroup
         type="single"
         defaultValue="left"
         options={[
@@ -11,7 +10,7 @@ const DemoCode = () => {
           { label: <TextAlignCenter size={18} />, value: "center" },
           { label: <TextAlignEnd size={18} />, value: "right" },
         ]}
-      />
+      /> */}
 
       <ToggleGroup
         type="multiple"
@@ -23,6 +22,4 @@ const DemoCode = () => {
       />
     </div>
   );
-};
-
-export { DemoCode };
+}

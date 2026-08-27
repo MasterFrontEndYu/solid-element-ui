@@ -20,7 +20,7 @@ interface TabsProps {
 }
 
 export const Tabs = (props: TabsProps) => {
-  const others = omit(props, "items", "class");
+  const others = omit(props, "class");
 
   return (
     <KTabs class={defaultClass.root} {...others}>

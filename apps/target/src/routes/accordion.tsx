@@ -5,8 +5,6 @@ export const data = [
   { value: "2", title: "第二项", content: "内容部分2" },
 ];
 
-const DemoCode = () => {
+export default function AccordionDemo() {
   return <Accordion items={data} />;
-};
-
-export { DemoCode };
+}

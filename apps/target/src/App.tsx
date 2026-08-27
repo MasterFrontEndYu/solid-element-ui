@@ -1,23 +1,31 @@
+// App.tsx
 import { Title } from "@solidjs/meta";
 import { Loading } from "solid-js";
-import { paths, Router } from "./router";
+import { Router, routes } from "./router";
 import "./App.css";
 
-// The app root: the router and the site-wide layout live here. Pages are
-// the modules under src/routes.
-export default function App() {
-  console.log("path", paths());
+const navRoutes = routes.filter((route) => route.path && route.path !== "/*404");
 
+export default function App() {
   return (
     <Router>
       {(props) => (
         <>
           <Title>Solid App</Title>
-          <nav>
-            <a href={paths()}>Home</a>
-            <a href={paths.users(1)}>Users</a>
-          </nav>
-          <Loading fallback={<main>Loading…</main>}>{props.children}</Loading>
+          <div class="flex">
+            <nav>
+              <ul>
+                {navRoutes.map((route) => (
+                  <li>
+                    <a href={route.path}>
+                      {route.path === "/" ? "Home" : route.path.replace("/", "")}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <Loading fallback={<main>Loading…</main>}>{props.children}</Loading>
+          </div>
         </>
       )}
     </Router>

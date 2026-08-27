@@ -1,5 +1,5 @@
 import { Collapsible } from "solid-element-ui";
-const DemoCode = () => {
+export default function CollapsibleDemo() {
   return (
     <div class=" flex p-4 bg-white dark:bg-zinc-950 border rounded-lg space-x-2">
       <Collapsible title="查看源代码说明" class="">
@@ -7,6 +7,4 @@ const DemoCode = () => {
       </Collapsible>
     </div>
   );
-};
-
-export { DemoCode };
+}

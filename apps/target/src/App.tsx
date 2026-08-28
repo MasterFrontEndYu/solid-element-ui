@@ -4,7 +4,10 @@ import { Loading } from "solid-js";
 import { Router, routes } from "./router";
 import "./App.css";
 
-const navRoutes = routes.filter((route) => route.path && route.path !== "/*404");
+// 过滤并排序路由（按路径字母顺序）
+const navRoutes = routes
+  .filter((route) => route.path && route.path !== "/*404")
+  .sort((a, b) => a.path.localeCompare(b.path));
 
 export default function App() {
   return (

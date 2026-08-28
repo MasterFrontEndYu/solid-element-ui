@@ -27,7 +27,9 @@ export default function App() {
                 ))}
               </ul>
             </nav>
-            <Loading fallback={<main>Loading…</main>}>{props.children}</Loading>
+            <div class="p-4">
+              <Loading fallback={<main>Loading…</main>}>{props.children}</Loading>
+            </div>
           </div>
         </>
       )}

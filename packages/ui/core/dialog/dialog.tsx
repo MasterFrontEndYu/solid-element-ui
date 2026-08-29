@@ -1,4 +1,4 @@
-import { Dialog as KDialog } from "@kobalte/core/dialog";
+import { Dialog as KDialog, type DialogRootProps } from "@kobalte/core/dialog";
 import { Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { X } from "../icons";
@@ -7,7 +7,7 @@ import { defaultClass } from "./setting";
 //TODO 修改footer，可自定义或是自带，方法传入等等
 // FIXME title 和close icon 平行。
 
-interface DialogProps {
+interface DialogProps extends DialogRootProps {
   // 状态控制
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -25,6 +25,11 @@ interface DialogProps {
 
   // 样式
   class?: string;
+  overlayClass?: string;
+  contentClass?: string;
+  titleClass?: string;
+  descriptionClass?: string;
+  closeButtonClass?: string;
 }
 
 export const Dialog = (props: DialogProps) => {
@@ -36,10 +41,7 @@ export const Dialog = (props: DialogProps) => {
 
       <KDialog.Portal>
         <KDialog.Overlay class={defaultClass.overlay} />
-        <KDialog.Content
-          class={defaultClass.content}
-          style={{ "pointer-events": "auto" }}
-        >
+        <KDialog.Content class={defaultClass.content} style={{ "pointer-events": "auto" }}>
           <div class="flex justify-between items-center">
             <KDialog.Title class={defaultClass.title}>{props.title}</KDialog.Title>
             <KDialog.CloseButton class={defaultClass.closeButton}>
@@ -48,7 +50,9 @@ export const Dialog = (props: DialogProps) => {
             </KDialog.CloseButton>
           </div>
           <Show when={props.description}>
-            <KDialog.Description class={defaultClass.description}>{props.description}</KDialog.Description>
+            <KDialog.Description class={defaultClass.description}>
+              {props.description}
+            </KDialog.Description>
           </Show>
 
           <div class="mt-6">{props.children}</div>

@@ -1,18 +1,23 @@
-import { TextField as KTextField } from "@kobalte/core/text-field";
-import { omit, type ComponentProps, Show, createSignal } from "solid-js";
+import { TextField as KTextField, type TextFieldRootProps } from "@kobalte/core/text-field";
+import { omit, Show, createSignal } from "solid-js";
 import { CloudUpload } from "../icons";
 import { defaultClass } from "./setting";
 
 //TODO 样式修改，移除 UploadCloud这种已废弃的icon
 
-export interface FileFieldProps
-  extends Omit<ComponentProps<typeof KTextField>, "value" | "onChange"> {
+export interface FileFieldProps extends Omit<TextFieldRootProps, "value" | "onChange"> {
   label?: string;
   description?: string;
   accept?: string;
   multiple?: boolean;
   onChange?: (files: File[]) => void;
   isDisabled?: boolean;
+  class?: string;
+  labelClass?: string;
+  dropzoneClass?: string;
+  iconClass?: string;
+  descriptionClass?: string;
+  errorMessageClass?: string;
 }
 
 export const FileField = (props: FileFieldProps) => {
@@ -26,6 +31,11 @@ export const FileField = (props: FileFieldProps) => {
     "onChange",
     "validationState",
     "isDisabled",
+    "labelClass",
+    "dropzoneClass",
+    "iconClass",
+    "descriptionClass",
+    "errorMessageClass",
   );
 
   const [files, setFiles] = createSignal<File[]>([]);

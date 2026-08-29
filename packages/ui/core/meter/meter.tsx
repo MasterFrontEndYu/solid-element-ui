@@ -1,12 +1,19 @@
-import { Meter as KMeter } from "@kobalte/core/meter";
+import { Meter as KMeter, type MeterRootProps } from "@kobalte/core/meter";
 import { omit, type ComponentProps } from "solid-js";
 import { defaultClass } from "./setting";
 
 // TODO 1. 格式
 
+export interface MeterProps extends MeterRootProps {
+  class?: string;
+  labelContainerClass?: string;
+  trackClass?: string;
+  fillClass?: string;
+}
+
 export const Meter = Object.assign(
-  (props: ComponentProps<typeof KMeter>) => {
-    const others = omit(props, "class", "color");
+  (props: MeterProps) => {
+    const others = omit(props, "class", "color", "labelContainerClass", "trackClass", "fillClass");
 
     return (
       <KMeter class={defaultClass.root} {...others}>
@@ -17,9 +24,7 @@ export const Meter = Object.assign(
   {
     Label: (props: ComponentProps<typeof KMeter.Label>) => {
       const others = omit(props, "class");
-      return (
-        <KMeter.Label class={defaultClass.labelContainer} {...others} />
-      );
+      return <KMeter.Label class={defaultClass.labelContainer} {...others} />;
     },
     ValueLabel: (props: ComponentProps<typeof KMeter.ValueLabel>) => {
       const others = omit(props, "class");

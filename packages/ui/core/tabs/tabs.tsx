@@ -1,4 +1,4 @@
-import { Tabs as KTabs } from "@kobalte/core/tabs";
+import { Tabs as KTabs, type TabsRootProps } from "@kobalte/core/tabs";
 import { omit, For } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { defaultClass } from "./setting";
@@ -10,17 +10,28 @@ export type TabItem = {
   disabled?: boolean;
 };
 
-interface TabsProps {
+interface TabsProps extends TabsRootProps {
   items: TabItem[];
   defaultValue?: string;
   value?: string;
   onValueChange?: (value: string) => void;
   orientation?: "horizontal" | "vertical";
   class?: string;
+  listClass?: string;
+  triggerClass?: string;
+  indicatorClass?: string;
+  contentClass?: string;
 }
 
 export const Tabs = (props: TabsProps) => {
-  const others = omit(props, "class");
+  const others = omit(
+    props,
+    "class",
+    "listClass",
+    "triggerClass",
+    "indicatorClass",
+    "contentClass",
+  );
 
   return (
     <KTabs class={defaultClass.root} {...others}>

@@ -1,15 +1,30 @@
-import { Switch as KSwitch } from "@kobalte/core/switch";
-import { omit, type ComponentProps, Show } from "solid-js";
+import { Switch as KSwitch, type SwitchRootProps } from "@kobalte/core/switch";
+import { omit, Show } from "solid-js";
 import { defaultClass } from "./setting";
 
-export interface SwitchProps extends Omit<ComponentProps<typeof KSwitch>, "class"> {
+export interface SwitchProps extends Omit<SwitchRootProps, "class"> {
   label?: string;
   description?: string;
   class?: string;
+  controlClass?: string;
+  thumbClass?: string;
+  labelClass?: string;
+  descriptionClass?: string;
 }
 
 export const Switch = (props: SwitchProps) => {
-  const others = omit(props, "label", "description", "class", "size", "variant");
+  const others = omit(
+    props,
+    "label",
+    "description",
+    "class",
+    "size",
+    "variant",
+    "controlClass",
+    "thumbClass",
+    "labelClass",
+    "descriptionClass",
+  );
 
   return (
     <KSwitch class={defaultClass.root} {...others}>

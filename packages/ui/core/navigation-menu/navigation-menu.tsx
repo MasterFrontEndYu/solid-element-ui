@@ -1,5 +1,8 @@
-import { NavigationMenu as KNavigationMenu } from "@kobalte/core/navigation-menu";
-import { omit, type ComponentProps, For, Show } from "solid-js";
+import {
+  NavigationMenu as KNavigationMenu,
+  type NavigationMenuRootProps,
+} from "@kobalte/core/navigation-menu";
+import { omit, For, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { defaultClass } from "./setting";
 
@@ -11,12 +14,16 @@ interface NavItem {
   content?: JSX.Element;
 }
 
-export interface NavigationMenuProps extends ComponentProps<typeof KNavigationMenu> {
+export interface NavigationMenuProps extends NavigationMenuRootProps {
   items: NavItem[];
+  class?: string;
+  triggerClass?: string;
+  contentClass?: string;
+  viewportClass?: string;
 }
 
 export const NavigationMenu = (props: NavigationMenuProps) => {
-  const others = omit(props, "items", "class");
+  const others = omit(props, "items", "class", "triggerClass", "contentClass", "viewportClass");
 
   return (
     <KNavigationMenu class={defaultClass.root} {...others}>
@@ -48,7 +55,9 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
                 </svg>
               </KNavigationMenu.Trigger>
               <KNavigationMenu.Portal>
-                <KNavigationMenu.Content class={defaultClass.content}>{item.content}</KNavigationMenu.Content>
+                <KNavigationMenu.Content class={defaultClass.content}>
+                  {item.content}
+                </KNavigationMenu.Content>
               </KNavigationMenu.Portal>
             </Show>
           </KNavigationMenu.Menu>

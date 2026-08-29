@@ -1,17 +1,33 @@
-import { TimeField as KTimeField } from "@kobalte/core/time-field";
-import { omit, type ComponentProps, Show } from "solid-js";
+import { TimeField as KTimeField, type TimeFieldRootProps } from "@kobalte/core/time-field";
+import { omit, Show } from "solid-js";
 import { defaultClass } from "./setting";
 
-export interface TimeFieldProps
-  extends Omit<ComponentProps<typeof KTimeField>, "class"> {
+export interface TimeFieldProps extends Omit<TimeFieldRootProps, "class"> {
   label?: string;
   description?: string;
   errorMessage?: string;
   class?: string;
+  labelClass?: string;
+  controlClass?: string;
+  segmentClass?: string;
+  descriptionClass?: string;
+  errorMessageClass?: string;
 }
 
 export const TimeField = (props: TimeFieldProps) => {
-  const others = omit(props, "label", "description", "errorMessage", "class", "size");
+  const others = omit(
+    props,
+    "label",
+    "description",
+    "errorMessage",
+    "class",
+    "size",
+    "labelClass",
+    "controlClass",
+    "segmentClass",
+    "descriptionClass",
+    "errorMessageClass",
+  );
 
   return (
     <KTimeField

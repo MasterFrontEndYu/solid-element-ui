@@ -1,16 +1,30 @@
-import { Collapsible as KCollapsible } from "@kobalte/core/collapsible";
-import { omit, type ComponentProps } from "solid-js";
+import { Collapsible as KCollapsible, type CollapsibleRootProps } from "@kobalte/core/collapsible";
+import { omit } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { ChevronDown } from "../icons";
 import { defaultClass } from "./setting";
 
-interface CollapsibleProps extends ComponentProps<typeof KCollapsible> {
+interface CollapsibleProps extends CollapsibleRootProps {
   title: JSX.Element;
   children: JSX.Element;
+  class?: string;
+  triggerClass?: string;
+  contentClass?: string;
+  contentInnerClass?: string;
+  iconClass?: string;
 }
 
 export const Collapsible = (props: CollapsibleProps) => {
-  const others = omit(props, "title", "children", "class");
+  const others = omit(
+    props,
+    "title",
+    "children",
+    "class",
+    "triggerClass",
+    "contentClass",
+    "contentInnerClass",
+    "iconClass",
+  );
 
   return (
     <KCollapsible class={defaultClass.root} {...others}>

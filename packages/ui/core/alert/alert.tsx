@@ -1,5 +1,5 @@
 import { Alert as KAlert, type AlertRootProps } from "@kobalte/core/alert";
-import { omit, type ComponentProps } from "solid-js";
+import { omit } from "solid-js";
 import { Info, CircleAlert, CircleCheck, CircleX } from "../icons";
 import { defaultClass } from "./setting";
 import type { JSX } from "@solidjs/web";
@@ -9,6 +9,10 @@ export interface AlertProps extends AlertRootProps {
   title?: string;
   icon?: boolean;
   children?: string | JSX.Element;
+  contentClass?: string;
+  titleClass?: string;
+  childrenClass?: string;
+  iconClass?: string;
 }
 
 const iconMap = {
@@ -19,7 +23,18 @@ const iconMap = {
 };
 
 export const Alert = (props: AlertProps) => {
-  const others = omit(props, "title", "icon", "children", "class", "variant");
+  const others = omit(
+    props,
+    "title",
+    "icon",
+    "children",
+    "class",
+    "variant",
+    "contentClass",
+    "titleClass",
+    "childrenClass",
+    "iconClass",
+  );
 
   const RenderedIcon = () => {
     if (props.icon === false) return null;

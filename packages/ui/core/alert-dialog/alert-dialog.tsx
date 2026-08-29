@@ -1,17 +1,25 @@
-import { AlertDialog as KAlertDialog } from "@kobalte/core/alert-dialog";
-import { omit, type ComponentProps, createSignal } from "solid-js";
+import { AlertDialog as KAlertDialog, type AlertDialogRootProps } from "@kobalte/core/alert-dialog";
+import { omit, createSignal } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { X } from "../icons";
 import { Button } from "../button/button";
 import { defaultClass } from "./setting";
 
-interface AlertDialogProps extends ComponentProps<typeof KAlertDialog> {
+interface AlertDialogProps extends AlertDialogRootProps {
   trigger: JSX.Element;
   title: string;
   description?: string;
   action?: JSX.Element;
   cancel?: JSX.Element;
   onConfirm?: () => void | Promise<void>;
+  class?: string;
+  overlayClass?: string;
+  contentClass?: string;
+  headerClass?: string;
+  titleClass?: string;
+  descriptionClass?: string;
+  footerClass?: string;
+  closeButtonClass?: string;
 }
 
 export const AlertDialog = (props: AlertDialogProps) => {
@@ -19,7 +27,23 @@ export const AlertDialog = (props: AlertDialogProps) => {
   const [isOpen, setIsOpen] = createSignal(false);
   const [loading, setLoading] = createSignal(false);
 
-  const others = omit(props, "trigger", "title", "description", "action", "cancel", "onConfirm");
+  const others = omit(
+    props,
+    "trigger",
+    "title",
+    "description",
+    "action",
+    "cancel",
+    "onConfirm",
+    "class",
+    "overlayClass",
+    "contentClass",
+    "headerClass",
+    "titleClass",
+    "descriptionClass",
+    "footerClass",
+    "closeButtonClass",
+  );
 
   const handleConfirm = async (e: MouseEvent) => {
     // 阻止默认行为和冒泡，确保点击不会误触发 Kobalte 的内部关闭逻辑

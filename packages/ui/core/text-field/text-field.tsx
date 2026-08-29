@@ -1,15 +1,18 @@
-import { TextField as KTextField } from "@kobalte/core/text-field";
-import { omit, type ComponentProps, Show } from "solid-js";
+import { TextField as KTextField, type TextFieldRootProps } from "@kobalte/core/text-field";
+import { omit, Show } from "solid-js";
 import { defaultClass } from "./setting";
 
-export interface TextFieldProps
-  extends Omit<ComponentProps<typeof KTextField>, "class"> {
+export interface TextFieldProps extends Omit<TextFieldRootProps, "class"> {
   label?: string;
   description?: string;
   errorMessage?: string;
   placeholder?: string;
   type?: string;
   class?: string;
+  labelClass?: string;
+  inputClass?: string;
+  descriptionClass?: string;
+  errorMessageClass?: string;
 }
 
 export const TextField = (props: TextFieldProps) => {
@@ -22,6 +25,10 @@ export const TextField = (props: TextFieldProps) => {
     "type",
     "class",
     "size",
+    "labelClass",
+    "inputClass",
+    "descriptionClass",
+    "errorMessageClass",
   );
 
   return (
@@ -34,7 +41,11 @@ export const TextField = (props: TextFieldProps) => {
         <KTextField.Label class={defaultClass.label}>{props.label}</KTextField.Label>
       </Show>
 
-      <KTextField.Input class={defaultClass.input} type={props.type} placeholder={props.placeholder} />
+      <KTextField.Input
+        class={defaultClass.input}
+        type={props.type}
+        placeholder={props.placeholder}
+      />
 
       <Show when={props.description}>
         <KTextField.Description class={defaultClass.description}>

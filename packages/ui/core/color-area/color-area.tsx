@@ -1,11 +1,15 @@
-import { ColorArea as KColorArea } from "@kobalte/core/color-area";
-import { omit, type ComponentProps } from "solid-js";
+import { ColorArea as KColorArea, type ColorAreaRootProps } from "@kobalte/core/color-area";
+import { omit } from "solid-js";
 import { defaultClass } from "./setting";
 
-export interface ColorAreaProps extends ComponentProps<typeof KColorArea> {}
+export interface ColorAreaProps extends ColorAreaRootProps {
+  class?: string;
+  backgroundClass?: string;
+  thumbClass?: string;
+}
 
 export const ColorArea = (props: ColorAreaProps) => {
-  const others = omit(props, "class");
+  const others = omit(props, "class", "backgroundClass", "thumbClass");
 
   return (
     <KColorArea class={defaultClass.root} {...others}>

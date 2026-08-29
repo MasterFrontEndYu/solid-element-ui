@@ -1,17 +1,30 @@
-import { Progress as KProgress } from "@kobalte/core/progress";
-import { omit, type ComponentProps, Show } from "solid-js";
+import { Progress as KProgress, type ProgressRootProps } from "@kobalte/core/progress";
+import { omit, Show } from "solid-js";
 import { defaultClass } from "./setting";
 
 // FIXME  进度条问题，value 直接占满
 
-export interface ProgressProps
-  extends Omit<ComponentProps<typeof KProgress>, "children"> {
+export interface ProgressProps extends Omit<ProgressRootProps, "children"> {
   label?: string;
   showValue?: boolean;
+  class?: string;
+  labelContainerClass?: string;
+  trackClass?: string;
+  fillClass?: string;
 }
 
 export const Progress = (props: ProgressProps) => {
-  const others = omit(props, "label", "showValue", "class", "size", "radius");
+  const others = omit(
+    props,
+    "label",
+    "showValue",
+    "class",
+    "size",
+    "radius",
+    "labelContainerClass",
+    "trackClass",
+    "fillClass",
+  );
 
   return (
     <KProgress class={defaultClass.root} {...others}>
@@ -27,7 +40,10 @@ export const Progress = (props: ProgressProps) => {
       </Show>
 
       <KProgress.Track class={defaultClass.track}>
-        <KProgress.Fill class={defaultClass.fill} style={{ width: "var(--kb-progress-fill-width)" }} />
+        <KProgress.Fill
+          class={defaultClass.fill}
+          style={{ width: "var(--kb-progress-fill-width)" }}
+        />
       </KProgress.Track>
     </KProgress>
   );

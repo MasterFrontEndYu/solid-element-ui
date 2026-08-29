@@ -1,17 +1,27 @@
-import { Tooltip as KTooltip } from "@kobalte/core/tooltip";
-import { omit, type ComponentProps } from "solid-js";
+import { Tooltip as KTooltip, type TooltipRootProps } from "@kobalte/core/tooltip";
+import { omit } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { defaultClass } from "./setting";
 
-export interface TooltipProps
-  extends Omit<ComponentProps<typeof KTooltip>, "class"> {
+export interface TooltipProps extends Omit<TooltipRootProps, "class"> {
   content: JSX.Element;
   children: JSX.Element;
+  class?: string;
+  contentClass?: string;
+  arrowClass?: string;
 }
 
 export const Tooltip = (props: TooltipProps) => {
   // 1. 分离属性
-  const others = omit(props, "children", "content", "variant");
+  const others = omit(
+    props,
+    "children",
+    "content",
+    "variant",
+    "class",
+    "contentClass",
+    "arrowClass",
+  );
 
   return (
     <KTooltip gutter={4} openDelay={200} {...others}>

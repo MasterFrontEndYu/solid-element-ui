@@ -1,15 +1,20 @@
-import { Toast as KToast, toaster } from "@kobalte/core/toast";
+import { Toast as KToast, toaster, type ToastRootProps } from "@kobalte/core/toast";
 
 import { isServer } from "@solidjs/web";
-import { omit, type ComponentProps, Show, type ParentProps } from "solid-js";
+import { omit, Show, type ParentProps } from "solid-js";
 import { X, CircleCheck, CircleAlert, Info, TriangleAlert } from "../icons";
 import { defaultClass } from "./setting";
 
-export interface ToastProps extends Omit<ComponentProps<typeof KToast>, "class"> {
+export interface ToastProps extends Omit<ToastRootProps, "class"> {
   title?: string;
   description?: string;
   class?: string;
   variant?: "info" | "success" | "warning" | "error";
+  titleClass?: string;
+  descriptionClass?: string;
+  closeButtonClass?: string;
+  contentClass?: string;
+  iconClass?: string;
 }
 
 const iconMap = {
@@ -31,7 +36,19 @@ export const ToastProvider = (props: ParentProps) => {
 };
 
 const Toast = (props: ToastProps) => {
-  const others = omit(props, "title", "description", "class", "toastId", "variant");
+  const others = omit(
+    props,
+    "title",
+    "description",
+    "class",
+    "toastId",
+    "variant",
+    "titleClass",
+    "descriptionClass",
+    "closeButtonClass",
+    "contentClass",
+    "iconClass",
+  );
 
   // 显式回退到 info，确保 Icon 组件始终存在
   const Icon = iconMap[props.variant ?? "info"];
@@ -44,7 +61,9 @@ const Toast = (props: ToastProps) => {
           <KToast.Title class={defaultClass.title}>{props.title}</KToast.Title>
         </Show>
         <Show when={props.description}>
-          <KToast.Description class={defaultClass.description}>{props.description}</KToast.Description>
+          <KToast.Description class={defaultClass.description}>
+            {props.description}
+          </KToast.Description>
         </Show>
       </div>
       <KToast.CloseButton class={defaultClass.closeButton}>

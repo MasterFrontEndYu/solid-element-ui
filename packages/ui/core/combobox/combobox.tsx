@@ -1,18 +1,41 @@
-import { Combobox as KCombobox } from "@kobalte/core/combobox";
-import { omit, type ComponentProps } from "solid-js";
+import { Combobox as KCombobox, type ComboboxRootProps } from "@kobalte/core/combobox";
+import { omit } from "solid-js";
 import { Check, ChevronDown } from "../icons";
 import { defaultClass } from "./setting";
 
 // FIXME 缺少Description，ErrorMessage，验证
 
-export type ComboboxProps<T> = ComponentProps<typeof KCombobox<T>> & {
+export type ComboboxProps<T> = ComboboxRootProps<T> & {
   label?: string;
   placeholder?: string;
   class?: string;
+  labelClass?: string;
+  controlClass?: string;
+  inputClass?: string;
+  triggerClass?: string;
+  contentClass?: string;
+  listboxClass?: string;
+  itemClass?: string;
+  itemIndicatorClass?: string;
+  iconClass?: string;
 };
 
 export const Combobox = <T extends string | object>(props: ComboboxProps<T>) => {
-  const others = omit(props as ComboboxProps<T>, "label", "placeholder", "class");
+  const others = omit(
+    props as ComboboxProps<T>,
+    "label",
+    "placeholder",
+    "class",
+    "labelClass",
+    "controlClass",
+    "inputClass",
+    "triggerClass",
+    "contentClass",
+    "listboxClass",
+    "itemClass",
+    "itemIndicatorClass",
+    "iconClass",
+  );
 
   return (
     <KCombobox<T> class={defaultClass.root} {...others}>

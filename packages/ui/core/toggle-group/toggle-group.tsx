@@ -1,5 +1,5 @@
-import { ToggleGroup as KToggleGroup } from "@kobalte/core/toggle-group";
-import { omit, For, type ComponentProps } from "solid-js";
+import { ToggleGroup as KToggleGroup, type ToggleGroupRootProps } from "@kobalte/core/toggle-group";
+import { omit, For } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { defaultClass } from "./setting";
 
@@ -11,20 +11,24 @@ interface Option {
   disabled?: boolean;
 }
 
-export interface ToggleGroupProps
-  extends Omit<ComponentProps<typeof KToggleGroup>, "class"> {
+export interface ToggleGroupProps extends Omit<ToggleGroupRootProps, "class"> {
   options: Option[];
   class?: string;
+  itemClass?: string;
 }
 
 export const ToggleGroup = (props: ToggleGroupProps) => {
-  const others = omit(props, "options", "class", "size", "variant");
+  const others = omit(props, "options", "class", "size", "variant", "itemClass");
 
   return (
     <KToggleGroup class={defaultClass.root} {...others}>
       <For each={props.options}>
         {(option) => (
-          <KToggleGroup.Item value={option.value} disabled={option.disabled} class={defaultClass.item}>
+          <KToggleGroup.Item
+            value={option.value}
+            disabled={option.disabled}
+            class={defaultClass.item}
+          >
             {option.label}
           </KToggleGroup.Item>
         )}

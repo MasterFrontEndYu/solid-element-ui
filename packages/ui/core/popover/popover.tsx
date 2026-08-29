@@ -1,6 +1,6 @@
-import { Popover as KPopover } from "@kobalte/core/popover";
+import { Popover as KPopover, type PopoverRootProps } from "@kobalte/core/popover";
 import { CrossIcon } from "../icons";
-import { omit, type ComponentProps } from "solid-js";
+import { omit } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { defaultClass } from "./setting";
 
@@ -8,13 +8,16 @@ import { defaultClass } from "./setting";
 // Description，而不是内敛。
 // trigger用内部，而其他放在标签属性
 
-export interface PopoverProps extends ComponentProps<typeof KPopover> {
+export interface PopoverProps extends PopoverRootProps {
   trigger: JSX.Element;
   title: string;
+  class?: string;
+  contentClass?: string;
+  arrowClass?: string;
 }
 
 export const Popover = (props: PopoverProps) => {
-  const others = omit(props, "trigger", "children", "title");
+  const others = omit(props, "trigger", "children", "title", "class", "contentClass", "arrowClass");
 
   return (
     <KPopover {...others}>

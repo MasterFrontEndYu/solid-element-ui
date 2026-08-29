@@ -1,9 +1,10 @@
-import { Link as KLink } from "@kobalte/core/link";
-import { omit, type ComponentProps } from "solid-js";
+import { Link as KLink, type LinkRootProps } from "@kobalte/core/link";
+import { omit } from "solid-js";
 import { defaultClass } from "./setting";
 
-export interface LinkProps extends ComponentProps<typeof KLink> {
+export interface LinkProps extends LinkRootProps {
   external?: boolean;
+  class?: string;
 }
 
 export const Link = (props: LinkProps) => {

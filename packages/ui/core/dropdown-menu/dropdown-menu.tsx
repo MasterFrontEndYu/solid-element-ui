@@ -1,4 +1,7 @@
-import { DropdownMenu as KDropdownMenu } from "@kobalte/core/dropdown-menu";
+import {
+  DropdownMenu as KDropdownMenu,
+  type DropdownMenuRootProps,
+} from "@kobalte/core/dropdown-menu";
 import { For, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { ChevronRight } from "../icons";
@@ -15,11 +18,16 @@ export type DropdownItemConfig = {
   children?: DropdownItemConfig[]; // 子菜单
 };
 
-interface DropdownMenuProps {
+interface DropdownMenuProps extends DropdownMenuRootProps {
   trigger: JSX.Element;
   items: DropdownItemConfig[];
   placement?: "bottom" | "bottom-start" | "bottom-end" | "top" | "left" | "right";
   class?: string;
+  triggerClass?: string;
+  contentClass?: string;
+  itemClass?: string;
+  separatorClass?: string;
+  subIconClass?: string;
 }
 
 // 递归渲染函数：处理无限级嵌套
@@ -27,7 +35,10 @@ const RenderMenuItems = (props: { items: DropdownItemConfig[] }) => {
   return (
     <For each={props.items}>
       {(config) => (
-        <Show when={!config.separator} fallback={<KDropdownMenu.Separator class={defaultClass.separator} />}>
+        <Show
+          when={!config.separator}
+          fallback={<KDropdownMenu.Separator class={defaultClass.separator} />}
+        >
           <Show
             when={config.children && config.children.length > 0}
             fallback={

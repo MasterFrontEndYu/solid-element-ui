@@ -1,5 +1,5 @@
-import { Breadcrumbs as KBreadcrumbs } from "@kobalte/core/breadcrumbs";
-import { For, omit, type ComponentProps } from "solid-js";
+import { Breadcrumbs as KBreadcrumbs, type BreadcrumbsRootProps } from "@kobalte/core/breadcrumbs";
+import { For, omit } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { ChevronRight } from "../icons";
 import { defaultClass } from "./setting";
@@ -14,13 +14,16 @@ export interface BreadcrumbItem {
   disabled?: boolean;
 }
 
-interface BreadcrumbsProps extends ComponentProps<typeof KBreadcrumbs> {
+interface BreadcrumbsProps extends BreadcrumbsRootProps {
   items: BreadcrumbItem[];
   separatorIcon?: JSX.Element;
+  class?: string;
+  linkClass?: string;
+  separatorClass?: string;
 }
 
 export const Breadcrumbs = (props: BreadcrumbsProps) => {
-  const others = omit(props, "items", "separatorIcon", "class");
+  const others = omit(props, "items", "separatorIcon", "class", "linkClass", "separatorClass");
 
   return (
     <KBreadcrumbs class={defaultClass.root} {...others}>

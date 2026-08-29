@@ -1,17 +1,36 @@
-import { Slider as KSlider } from "@kobalte/core/slider";
-import { omit, type ComponentProps, For, Show } from "solid-js";
+import { Slider as KSlider, type SliderRootProps } from "@kobalte/core/slider";
+import { omit, For, Show } from "solid-js";
 import { defaultClass } from "./setting";
 
 // FIXME 点击轨道时报错
 
-export interface SliderProps extends Omit<ComponentProps<typeof KSlider>, "class"> {
+export interface SliderProps extends Omit<SliderRootProps, "class"> {
   label?: string;
   showValue?: boolean;
   class?: string;
+  labelWrapperClass?: string;
+  labelClass?: string;
+  valueClass?: string;
+  trackClass?: string;
+  fillClass?: string;
+  thumbClass?: string;
 }
 
 export const Slider = (props: SliderProps) => {
-  const others = omit(props, "label", "showValue", "class", "variant", "size");
+  const others = omit(
+    props,
+    "label",
+    "showValue",
+    "class",
+    "variant",
+    "size",
+    "labelWrapperClass",
+    "labelClass",
+    "valueClass",
+    "trackClass",
+    "fillClass",
+    "thumbClass",
+  );
 
   return (
     <KSlider class={defaultClass.root} {...others}>

@@ -1,15 +1,29 @@
-import { Pagination as KPagination } from "@kobalte/core/pagination";
-import { omit, type ComponentProps } from "solid-js";
+import { Pagination as KPagination, type PaginationRootProps } from "@kobalte/core/pagination";
+import { omit } from "solid-js";
 import { ChevronLeft, ChevronRight, Ellipsis } from "../icons";
 import { defaultClass } from "./setting";
 
 // FIXME 样式修改，
 
-export interface PaginationProps extends ComponentProps<typeof KPagination> {}
+export interface PaginationProps extends PaginationRootProps {
+  class?: string;
+  itemsContainerClass?: string;
+  itemClass?: string;
+  ellipsisClass?: string;
+  triggerClass?: string;
+}
 
 export const Pagination = (props: PaginationProps) => {
   // 显式提取 count 以满足类型约束，同时清理 others
-  const others = omit(props, "class", "count");
+  const others = omit(
+    props,
+    "class",
+    "count",
+    "itemsContainerClass",
+    "itemClass",
+    "ellipsisClass",
+    "triggerClass",
+  );
 
   return (
     <KPagination

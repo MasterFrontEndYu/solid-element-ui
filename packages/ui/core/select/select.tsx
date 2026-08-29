@@ -1,4 +1,4 @@
-import { Select as KSelect } from "@kobalte/core/select";
+import { Select as KSelect, type SelectRootProps } from "@kobalte/core/select";
 import { omit, Show, createMemo } from "solid-js";
 import { ChevronDown, Check } from "../icons";
 import { defaultClass } from "./setting";
@@ -10,7 +10,10 @@ interface Option {
 }
 
 // 重新定义接口，使 value 和 onChange 处理的是 string 类型
-export interface SelectProps {
+export interface SelectProps extends Omit<
+  SelectRootProps<Option>,
+  "options" | "value" | "defaultValue" | "onChange" | "placeholder" | "disabled" | "name"
+> {
   options: Option[];
   value?: string;
   defaultValue?: string;
@@ -21,6 +24,13 @@ export interface SelectProps {
   disabled?: boolean;
   name?: string;
   class?: string;
+  labelClass?: string;
+  triggerClass?: string;
+  contentClass?: string;
+  listboxClass?: string;
+  itemClass?: string;
+  itemIndicatorClass?: string;
+  descriptionClass?: string;
 }
 
 export const Select = (props: SelectProps) => {
@@ -35,6 +45,13 @@ export const Select = (props: SelectProps) => {
     "defaultValue",
     "onChange",
     "size",
+    "labelClass",
+    "triggerClass",
+    "contentClass",
+    "listboxClass",
+    "itemClass",
+    "itemIndicatorClass",
+    "descriptionClass",
   );
 
   const selectedOption = createMemo(() => {
@@ -101,7 +118,9 @@ export const Select = (props: SelectProps) => {
       </KSelect.Portal>
 
       <Show when={props.description}>
-        <KSelect.Description class={defaultClass.description}>{props.description}</KSelect.Description>
+        <KSelect.Description class={defaultClass.description}>
+          {props.description}
+        </KSelect.Description>
       </Show>
     </KSelect>
   );

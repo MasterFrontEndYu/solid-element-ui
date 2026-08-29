@@ -1,18 +1,34 @@
-import { NumberField as KNumberField } from "@kobalte/core/number-field";
-import { omit, type ComponentProps, Show } from "solid-js";
+import { NumberField as KNumberField, type NumberFieldRootProps } from "@kobalte/core/number-field";
+import { omit, Show } from "solid-js";
 import { ChevronUp, ChevronDown } from "../icons";
 import { defaultClass } from "./setting";
 
-export interface NumberFieldProps
-  extends Omit<ComponentProps<typeof KNumberField>, "class"> {
+export interface NumberFieldProps extends Omit<NumberFieldRootProps, "class"> {
   label?: string;
   description?: string;
   class?: string;
+  labelClass?: string;
+  containerClass?: string;
+  inputClass?: string;
+  controlsClass?: string;
+  stepperClass?: string;
+  errorMessageClass?: string;
 }
 
 export const NumberField = (props: NumberFieldProps) => {
   // 严格处理属性，防止 TS 报错“已声明但未使用”
-  const others = omit(props, "label", "description", "class");
+  const others = omit(
+    props,
+    "label",
+    "description",
+    "class",
+    "labelClass",
+    "containerClass",
+    "inputClass",
+    "controlsClass",
+    "stepperClass",
+    "errorMessageClass",
+  );
 
   return (
     <KNumberField class={defaultClass.root} {...others}>

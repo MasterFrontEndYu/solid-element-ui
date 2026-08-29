@@ -1,10 +1,9 @@
-import { Skeleton as KSkeleton } from "@kobalte/core/skeleton";
-import { omit, type ComponentProps } from "solid-js";
+import { Skeleton as KSkeleton, type SkeletonRootProps } from "@kobalte/core/skeleton";
+import { omit } from "solid-js";
 import { defaultClass } from "./setting";
 
 // 核心修正：使用 Omit 排除掉冲突的 width 和 height
-export interface SkeletonProps
-  extends Omit<ComponentProps<typeof KSkeleton>, "class" | "width" | "height"> {
+export interface SkeletonProps extends Omit<SkeletonRootProps, "class" | "width" | "height"> {
   width?: string | number;
   height?: string | number;
   class?: string;
@@ -20,11 +19,5 @@ export const Skeleton = (props: SkeletonProps) => {
     ...(typeof props.style === "object" ? props.style : {}),
   });
 
-  return (
-    <KSkeleton
-      class={defaultClass.root}
-      style={mergedStyle()}
-      {...others}
-    />
-  );
+  return <KSkeleton class={defaultClass.root} style={mergedStyle()} {...others} />;
 };

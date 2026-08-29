@@ -1,15 +1,19 @@
-import { Button as KButton } from "@kobalte/core/button";
-import { omit, type ComponentProps, Show } from "solid-js";
+import { Button as KButton, type ButtonRootProps } from "@kobalte/core/button";
+import { omit, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { LoaderCircle } from "../icons";
 import { defaultClass } from "./setting";
 
-
-
-export interface ButtonProps extends ComponentProps<typeof KButton> {
+export interface ButtonProps extends ButtonRootProps {
   loading?: boolean;
   leftIcon?: JSX.Element;
+  children?: JSX.Element;
   rightIcon?: JSX.Element;
+  class?: string;
+  iconClass?: string;
+  variant?: "default" | "outline" | "dashed" | "filled" | "text";
+  color?: "default" | "primary" | "success" | "warning" | "danger";
+  size?: string;
 }
 
 export const Button = (props: ButtonProps) => {
@@ -24,6 +28,7 @@ export const Button = (props: ButtonProps) => {
     "variant",
     "size",
     "color",
+    "iconClass",
   );
 
   return (

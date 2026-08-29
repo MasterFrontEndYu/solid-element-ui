@@ -1,12 +1,29 @@
-import { Menubar as KMenubar } from "@kobalte/core/menubar";
+import { Menubar as KMenubar, type MenubarRootProps } from "@kobalte/core/menubar";
 import { omit, type ComponentProps } from "solid-js";
 import { defaultClass } from "./setting";
 
 // TODO 1. 格式
 
+export interface MenubarProps extends MenubarRootProps {
+  class?: string;
+  triggerClass?: string;
+  contentClass?: string;
+  itemClass?: string;
+  separatorClass?: string;
+  shortcutClass?: string;
+}
+
 export const Menubar = Object.assign(
-  (props: ComponentProps<typeof KMenubar>) => {
-    const others = omit(props, "class");
+  (props: MenubarProps) => {
+    const others = omit(
+      props,
+      "class",
+      "triggerClass",
+      "contentClass",
+      "itemClass",
+      "separatorClass",
+      "shortcutClass",
+    );
     return <KMenubar class={defaultClass.root} {...others} />;
   },
   {

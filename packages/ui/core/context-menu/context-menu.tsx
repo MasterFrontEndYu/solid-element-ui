@@ -1,4 +1,4 @@
-import { ContextMenu as KContextMenu } from "@kobalte/core/context-menu";
+import { ContextMenu as KContextMenu, type ContextMenuRootProps } from "@kobalte/core/context-menu";
 import { For, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { ChevronRight } from "../icons";
@@ -15,10 +15,14 @@ export type ContextMenuItemConfig = {
   children?: ContextMenuItemConfig[]; // 支持嵌套子菜单
 };
 
-interface UnifiedContextMenuProps {
+interface UnifiedContextMenuProps extends ContextMenuRootProps {
   items: ContextMenuItemConfig[];
   children: JSX.Element; // 触发区域
   class?: string;
+  contentClass?: string;
+  itemClass?: string;
+  separatorClass?: string;
+  subIconClass?: string;
 }
 
 // 递归渲染函数

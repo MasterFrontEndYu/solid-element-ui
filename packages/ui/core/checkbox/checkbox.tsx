@@ -7,6 +7,8 @@ import { defaultClass } from "./setting";
 // TODO 添加checkbox 的几种形状尺寸,看情况吧
 export interface CheckboxProps extends CheckboxRootProps {
   label?: JSX.Element;
+  description?: string;
+  errorMessage?: string;
   class?: string;
   controlClass?: string;
   labelClass?: string;
@@ -19,9 +21,9 @@ export const Checkbox = (props: CheckboxProps) => {
   const others = omit(
     props,
     "label",
-    "class",
     "description",
     "errorMessage",
+    "class",
     "controlClass",
     "labelClass",
     "indicatorClass",

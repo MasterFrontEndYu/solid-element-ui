@@ -7,7 +7,7 @@ export interface BadgeProps extends BadgeRootProps {
 }
 
 export const Badge = (props: BadgeProps) => {
-  const others = omit(props, "class", "variant");
+  const others = omit(props, "class");
 
   return <KBadge class={defaultClass.root} {...others} />;
 };

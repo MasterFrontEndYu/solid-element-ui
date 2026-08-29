@@ -10,7 +10,7 @@ interface CollapsibleProps extends CollapsibleRootProps {
   class?: string;
   triggerClass?: string;
   contentClass?: string;
-  contentInnerClass?: string;
+  contentTextClass?: string;
   iconClass?: string;
 }
 
@@ -22,7 +22,7 @@ export const Collapsible = (props: CollapsibleProps) => {
     "class",
     "triggerClass",
     "contentClass",
-    "contentInnerClass",
+    "contentTextClass",
     "iconClass",
   );
 
@@ -34,7 +34,7 @@ export const Collapsible = (props: CollapsibleProps) => {
       </KCollapsible.Trigger>
 
       <KCollapsible.Content class={defaultClass.content}>
-        <div class={defaultClass.contentInner}>{props.children}</div>
+        <div class={defaultClass.contentText}>{props.children}</div>
       </KCollapsible.Content>
     </KCollapsible>
   );

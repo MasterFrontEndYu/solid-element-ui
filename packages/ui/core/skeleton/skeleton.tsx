@@ -1,12 +1,15 @@
 import { Skeleton as KSkeleton, type SkeletonRootProps } from "@kobalte/core/skeleton";
 import { omit } from "solid-js";
 import { defaultClass } from "./setting";
+import { cn } from "../../utils/cn";
 
 // 核心修正：使用 Omit 排除掉冲突的 width 和 height
 export interface SkeletonProps extends Omit<SkeletonRootProps, "class" | "width" | "height"> {
   width?: string | number;
   height?: string | number;
   class?: string;
+  variant?: string;
+  animation?: string;
 }
 
 export const Skeleton = (props: SkeletonProps) => {
@@ -19,5 +22,5 @@ export const Skeleton = (props: SkeletonProps) => {
     ...(typeof props.style === "object" ? props.style : {}),
   });
 
-  return <KSkeleton class={defaultClass.root} style={mergedStyle()} {...others} />;
+  return <KSkeleton class={cn('bg-foreground', props.class)} style={mergedStyle()} {...others} />;
 };

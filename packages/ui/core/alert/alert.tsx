@@ -3,12 +3,14 @@ import { omit } from "solid-js";
 import { Info, CircleAlert, CircleCheck, CircleX } from "../icons";
 import { defaultClass } from "./setting";
 import type { JSX } from "@solidjs/web";
+import { cn } from "../../utils/cn";
 
 export interface AlertProps extends AlertRootProps {
   class?: string;
   title?: string;
   icon?: boolean;
   children?: string | JSX.Element;
+  variant?: "info" | "success" | "warning" | "danger";
   contentClass?: string;
   titleClass?: string;
   childrenClass?: string;
@@ -35,11 +37,11 @@ export const Alert = (props: AlertProps) => {
 
   // 5. 渲染组件
   return (
-    <KAlert class={defaultClass.root} {...others}>
+    <KAlert class={cn('relative w-full rounded-lg border p-4 flex gap-3 antialiased text-main', props.class)} {...others}>
       <RenderedIcon />
-      <div class={defaultClass.content}>
-        {props.title && <h5 class={defaultClass.title}>{props.title}</h5>}
-        <div class={defaultClass.children}>{props.children}</div>
+      <div class={cn('flex flex-col gap-1 text-left', props.contentClass)}>
+        {props.title && <h5 class={cn('font-semibold leading-none tracking-tight', props.titleClass)}>{props.title}</h5>}
+        <div class={cn('text-md leading-relaxed opacity-90', props.childrenClass)}>{props.children}</div>
       </div>
     </KAlert>
   );

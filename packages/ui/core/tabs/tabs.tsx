@@ -2,6 +2,7 @@ import { Tabs as KTabs, type TabsRootProps } from "@kobalte/core/tabs";
 import { omit, For } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { defaultClass } from "./setting";
+import { cn } from "../../utils/cn";
 
 export type TabItem = {
   value: string;
@@ -34,21 +35,25 @@ export const Tabs = (props: TabsProps) => {
   );
 
   return (
-    <KTabs class={defaultClass.root} {...others}>
-      <KTabs.List class={defaultClass.list}>
+    <KTabs class={cn('flex flex-col w-full', props.class)} {...others}>
+      <KTabs.List class={cn('relative flex items-center border-b border-base', props.listClass)}>
         <For each={props.items}>
           {(item) => (
-            <KTabs.Trigger class={defaultClass.trigger} value={item.value} disabled={item.disabled}>
+            <KTabs.Trigger
+              class={cn('relative flex h-9 items-center justify-center px-4 text-sm font-medium transition-colors outline-none select-none cursor-pointer text-muted hover:text-muted/80 data-[selected]:text-main', props.triggerClass)}
+              value={item.value}
+              disabled={item.disabled}
+            >
               {item.label}
             </KTabs.Trigger>
           )}
         </For>
-        <KTabs.Indicator class={defaultClass.indicator} />
+        <KTabs.Indicator class={cn('absolute bottom-[-1px] h-0.5 bg-reversal-bg transition-all duration-200', props.indicatorClass)} />
       </KTabs.List>
 
       <For each={props.items}>
         {(item) => (
-          <KTabs.Content class={defaultClass.content} value={item.value}>
+          <KTabs.Content class={cn('mt-4 text-sm text-main focus-visible:outline-none', props.contentClass)} value={item.value}>
             {item.content}
           </KTabs.Content>
         )}

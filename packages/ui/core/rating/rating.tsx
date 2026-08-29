@@ -2,11 +2,14 @@ import { Rating as KRating, type RatingRootProps } from "@kobalte/core/rating";
 import { omit, Show, For } from "solid-js";
 import { StarIcon } from "../icons";
 import { defaultClass } from "./setting";
+import { cn } from "../../utils/cn";
 
 export interface RatingGroupProps extends Omit<RatingRootProps, "children" | "class"> {
   label?: string;
   count?: number; // 星星总数，默认为 5
   class?: string;
+  color?: string;
+  size?: string;
   labelClass?: string;
   controlClass?: string;
   itemClass?: string;
@@ -32,15 +35,17 @@ export const RatingGroup = (props: RatingGroupProps) => {
   );
 
   return (
-    <KRating class={defaultClass.root} {...others}>
+    <KRating class={cn('flex flex-col gap-1.5 antialiased', props.class)} {...others}>
       <Show when={props.label}>
-        <KRating.Label class={defaultClass.label}>{props.label}</KRating.Label>
+        <KRating.Label class={cn('text-sm font-medium text-slate-700 dark:text-slate-300', props.labelClass)}>
+          {props.label}
+        </KRating.Label>
       </Show>
 
-      <KRating.Control class={defaultClass.control}>
+      <KRating.Control class={cn('flex items-center gap-0.5', props.controlClass)}>
         <For each={Array(5)}>
           {(_) => (
-            <KRating.Item class={defaultClass.item}>
+            <KRating.Item class={cn('relative cursor-pointer transition-transform active:scale-90 focus-visible:outline-none', props.itemClass)}>
               <KRating.ItemControl>
                 <StarIcon />
               </KRating.ItemControl>

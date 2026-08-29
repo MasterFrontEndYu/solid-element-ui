@@ -2,11 +2,13 @@ import { Tooltip as KTooltip, type TooltipRootProps } from "@kobalte/core/toolti
 import { omit } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { defaultClass } from "./setting";
+import { cn } from "../../utils/cn";
 
 export interface TooltipProps extends Omit<TooltipRootProps, "class"> {
   content: JSX.Element;
   children: JSX.Element;
   class?: string;
+  variant?: string;
   contentClass?: string;
   arrowClass?: string;
 }
@@ -28,8 +30,8 @@ export const Tooltip = (props: TooltipProps) => {
       <KTooltip.Trigger class="block">{props.children}</KTooltip.Trigger>
 
       <KTooltip.Portal>
-        <KTooltip.Content class={defaultClass.content}>
-          <KTooltip.Arrow class={defaultClass.arrow} />
+        <KTooltip.Content class={cn('z-50 rounded-md px-4 py-1.5 text-xs shadow-md animate-in zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95', props.contentClass)}>
+          <KTooltip.Arrow class={cn('', props.arrowClass)} />
           {props.content}
         </KTooltip.Content>
       </KTooltip.Portal>

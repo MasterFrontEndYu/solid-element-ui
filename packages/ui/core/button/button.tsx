@@ -3,6 +3,7 @@ import { omit, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { LoaderCircle } from "../icons";
 import { defaultClass } from "./setting";
+import { cn } from "../../utils/cn";
 
 export interface ButtonProps extends ButtonRootProps {
   loading?: boolean;
@@ -32,10 +33,14 @@ export const Button = (props: ButtonProps) => {
   );
 
   return (
-    <KButton class={defaultClass.base} disabled={props.disabled || props.loading} {...others}>
+    <KButton
+      class={cn('inline-flex items-center cursor-pointer justify-center rounded-sm text-sm font-medium transition-all duration-200 active:scale-[0.98] focus:outline-none disabled:opacity-50 disabled:pointer-events-none', props.class)}
+      disabled={props.disabled || props.loading}
+      {...others}
+    >
       {/* Loading 状态显示 */}
       <Show when={props.loading}>
-        <LoaderCircle class={defaultClass.icon} />
+        <LoaderCircle class={cn('animate-spin -ml-1 mr-2 h-4 w-4 text-current', props.iconClass)} />
       </Show>
 
       {/* 非 Loading 状态下的 Left Icon */}

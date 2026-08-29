@@ -6,12 +6,12 @@ export default defineConfig({
   plugins: [solid(), tailwindcss()],
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.tsx"),
+      entry: resolve(__dirname, "./core/index.tsx"),
       formats: ["es"],
       fileName: "index",
     },
     rollupOptions: {
       external: ["solid-js", "@kobalte/core", "tailwind-variants", "tailwind-merge"],
     },
-  },
+  }
 } as any);

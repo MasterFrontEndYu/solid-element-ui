@@ -4,6 +4,7 @@ import { isServer } from "@solidjs/web";
 import { omit, Show, type ParentProps } from "solid-js";
 import { X, CircleCheck, CircleAlert, Info, TriangleAlert } from "../icons";
 import { defaultClass } from "./setting";
+import { cn } from "../../utils/cn";
 
 export interface ToastProps extends Omit<ToastRootProps, "class"> {
   title?: string;
@@ -54,19 +55,21 @@ const Toast = (props: ToastProps) => {
   const Icon = iconMap[props.variant ?? "info"];
 
   return (
-    <KToast toastId={props.toastId} class={defaultClass.root} {...others}>
-      <Icon class={defaultClass.icon} />
-      <div class={defaultClass.content}>
+    <KToast toastId={props.toastId} class={cn('group relative flex w-[400px] items-start justify-between space-x-4 overflow-hidden rounded-md border p-4 pr-8 shadow-lg transition-all data-[opened]:animate-slide-in data-[closed]:animate-hide data-[swipe=move]:translate-x-[--kb-toast-swipe-move-x] data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-transform data-[swipe=cancel]:duration-200 data-[swipe=cancel]:ease-out data-[swipe=end]:animate-swipe-out', props.class)} {...others}>
+      <Icon class={cn('h-5 w-5 shrink-0 mt-0.5', props.iconClass)} />
+      <div class={cn('flex flex-col gap-1 flex-1', props.contentClass)}>
         <Show when={props.title}>
-          <KToast.Title class={defaultClass.title}>{props.title}</KToast.Title>
+          <KToast.Title class={cn('text-sm font-semibold', props.titleClass)}>
+            {props.title}
+          </KToast.Title>
         </Show>
         <Show when={props.description}>
-          <KToast.Description class={defaultClass.description}>
+          <KToast.Description class={cn('text-xs opacity-90 leading-relaxed', props.descriptionClass)}>
             {props.description}
           </KToast.Description>
         </Show>
       </div>
-      <KToast.CloseButton class={defaultClass.closeButton}>
+      <KToast.CloseButton class={cn('absolute right-2 top-2 rounded-md p-1 opacity-0 transition-opacity hover:text-main focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100', props.closeButtonClass)}>
         <X size={16} />
       </KToast.CloseButton>
     </KToast>

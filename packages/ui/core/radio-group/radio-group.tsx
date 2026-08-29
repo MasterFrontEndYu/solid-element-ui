@@ -1,6 +1,7 @@
 import { RadioGroup as KRadioGroup, type RadioGroupRootProps } from "@kobalte/core/radio-group";
 import { omit, For, Show } from "solid-js";
 import { defaultClass } from "./setting";
+import { cn } from "../../utils/cn";
 
 export interface RadioOption {
   label: string;
@@ -38,9 +39,11 @@ export const RadioGroup = (props: RadioGroupProps) => {
   );
 
   return (
-    <KRadioGroup class={defaultClass.root} {...others}>
+    <KRadioGroup class={cn('flex flex-col gap-3 antialiased', props.class)} {...others}>
       <Show when={props.label}>
-        <KRadioGroup.Label class={defaultClass.label}>{props.label}</KRadioGroup.Label>
+        <KRadioGroup.Label class={cn('text-sm font-semibold text-main mb-1', props.labelClass)}>
+          {props.label}
+        </KRadioGroup.Label>
       </Show>
 
       <For each={props.options}>
@@ -48,13 +51,13 @@ export const RadioGroup = (props: RadioGroupProps) => {
           <KRadioGroup.Item
             value={option.value}
             disabled={option.disabled}
-            class={defaultClass.item}
+            class={cn('group flex items-center gap-3 cursor-pointer disabled:cursor-not-allowed', props.itemClass)}
           >
             <KRadioGroup.ItemInput />
-            <KRadioGroup.ItemControl class={defaultClass.control}>
-              <KRadioGroup.ItemIndicator class={defaultClass.indicator} />
+            <KRadioGroup.ItemControl class={cn('flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-app transition-all shadow-sm group-hover:border-light group-data-[checked]:border-primary group-data-[checked]:bg-primary group-focus-visible:ring-2 group-focus-visible:ring-blue-500/20', props.controlClass)}>
+              <KRadioGroup.ItemIndicator class={cn('h-2 w-2 rounded-full bg-app shadow-sm', props.indicatorClass)} />
             </KRadioGroup.ItemControl>
-            <KRadioGroup.ItemLabel class={defaultClass.itemLabel}>
+            <KRadioGroup.ItemLabel class={cn('text-sm font-medium text-main group-data-[disabled]:opacity-50', props.itemLabelClass)}>
               {option.label}
             </KRadioGroup.ItemLabel>
           </KRadioGroup.Item>

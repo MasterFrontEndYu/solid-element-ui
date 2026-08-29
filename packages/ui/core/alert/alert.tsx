@@ -5,6 +5,7 @@ import { defaultClass } from "./setting";
 import type { JSX } from "@solidjs/web";
 
 export interface AlertProps extends AlertRootProps {
+  class?: string;
   title?: string;
   icon?: boolean;
   children?: string | JSX.Element;

@@ -1,33 +1,11 @@
 @layer ui-lib, base, components, utilities;
 @import "tailwindcss";
 
-@import "../node_modules/solid-element-ui/core/style/theme.css";
+@import "../node_modules/solid-element-ui/style/theme.css";
 @source "../node_modules/solid-element-ui/core/**/*.{ts,tsx}";
 /* @import "solid-element-ui/theme.css"; */
 
 /* App.css */
-
-/* ----- 全局重置 & 基础 ----- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background: #f7f9fc;
-  color: #1e293b;
-  height: 100vh;
-}
-
-/* ----- 整体布局容器 ----- */
-.flex {
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
-}
 
 /* ----- 侧边栏 ----- */
 nav {

@@ -1,5 +1,5 @@
 export const defaultClass = {
-  root: "w-full divide-y divide-base border border-base rounded-lg overflow-hidden",
+  root: " w-50 divide-y divide-base border border-base rounded-lg overflow-hidden",
   item: "group",
   header: "flex",
   trigger: [
@@ -10,6 +10,6 @@ export const defaultClass = {
     "overflow-hidden text-md transition-all bg-transparent text-main",
     "data-[expanded]:animate-accordion-down data-[closed]:animate-accordion-up",
   ],
-  contentInner: "pb-4 pt-2 px-4",
+  contentText: "p-4",
   icon: "h-4 w-4 transition-transform duration-200 group-data-[expanded]:rotate-180",
 }

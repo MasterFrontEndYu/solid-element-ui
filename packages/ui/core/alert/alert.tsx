@@ -1,14 +1,13 @@
-import { Alert as KAlert } from "@kobalte/core/alert";
+import { Alert as KAlert, type AlertRootProps } from "@kobalte/core/alert";
 import { omit, type ComponentProps } from "solid-js";
 import { Info, CircleAlert, CircleCheck, CircleX } from "../icons";
 import { defaultClass } from "./setting";
+import type { JSX } from "@solidjs/web";
 
-
-
-export interface AlertProps extends ComponentProps<typeof KAlert> {
+export interface AlertProps extends AlertRootProps {
   title?: string;
   icon?: boolean;
-  variant?: "info" | "success" | "warning" | "danger";
+  children?: string | JSX.Element;
 }
 
 const iconMap = {

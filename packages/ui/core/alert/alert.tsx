@@ -15,13 +15,6 @@ export interface AlertProps extends AlertRootProps {
   iconClass?: string;
 }
 
-const iconMap = {
-  info: Info,
-  success: CircleCheck,
-  warning: CircleAlert,
-  danger: CircleX,
-};
-
 export const Alert = (props: AlertProps) => {
   const others = omit(
     props,
@@ -29,7 +22,6 @@ export const Alert = (props: AlertProps) => {
     "icon",
     "children",
     "class",
-    "variant",
     "contentClass",
     "titleClass",
     "childrenClass",
@@ -39,9 +31,6 @@ export const Alert = (props: AlertProps) => {
   const RenderedIcon = () => {
     if (props.icon === false) return null;
     if (typeof props.icon === "object") return props.icon;
-
-    const Icon = iconMap[props.variant || "info"];
-    return <Icon size={18} class={defaultClass.icon} />;
   };
 
   // 5. 渲染组件

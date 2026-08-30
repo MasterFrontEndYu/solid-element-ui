@@ -5,7 +5,7 @@ import {
 import { For, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { ChevronRight } from "../icons";
-import { defaultClass } from "./setting";
+
 import { cn } from "../../utils/cn";
 
 // TODO  Dropdown Menu 样式
@@ -45,14 +45,19 @@ const RenderMenuItems = (props: {
         <Show
           when={!config.separator}
           fallback={
-            <KDropdownMenu.Separator class={cn('-mx-1 my-1 h-px border-light', props.separatorClass)} />
+            <KDropdownMenu.Separator
+              class={cn("-mx-1 my-1 h-px border-light", props.separatorClass)}
+            />
           }
         >
           <Show
             when={config.children && config.children.length > 0}
             fallback={
               <KDropdownMenu.Item
-                class={cn('relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-50', props.itemClass)}
+                class={cn(
+                  "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-50",
+                  props.itemClass,
+                )}
                 disabled={config.disabled}
                 onSelect={() => config.onClick?.()}
               >
@@ -62,12 +67,22 @@ const RenderMenuItems = (props: {
           >
             {/* 子菜单渲染逻辑 */}
             <KDropdownMenu.Sub>
-              <KDropdownMenu.SubTrigger class={cn('relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-50', props.itemClass)}>
+              <KDropdownMenu.SubTrigger
+                class={cn(
+                  "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-50",
+                  props.itemClass,
+                )}
+              >
                 {config.label}
-                <ChevronRight class={cn('ml-auto h-4 w-4', props.subIconClass)} />
+                <ChevronRight class={cn("ml-auto h-4 w-4", props.subIconClass)} />
               </KDropdownMenu.SubTrigger>
               <KDropdownMenu.Portal>
-                <KDropdownMenu.SubContent class={cn('z-50 min-w-[8rem] overflow-hidden rounded-md border border-light bg-white p-1 text-zinc-950 shadow-md animate-in zoom-in-95 dark:bg-zinc-950 dark:text-zinc-50 data-[expanded]:animate-in data-[closed]:animate-out', props.contentClass)}>
+                <KDropdownMenu.SubContent
+                  class={cn(
+                    "z-50 min-w-[8rem] overflow-hidden rounded-md border border-light bg-white p-1 text-zinc-950 shadow-md animate-in zoom-in-95 dark:bg-zinc-950 dark:text-zinc-50 data-[expanded]:animate-in data-[closed]:animate-out",
+                    props.contentClass,
+                  )}
+                >
                   <RenderMenuItems
                     items={config.children!}
                     itemClass={props.itemClass}
@@ -88,12 +103,17 @@ const RenderMenuItems = (props: {
 export const DropdownMenu = (props: DropdownMenuProps) => {
   return (
     <KDropdownMenu placement={props.placement ?? "bottom-start"}>
-      <KDropdownMenu.Trigger as="div" class={cn('inline-block cursor-pointer', props.triggerClass)}>
+      <KDropdownMenu.Trigger as="div" class={cn("inline-block cursor-pointer", props.triggerClass)}>
         {props.trigger}
       </KDropdownMenu.Trigger>
 
       <KDropdownMenu.Portal>
-        <KDropdownMenu.Content class={cn('z-50 min-w-[8rem] overflow-hidden rounded-md border border-light bg-white p-1 text-zinc-950 shadow-md animate-in zoom-in-95 dark:bg-zinc-950 dark:text-zinc-50 data-[expanded]:animate-in data-[closed]:animate-out', props.contentClass)}>
+        <KDropdownMenu.Content
+          class={cn(
+            "z-50 min-w-[8rem] overflow-hidden rounded-md border border-light bg-white p-1 text-zinc-950 shadow-md animate-in zoom-in-95 dark:bg-zinc-950 dark:text-zinc-50 data-[expanded]:animate-in data-[closed]:animate-out",
+            props.contentClass,
+          )}
+        >
           <RenderMenuItems
             items={props.items}
             itemClass={props.itemClass}

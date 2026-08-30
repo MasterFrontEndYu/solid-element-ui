@@ -1,7 +1,7 @@
 import { Link as KLink, type LinkRootProps } from "@kobalte/core/link";
 import { omit } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { defaultClass } from "./setting";
+
 import { cn } from "../../utils/cn";
 
 export interface LinkProps extends LinkRootProps {

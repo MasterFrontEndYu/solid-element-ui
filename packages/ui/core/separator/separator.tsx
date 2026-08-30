@@ -1,6 +1,6 @@
 import { Separator as KSeparator, type SeparatorRootProps } from "@kobalte/core/separator";
 import { omit } from "solid-js";
-import { defaultClass } from "./setting";
+
 import { cn } from "../../utils/cn";
 
 export interface SeparatorProps extends SeparatorRootProps {
@@ -15,7 +15,7 @@ export const Separator = (props: SeparatorProps) => {
 
   return (
     <KSeparator
-      class={cn('bg-foreground shrink-0 transition-colors', props.class)}
+      class={cn("bg-foreground shrink-0 transition-colors", props.class)}
       orientation={props.orientation}
       {...others}
     />

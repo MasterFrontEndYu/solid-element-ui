@@ -3,7 +3,7 @@ import { omit, createSignal } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { X } from "../icons";
 import { Button } from "../button/button";
-import { defaultClass } from "./setting";
+
 import { cn } from "../../utils/cn";
 
 interface AlertDialogProps extends AlertDialogRootProps {
@@ -75,13 +75,28 @@ export const AlertDialog = (props: AlertDialogProps) => {
       </div>
 
       <KAlertDialog.Portal>
-        <KAlertDialog.Overlay class={cn('fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-[expanded]:animate-in data-[closed]:animate-out', props.overlayClass)} />
-        <KAlertDialog.Content class={cn('fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl bg-app p-4 shadow-xl data-[expanded]:animate-in data-[closed]:animate-out', props.contentClass)}>
-          <div class={cn('flex align-center justify-between', props.headerClass)}>
-            <KAlertDialog.Title class={cn('text-lg font-semibold text-main', props.titleClass)}>
+        <KAlertDialog.Overlay
+          class={cn(
+            "fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-[expanded]:animate-in data-[closed]:animate-out",
+            props.overlayClass,
+          )}
+        />
+        <KAlertDialog.Content
+          class={cn(
+            "fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl bg-app p-4 shadow-xl data-[expanded]:animate-in data-[closed]:animate-out",
+            props.contentClass,
+          )}
+        >
+          <div class={cn("flex align-center justify-between", props.headerClass)}>
+            <KAlertDialog.Title class={cn("text-lg font-semibold text-main", props.titleClass)}>
               {props.title}
             </KAlertDialog.Title>
-            <KAlertDialog.CloseButton class={cn('rounded-sm opacity-70 text-main transition-opacity hover:opacity-100 focus:outline-none', props.closeButtonClass)}>
+            <KAlertDialog.CloseButton
+              class={cn(
+                "rounded-sm opacity-70 text-main transition-opacity hover:opacity-100 focus:outline-none",
+                props.closeButtonClass,
+              )}
+            >
               <X size={18} />
             </KAlertDialog.CloseButton>
           </div>
@@ -89,14 +104,14 @@ export const AlertDialog = (props: AlertDialogProps) => {
           <div class="mt-2">
             {props.description && (
               <KAlertDialog.Description
-                class={cn('text-sm py-2 text-main', props.descriptionClass)}
+                class={cn("text-sm py-2 text-main", props.descriptionClass)}
               >
                 {props.description}
               </KAlertDialog.Description>
             )}
           </div>
 
-          <div class={cn('mt-6 flex flex-row justify-end gap-3', props.footerClass)}>
+          <div class={cn("mt-6 flex flex-row justify-end gap-3", props.footerClass)}>
             <KAlertDialog.CloseButton>
               {props.cancel || <Button variant="outline">取消</Button>}
             </KAlertDialog.CloseButton>

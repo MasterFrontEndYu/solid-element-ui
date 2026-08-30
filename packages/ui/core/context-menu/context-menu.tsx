@@ -2,7 +2,7 @@ import { ContextMenu as KContextMenu, type ContextMenuRootProps } from "@kobalte
 import { For, Show } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { ChevronRight } from "../icons";
-import { defaultClass } from "./setting";
+
 import { cn } from "../../utils/cn";
 
 // TODO 样式修改
@@ -40,14 +40,19 @@ const RenderMenuItems = (props: {
         <Show
           when={!itemConfig.separator}
           fallback={
-            <KContextMenu.Separator class={cn('-mx-1 my-1 h-px border-light', props.separatorClass)} />
+            <KContextMenu.Separator
+              class={cn("-mx-1 my-1 h-px border-light", props.separatorClass)}
+            />
           }
         >
           <Show
             when={itemConfig.children && itemConfig.children.length > 0}
             fallback={
               <KContextMenu.Item
-                class={cn('relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50', props.itemClass)}
+                class={cn(
+                  "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+                  props.itemClass,
+                )}
                 disabled={itemConfig.disabled}
                 onSelect={() => itemConfig.onClick?.()}
               >
@@ -57,12 +62,22 @@ const RenderMenuItems = (props: {
           >
             {/* 渲染子菜单 */}
             <KContextMenu.Sub>
-              <KContextMenu.SubTrigger class={cn('relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50', props.itemClass)}>
+              <KContextMenu.SubTrigger
+                class={cn(
+                  "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+                  props.itemClass,
+                )}
+              >
                 {itemConfig.label}
-                <ChevronRight class={cn('ml-auto h-4 w-4', props.subIconClass)} />
+                <ChevronRight class={cn("ml-auto h-4 w-4", props.subIconClass)} />
               </KContextMenu.SubTrigger>
               <KContextMenu.Portal>
-                <KContextMenu.SubContent class={cn('z-50 min-w-[10rem] overflow-hidden rounded-md border border-light bg-app p-1 text-main shadow-md dark:text-zinc-50 data-[expanded]:animate-in data-[closed]:animate-out', props.contentClass)}>
+                <KContextMenu.SubContent
+                  class={cn(
+                    "z-50 min-w-[10rem] overflow-hidden rounded-md border border-light bg-app p-1 text-main shadow-md dark:text-zinc-50 data-[expanded]:animate-in data-[closed]:animate-out",
+                    props.contentClass,
+                  )}
+                >
                   <RenderMenuItems
                     items={itemConfig.children!}
                     itemClass={props.itemClass}
@@ -85,7 +100,12 @@ export const ContextMenu = (props: UnifiedContextMenuProps) => {
     <KContextMenu>
       <KContextMenu.Trigger class={cn(props.class)}>{props.children}</KContextMenu.Trigger>
       <KContextMenu.Portal>
-        <KContextMenu.Content class={cn('z-50 min-w-[10rem] overflow-hidden rounded-md border border-light bg-app p-1 text-main shadow-md dark:text-zinc-50 data-[expanded]:animate-in data-[closed]:animate-out', props.contentClass)}>
+        <KContextMenu.Content
+          class={cn(
+            "z-50 min-w-[10rem] overflow-hidden rounded-md border border-light bg-app p-1 text-main shadow-md dark:text-zinc-50 data-[expanded]:animate-in data-[closed]:animate-out",
+            props.contentClass,
+          )}
+        >
           <RenderMenuItems
             items={props.items}
             itemClass={props.itemClass}

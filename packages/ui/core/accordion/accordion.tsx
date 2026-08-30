@@ -3,8 +3,6 @@ import { ComponentProps, For, omit } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { ChevronDown } from "../icons";
 
-import { defaultClass } from "./setting";
-
 import { cn } from "../../utils/cn";
 
 // TODO  别忘记如何处理 后端返回的 带标签的数据？强制用户自己处理，组件只用处理jsx就可以了。

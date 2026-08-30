@@ -1,7 +1,7 @@
 import { Select as KSelect, type SelectRootProps } from "@kobalte/core/select";
 import { omit, Show, createMemo } from "solid-js";
 import { ChevronDown, Check } from "../icons";
-import { defaultClass } from "./setting";
+
 import { cn } from "../../utils/cn";
 
 interface Option {

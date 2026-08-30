@@ -1,7 +1,7 @@
 import { ToggleGroup as KToggleGroup, type ToggleGroupRootProps } from "@kobalte/core/toggle-group";
 import { omit, For } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { defaultClass } from "./setting";
+
 import { cn } from "../../utils/cn";
 
 // TODO 单选，多选出现问题

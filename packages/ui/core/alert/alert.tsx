@@ -1,7 +1,7 @@
 import { Alert as KAlert, type AlertRootProps } from "@kobalte/core/alert";
 import { omit } from "solid-js";
 import { Info, CircleAlert, CircleCheck, CircleX } from "../icons";
-import { defaultClass } from "./setting";
+
 import type { JSX } from "@solidjs/web";
 import { cn } from "../../utils/cn";
 
@@ -37,11 +37,23 @@ export const Alert = (props: AlertProps) => {
 
   // 5. 渲染组件
   return (
-    <KAlert class={cn('relative w-full rounded-lg border p-4 flex gap-3 antialiased text-main', props.class)} {...others}>
+    <KAlert
+      class={cn(
+        "relative w-full rounded-lg border p-4 flex gap-3 antialiased text-main",
+        props.class,
+      )}
+      {...others}
+    >
       <RenderedIcon />
-      <div class={cn('flex flex-col gap-1 text-left', props.contentClass)}>
-        {props.title && <h5 class={cn('font-semibold leading-none tracking-tight', props.titleClass)}>{props.title}</h5>}
-        <div class={cn('text-md leading-relaxed opacity-90', props.childrenClass)}>{props.children}</div>
+      <div class={cn("flex flex-col gap-1 text-left", props.contentClass)}>
+        {props.title && (
+          <h5 class={cn("font-semibold leading-none tracking-tight", props.titleClass)}>
+            {props.title}
+          </h5>
+        )}
+        <div class={cn("text-md leading-relaxed opacity-90", props.childrenClass)}>
+          {props.children}
+        </div>
       </div>
     </KAlert>
   );

@@ -1,6 +1,6 @@
 import { TimeField as KTimeField, type TimeFieldRootProps } from "@kobalte/core/time-field";
 import { omit, Show } from "solid-js";
-import { defaultClass } from "./setting";
+
 import { cn } from "../../utils/cn";
 
 export interface TimeFieldProps extends Omit<TimeFieldRootProps, "class"> {
@@ -33,12 +33,17 @@ export const TimeField = (props: TimeFieldProps) => {
 
   return (
     <KTimeField
-      class={cn('flex flex-col gap-1.5 w-full', props.class)}
+      class={cn("flex flex-col gap-1.5 w-full", props.class)}
       validationState={props.errorMessage ? "invalid" : "valid"}
       {...others}
     >
       <Show when={props.label}>
-        <KTimeField.Label class={cn('text-sm font-medium text-slate-700 dark:text-slate-300 peer-disabled:cursor-not-allowed peer-disabled:opacity-70', props.labelClass)}>
+        <KTimeField.Label
+          class={cn(
+            "text-sm font-medium text-slate-700 dark:text-slate-300 peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+            props.labelClass,
+          )}
+        >
           {props.label}
         </KTimeField.Label>
       </Show>
@@ -47,19 +52,24 @@ export const TimeField = (props: TimeFieldProps) => {
         {(segment) => (
           <KTimeField.Segment
             segment={segment()}
-            class={cn('inline rounded-sm px-0.5 tabular-nums outline-none transition-colors focus:bg-blue-600 focus:text-white dark:focus:bg-blue-500 data-[placeholder]:text-slate-400 data-[type=literal]:px-0', props.segmentClass)}
+            class={cn(
+              "inline rounded-sm px-0.5 tabular-nums outline-none transition-colors focus:bg-blue-600 focus:text-white dark:focus:bg-blue-500 data-[placeholder]:text-slate-400 data-[type=literal]:px-0",
+              props.segmentClass,
+            )}
           />
         )}
       </KTimeField.Input>
 
       <Show when={props.description}>
-        <KTimeField.Description class={cn('text-xs text-slate-500 dark:text-slate-400', props.descriptionClass)}>
+        <KTimeField.Description
+          class={cn("text-xs text-slate-500 dark:text-slate-400", props.descriptionClass)}
+        >
           {props.description}
         </KTimeField.Description>
       </Show>
 
       <Show when={props.errorMessage}>
-        <KTimeField.ErrorMessage class={cn('text-xs text-red-500', props.errorMessageClass)}>
+        <KTimeField.ErrorMessage class={cn("text-xs text-red-500", props.errorMessageClass)}>
           {props.errorMessage}
         </KTimeField.ErrorMessage>
       </Show>
